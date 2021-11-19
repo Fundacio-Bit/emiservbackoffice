@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * &lt;p&gt;Java class for WsI18NError complex type.
+ * &lt;p&gt;Clase Java para WsI18NError complex type.
  * 
- * &lt;p&gt;The following schema fragment specifies the expected content contained within this class.
+ * &lt;p&gt;El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * &lt;pre&gt;
  * &amp;lt;complexType name="WsI18NError"&amp;gt;
@@ -34,7 +34,7 @@ public class WsI18NError {
     protected String message;
 
     /**
-     * Gets the value of the message property.
+     * Obtiene el valor de la propiedad message.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class WsI18NError {
     }
 
     /**
-     * Sets the value of the message property.
+     * Define el valor de la propiedad message.
      * 
      * @param value
      *     allowed object is

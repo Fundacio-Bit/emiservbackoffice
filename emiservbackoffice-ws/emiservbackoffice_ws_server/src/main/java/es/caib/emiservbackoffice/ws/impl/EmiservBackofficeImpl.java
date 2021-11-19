@@ -9,16 +9,14 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-/*
-import es.caib.emiserv.backoffice.ConfirmacionPeticion;
-import es.caib.emiserv.backoffice.EmiservBackoffice;
-import es.caib.emiserv.backoffice.Peticion;
-import es.caib.emiserv.backoffice.Respuesta;
-import es.caib.emiserv.backoffice.SolicitudRespuesta;
-*/
+import es.caib.emiserv.logic.intf.service.ws.backoffice.EmiservBackoffice;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Peticion;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Respuesta;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.ConfirmacionPeticion;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudRespuesta;
 
 /**
- * @author anadal
+ * @author gdeignacio
  */
 @Stateless(name = EmiservBackofficeImpl.NAME + "Ejb")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
@@ -27,7 +25,7 @@ import es.caib.emiserv.backoffice.SolicitudRespuesta;
         portName = EmiservBackofficeImpl.NAME_WS,
         serviceName = EmiservBackofficeImpl.NAME_WS + "Service",
         targetNamespace = "http://caib.es/emiserv/backoffice")
-public class EmiservBackofficeImpl extends BaseWsImpl {
+public class EmiservBackofficeImpl extends BaseWsImpl implements EmiservBackoffice {
 
     public static final String NAME = "EmiservBackoffice";
 
@@ -39,18 +37,18 @@ public class EmiservBackofficeImpl extends BaseWsImpl {
         return echo;
     }
     
-    /*
+    
     @WebMethod
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
-        // TODO
+        
         return new Respuesta();
     }
     
     @WebMethod
     @Override
     public ConfirmacionPeticion peticionAsincrona(Peticion peticion) {
-        // TODO
+
         return new ConfirmacionPeticion();
 
     }
@@ -58,10 +56,10 @@ public class EmiservBackofficeImpl extends BaseWsImpl {
     @WebMethod
     @Override
     public Respuesta solicitarRespuesta(SolicitudRespuesta solicitudRespuesta) {
-        // TODO
+     
         return new Respuesta();
     }
-    */
+    
       
 
 }

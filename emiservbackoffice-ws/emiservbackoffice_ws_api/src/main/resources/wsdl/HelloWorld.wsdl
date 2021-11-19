@@ -10,6 +10,8 @@
   </xsd:complexType>
 </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="getVersion">
+  </wsdl:message>
   <wsdl:message name="echo">
     <wsdl:part name="echo" type="xsd:string">
     </wsdl:part>
@@ -25,8 +27,6 @@
   <wsdl:message name="WsI18NException">
     <wsdl:part name="WsI18NException" element="tns:WsI18NError">
     </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getVersion">
   </wsdl:message>
   <wsdl:portType name="HelloWorldWs">
     <wsdl:operation name="echo">

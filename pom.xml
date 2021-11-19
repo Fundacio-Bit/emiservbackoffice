@@ -149,7 +149,12 @@
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
-            
+            <dependency>
+                <groupId>es.caib.emiserv</groupId>
+                <artifactId>emiserv-service-intf</artifactId>
+                <version>${emiserv.version}</version>
+            </dependency>
+
             <!-- Dependències emprades als tests -->
             <dependency>
                 <groupId>junit</groupId>
@@ -433,6 +438,7 @@
         <module>emiservbackoffice-commons</module>
         <module>emiservbackoffice-persistence</module>
         <module>emiservbackoffice-ejb</module>
+        <module>emiservbackoffice-logic</module>
         <module>emiservbackoffice-service</module>
         <module>emiservbackoffice-back</module>
         <module>emiservbackoffice-front</module>

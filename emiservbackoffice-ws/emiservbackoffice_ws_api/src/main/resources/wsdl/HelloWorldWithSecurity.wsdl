@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="HelloWorldWithSecurityWsService" targetNamespace="http://impl.ws.emiservbackoffice.caib.es/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://impl.ws.emiservbackoffice.caib.es/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:message name="getVersion">
+  </wsdl:message>
   <wsdl:message name="echo">
     <wsdl:part name="echo" type="xsd:string">
     </wsdl:part>
@@ -11,8 +13,6 @@
   <wsdl:message name="echoResponse">
     <wsdl:part name="return" type="xsd:string">
     </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getVersion">
   </wsdl:message>
   <wsdl:portType name="HelloWorldWithSecurityWs">
     <wsdl:operation name="echo">
