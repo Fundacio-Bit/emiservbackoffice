@@ -7,10 +7,10 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>emiservbackoffice-ejb</artifactId>
+    <artifactId>emiservbackoffice-logic</artifactId>
     <packaging>ejb</packaging>
-    <name>EmiservBackoffice - EJB</name>
-    <description>Mòdul EJB de EmiservBackoffice</description>
+    <name>EmiservBackoffice - Logic</name>
+    <description>Mòdul EJB Logica de EmiservBackoffice</description>
 
     <dependencies>
         <!-- Especificacions i llibreries proporcionades per JBoss -->

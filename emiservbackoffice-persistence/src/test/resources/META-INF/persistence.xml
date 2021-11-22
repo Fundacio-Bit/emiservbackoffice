@@ -39,7 +39,8 @@
             Postgresql:    org.hibernate.dialect.PostgreSQL95Dialect
             Oracle:        org.hibernate.dialect.Oracle12cDialect
             -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
+            <property name="hibernate.dialect" value="${es.caib.emiservbackoffice.hibernate.dialect}" />
+            <property name="hibernate.query.substitutions" value="${es.caib.emiservbackoffice.hibernate.query.substitutions}"/>
 
         </properties>
     </persistence-unit>
