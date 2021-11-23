@@ -9,7 +9,7 @@
 
     <artifactId>emiservbackoffice-logic</artifactId>
     <packaging>ejb</packaging>
-    <name>EmiservBackoffice - Logic</name>
+    <name>EmiservBackoffice - LOGIC</name>
     <description>Mòdul EJB Logica de EmiservBackoffice</description>
 
     <dependencies>
