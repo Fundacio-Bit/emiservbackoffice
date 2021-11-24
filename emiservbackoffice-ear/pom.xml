@@ -31,6 +31,11 @@
             <artifactId>emiservbackoffice-ejb</artifactId>
             <type>ejb</type>
         </dependency>
+        <dependency>
+            <groupId>es.caib.emiservbackoffice</groupId>
+            <artifactId>emiservbackoffice-logic</artifactId>
+            <type>ejb</type>
+        </dependency>
         <!-- BACK START -->
         <dependency>
             <groupId>es.caib.emiservbackoffice</groupId>
@@ -132,6 +137,11 @@
                             <groupId>es.caib.emiservbackoffice</groupId>
                             <artifactId>emiservbackoffice-ejb</artifactId>
                             <bundleFileName>emiservbackoffice-ejb.jar</bundleFileName>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>es.caib.emiservbackoffice</groupId>
+                            <artifactId>emiservbackoffice-logic</artifactId>
+                            <bundleFileName>emiservbackoffice-logic.jar</bundleFileName>
                         </ejbModule>
                         <!-- BACK START -->
                         <webModule>

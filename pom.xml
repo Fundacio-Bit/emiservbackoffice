@@ -68,6 +68,12 @@
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
+                <artifactId>emiservbackoffice-logic</artifactId>
+                <version>1.0.0</version>
+                <type>ejb</type>
+            </dependency>
+            <dependency>
+                <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-back</artifactId>
                 <version>1.0.0</version>
                 <type>war</type>

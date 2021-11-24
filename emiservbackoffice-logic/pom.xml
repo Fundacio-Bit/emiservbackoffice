@@ -41,6 +41,12 @@
             <artifactId>emiservbackoffice-persistence</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>es.caib.emiservbackoffice</groupId>
+            <artifactId>emiservbackoffice-ejb</artifactId>
+            <type>ejb</type>
+            <scope>provided</scope>
+        </dependency>
         <!-- Altres llibreries necessàries per aquest mòdul -->
         <!-- Només necessària per la generació de codi -->
         <dependency>

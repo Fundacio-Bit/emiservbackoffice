@@ -14,6 +14,8 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Peticion;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Respuesta;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.ConfirmacionPeticion;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudRespuesta;
+import es.caib.emiservbackoffice.service.facade.BackofficeLogicServiceFacade;
+import javax.ejb.EJB;
 
 /**
  * @author gdeignacio
@@ -26,6 +28,9 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudRespuesta;
         serviceName = EmiservBackofficeImpl.NAME_WS + "Service",
         targetNamespace = "http://caib.es/emiserv/backoffice")
 public class EmiservBackofficeImpl extends BaseWsImpl implements EmiservBackoffice {
+    
+    @EJB
+    private BackofficeLogicServiceFacade backofficeLogicService;
 
     public static final String NAME = "EmiservBackoffice";
 
@@ -42,7 +47,12 @@ public class EmiservBackofficeImpl extends BaseWsImpl implements EmiservBackoffi
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
         
-        return new Respuesta();
+        String echo = peticion.toString();
+        log.info("EmiservBackofficeImpl :: peticion = " + echo);
+        
+        Respuesta respuesta = backofficeLogicService.peticionSincrona(peticion);
+        
+        return respuesta
     }
     
     @WebMethod
