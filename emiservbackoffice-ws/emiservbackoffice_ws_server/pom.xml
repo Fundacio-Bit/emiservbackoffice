@@ -47,6 +47,10 @@
             <type>ejb</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+                <groupId>es.caib.emiserv</groupId>
+                <artifactId>emiserv-service-intf</artifactId>        
+        </dependency>
     </dependencies>
 
     <build>
