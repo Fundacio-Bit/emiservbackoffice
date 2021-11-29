@@ -1,0 +1,12 @@
+
+-------------------------------- OPCIONS ---------------------------------
+
+-Pswagger-ui      Inclou l'interficie d'usuari Swagger dins el modul d'API REST
+
+-Previsionnumber  Inclou el numero de la darrera revisio pujada al repositori
+                  de Versions.
+
+clean             Neteja els projectes abans de compilar.
+
+--------------------------------------------------------------------------
+
