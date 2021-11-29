@@ -14,7 +14,8 @@
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
+            <property name="hibernate.dialect" value="${es.caib.emiservbackoffice.hibernate.dialect}" />
+            <property name="hibernate.query.substitutions" value="${es.caib.emiservbackoffice.hibernate.query.substitutions}"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
