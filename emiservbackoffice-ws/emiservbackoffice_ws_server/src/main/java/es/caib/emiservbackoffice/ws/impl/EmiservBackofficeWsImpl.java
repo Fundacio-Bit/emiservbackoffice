@@ -5,8 +5,10 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.EmiservBackoffice;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Peticion;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Respuesta;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudRespuesta;
+import es.caib.emiservbackoffice.service.facade.EmiservBackofficeServiceFacade;
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
+import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
@@ -29,6 +31,9 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
     public static final String NAME = "EmiservBackoffice";
 
     public static final String NAME_WS = NAME + "Ws";
+    
+    @EJB
+    EmiservBackofficeServiceFacade emiservBackofficeService;
 
     @WebMethod
     public String echo(@WebParam(name = "echo") String echo) throws WsI18NException {
@@ -38,7 +43,12 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Respuesta respuesta = new Respuesta();
+        
+        
+        
+        return respuesta;
     }
 
     @Override
