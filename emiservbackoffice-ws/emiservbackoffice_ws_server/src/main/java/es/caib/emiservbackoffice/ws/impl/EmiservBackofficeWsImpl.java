@@ -1,5 +1,6 @@
 package es.caib.emiservbackoffice.ws.impl;
 
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Atributos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.ConfirmacionPeticion;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.EmiservBackoffice;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Peticion;
@@ -44,7 +45,19 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
         
+        Atributos atributos = peticion.getAtributos();
+        
+        String codigoCertificado = atributos.getCodigoCertificado();
+        String idPeticion = atributos.getIdPeticion();
+        String numElementos = atributos.getNumElementos();
+        String timeStamp = atributos.getTimeStamp();
+        
+        
+        
+        
+        
         Respuesta respuesta = new Respuesta();
+        
         
         
         
