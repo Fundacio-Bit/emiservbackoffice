@@ -2,13 +2,24 @@ package es.caib.emiservbackoffice.ws.impl;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Atributos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.ConfirmacionPeticion;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.EmiservBackoffice;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Emisor;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Peticion;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Respuesta;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Solicitante;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudRespuesta;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudTransmision;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Solicitudes;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Titular;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmision;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
 import es.caib.emiservbackoffice.service.facade.EmiservBackofficeServiceFacade;
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
@@ -45,6 +56,14 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
         
+        Respuesta respuesta = new Respuesta();
+        
+        Transmisiones respuestaTransmisiones = new Transmisiones();
+        
+        List<TransmisionDatos> listRespuestaTransmisionDatos = new ArrayList<TransmisionDatos>();
+        
+        
+        
         Atributos atributos = peticion.getAtributos();
         
         String codigoCertificado = atributos.getCodigoCertificado();
@@ -52,11 +71,33 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         String numElementos = atributos.getNumElementos();
         String timeStamp = atributos.getTimeStamp();
         
+        Solicitudes solicitudes = peticion.getSolicitudes();
+        ArrayList<SolicitudTransmision> listSolicitudTransmision = solicitudes.getSolicitudTransmision();
+        
+        for (SolicitudTransmision solicitudTransmision:listSolicitudTransmision){
+            
+            DatosGenericos datosGenericos = solicitudTransmision.getDatosGenericos();
+            
+            Emisor emisor = datosGenericos.getEmisor();
+            
+            String nifEmisor = emisor.getNifEmisor();
+            String nombreEmisor = emisor.getNombreEmisor();
+            
+            Solicitante solicitante = datosGenericos.getSolicitante();
+            
+            Titular titular = datosGenericos.getTitular();
+            Transmision transmision = datosGenericos.getTransmision();
+            
+            
+            break;
+        }
         
         
         
         
-        Respuesta respuesta = new Respuesta();
+        
+      
+        
         
         
         
