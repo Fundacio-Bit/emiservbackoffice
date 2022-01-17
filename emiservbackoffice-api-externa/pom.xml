@@ -36,6 +36,10 @@
             <artifactId>emiservbackoffice-service</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+                <groupId>es.caib.emiserv</groupId>
+                <artifactId>emiserv-service-intf</artifactId>        
+        </dependency>
         <!-- Anotacions de documentació de openapi -->
         <dependency>
             <groupId>org.eclipse.microprofile.openapi</groupId>

@@ -15,7 +15,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Titular;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmision;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
-import es.caib.emiservbackoffice.service.facade.EmiservBackofficeServiceFacade;
+//import es.caib.emiservbackoffice.service.facade.EmiservBackofficeServiceFacade;
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
 import java.util.ArrayList;
@@ -44,8 +44,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
     public static final String NAME_WS = NAME + "Ws";
     
-    @EJB
-    EmiservBackofficeServiceFacade emiservBackofficeService;
+    //@EJB
+    //EmiservBackofficeServiceFacade emiservBackofficeService;
 
     @WebMethod
     public String echo(@WebParam(name = "echo") String echo) throws WsI18NException {
