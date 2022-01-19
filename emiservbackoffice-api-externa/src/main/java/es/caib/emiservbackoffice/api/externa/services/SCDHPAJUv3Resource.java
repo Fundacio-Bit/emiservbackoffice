@@ -20,25 +20,33 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
+import javax.ws.rs.POST;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.headers.Header;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+
+
+
 
 /**
  * Recurs REST per accedir a Unitats Organiques.
  *
  * @author areus
  */
-@Path("unitats")
+@Path("SCDHPAJUv3")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ServeisInteroperabilitatResource {
+public class SCDHPAJUv3Resource {
 
-    @EJB
-    private UnitatOrganicaServiceFacade unitatOrganicaService;
+    //@EJB
+    //private UnitatOrganicaServiceFacade unitatOrganicaService;
 
     /**
      * Retorna unta llista paginada de les unitats orgàniques.
      *
      * @return Un codi 200 amb les unitats orgàniques.
      */
+    /*
     @GET
     @Operation(operationId = "getUnitats", summary = "Retorna una llista paginada d'unitats orgàniques")
     @APIResponse(
@@ -55,5 +63,39 @@ public class ServeisInteroperabilitatResource {
                 Collections.emptyMap(), Collections.emptyList());
         return Response.ok().entity(pagina).build();
     }
-
+    */
+    
+    /**
+     * Crea una nova unitat orgànica.
+     *
+     * @param unitatOrganica la nova unitat orgànica a crear.
+     * @return Un codi 201 amb la localització de la unitat orgància creada.
+     */
+    @POST
+    @Operation(operationId = "peticionSincrona", summary = "Realitza una consulta al cedent")
+    @APIResponse(responseCode = "200",
+            description = "Petició processada",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UnitatOrganicaDTO.class)))
+    
+    
+    
+    
+    @APIResponse(responseCode = "201", description = "Petició processada",
+            headers = @Header(name = "location", description = "Enllaç al nou recurs",
+                    schema = @Schema(type = SchemaType.STRING)))
+    public Response peticionSincrona(
+            @RequestBody(
+                    required = true,
+                    description = "DatosEspecificos",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = DatosPersonales.class)))
+            @NotNull @Valid UnitatOrganicaDTO unitatOrganica) {
+        Long newId = unitatOrganicaService.create(unitatOrganica);
+        return Response.created(URI.create("unitats/" + newId)).build();
+    }
+    
+    
+    
+    
 }

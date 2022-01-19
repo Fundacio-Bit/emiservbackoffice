@@ -33,6 +33,7 @@
         <wildfly-arquillian.version>3.0.1.Final</wildfly-arquillian.version>
         <mockito.version>3.5.13</mockito.version>
         <emiserv.version>2.0.1</emiserv.version>
+        <scsp-schemas-xsd.version>1.0.0</scsp-schemas-xsd.version>
         <!-- Propietats emprades als descriptors en mode Desenvolupament. -->
         <!-- Es poden activar els valors de producció activatn el profile -Pproduccio -->
         <webXml.faces.projectStage>Development</webXml.faces.projectStage>
@@ -153,6 +154,11 @@
                 <groupId>es.caib.emiserv</groupId>
                 <artifactId>emiserv-service-intf</artifactId>
                 <version>${emiserv.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>es.caib.scsp</groupId>
+                <artifactId>scsp-schemas-xsd-SCDHPAJUv3</artifactId>
+                <version>${scsp-schemas-xsd.version}</version>
             </dependency>
             <!-- Dependències emprades als tests -->
             <dependency>
