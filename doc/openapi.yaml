@@ -1,0 +1,618 @@
+openapi: "3.0.0"
+info:
+  description: "This is a sample server SCDHPAJUv3 server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger SCDHPAJUv3"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "pinbal@fundaciobit.org"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "emiservbackoffice.fundaciobit.org:8080"
+basePath: "/emiservbackofficeapi/externa/services"
+tags:
+- name: "SCDHPAJUv3"
+  description: "Everything about your SCDHPAJUv3"
+  externalDocs:
+    description: "Manual del cedent del padro historic"
+    url: "https://github.com/Fundacio-Bit/emiservbackoffice/blob/main/doc/ManualCedentPadroHistoric.odt"
+schemes:
+- "https"
+- "http"
+paths:
+  /SCDHPAJUv3/peticionSincrona:
+    post:
+      tags:
+      - "SCDHPAJUv3"
+      summary: "Realitza una consulta al cedent"
+      description: ""
+      operationId: "peticionSincrona"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dades de la consulta"
+        required: true
+        schema:
+          $ref: "#/definitions/Solicitud"
+      responses:
+        "200":
+          description: "Petició processada"
+          schema:
+            $ref: "#/definitions/Resultado"
+        "400":
+          description: "Petició errònia"
+  /SCDHPAJUv3/peticionSincronaIdentidad:
+    post:
+      tags:
+      - "SCDHPAJUv3"
+      summary: "Realitza una consulta al cedent"
+      description: ""
+      operationId: "peticionSincronaIdentidad"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "order placed for purchasing the pet"
+        required: true
+        schema:
+          $ref: "#/definitions/SolicitudIdentidad"
+      responses:
+        "200":
+          description: "Petició processada"
+          schema:
+            $ref: "#/definitions/Resultado"
+        "400":
+          description: "Petició errònia"
+  /SCDHPAJUv3/peticionSincronaDatos:
+    post:
+      tags:
+      - "SCDHPAJUv3"
+      summary: "Realitza una consulta al cedent"
+      description: ""
+      operationId: "peticionSincronaDatos"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "order placed for purchasing the pet"
+        required: true
+        schema:
+          $ref: "#/definitions/SolicitudDatos"
+      responses:
+        "200":
+          description: "Petició processada"
+          schema:
+            $ref: "#/definitions/Resultado"
+        "400":
+          description: "Petició errònia"
+  
+  /SCDHPAJUv3/peticionSincronaNIA:
+    post:
+      tags:
+      - "SCDHPAJUv3"
+      summary: "Realitza una consulta al cedent"
+      description: ""
+      operationId: "peticionSincronaNIA"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "order placed for purchasing the pet"
+        required: true
+        schema:
+          $ref: "#/definitions/SolicitudNIA"
+      responses:
+        "200":
+          description: "Petició processada"
+          schema:
+            $ref: "#/definitions/Resultado"
+        "400":
+          description: "Petició errònia"
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Solicitud:
+    type: "object"
+    required:
+      - "provinciaSolicitud"
+      - "municipioSolicitud"
+      - "titular"
+    properties:
+      provinciaSolicitud:
+        type: "string"
+        description: "Codi de la Província a la que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
+        xml:
+          name: "ProvinciaSolicitud"
+      municipioSolicitud:
+        type: "string"
+        description: "Codi del municipi de la província al que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
+        xml:
+          name: "MunicipioSolicitud"
+      titular::
+        $ref: "#/definitions/Titular"
+      numeroAnyos:
+        type: "string"
+        description: "Nombre d'anys cap a enrere a consultar per generar l'històric. Independentment del nombre d'anys cap a enrere informats a la consulta, l'any més antic que l'emissor tindrà en compte és l'any 1996 o el primer any del que disposi de dades en format digital. Si no es rep aquesta dada, l'emissor retornarà la informació del padró relativa només al moment de la consulta."
+        xml:
+          name: "NumeroAnyos"
+    xml:
+      name: "Solicitud"
+  Titular:
+    type: "object"
+    properties:
+      datosSolicitud:
+        $ref: "#/definitions/DatosSolicitud"
+      datosPersonales:
+        $ref: "#/definitions/DatosPersonales"
+    xml:
+      name: "Titular"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  DatosSolicitud:
+    type: "object"
+    required:
+      - "provinciaSolicitud"
+      - "municipioSolicitud"
+    properties:
+      provinciaSolicitud:
+        type: "string"
+        description: "Codi de la Província a la que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
+        xml:
+          name: "ProvinciaSolicitud"
+      municipioSolicitud:
+        type: "string"
+        description: "Codi del municipi de la província al que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
+        xml:
+          name: "MunicipioSolicitud"
+      numeroAnyos:
+        type: "string"
+        description: "Nombre d'anys cap a enrere a consultar per generar l'històric. Independentment del nombre d'anys cap a enrere informats a la consulta, l'any més antic que l'emissor tindrà en compte és l'any 1996 o el primer any del que disposi de dades en format digital. Si no es rep aquesta dada, l'emissor retornarà la informació del padró relativa només al moment de la consulta."
+        xml:
+          name: "NumeroAnyos"
+    xml:
+      name: "DatosSolicitud"
+  Documentacion:
+    type: "object"
+    required:
+      - "tipo"
+      - "valor"
+    properties:
+      tipo:
+        type: "string"
+        description: "Possibles valors son NIF, DNI, NIE, Passaport."
+        enum:
+          - "NIF"
+          - "DNI"
+          - "NIE"
+          - "Passaport"
+        xml:
+          name: "Tipo"
+      valor:
+        type: "string"
+        description: "Valor del document del titular sense cap espai en blanc."
+        xml:
+          name: "Valor"
+      numSoporte:
+        type: "string"
+        description: ""
+        xml:
+          name: "NumSoporte"
+    xml:
+      name: "Documentacion"
+  DatosPersonales:
+    type: "object"
+    required:
+     - "nombre"
+     - "apellido1"
+    properties:
+      documentacion:
+        $ref: "#/definitions/Documentacion"
+      nombre:
+        type: "string"
+        description: "Nom del titular de la sol·licitud."
+        xml:
+          name: "Nombre"
+      particula1:
+        type: "string"
+        description: "Partícula prèvia al primer cognom."
+        xml:
+          name: "Particula1"
+      apellido1:
+        type: "string"
+        description: "Primer cognom del titular de la sol·licitud."
+        xml:
+          name: "Apellido1"
+      particula2:
+        type: "string"
+        description: "Partícula prèvia al segon cognom."
+        xml:
+          name: "Particula2"
+      apellido2:
+        type: "string"
+        description: "Segon cognom del titular de la sol·licitud."
+        xml:
+          name: "Apellido2"
+      fechaNacimiento:
+        type: "string"
+        format: "date-time"
+        description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
+        xml:
+          name: "FechaNacimiento"
+    xml:
+      name: "DatosPersonales"
+  SolicitudIdentidad:
+    type: "object"
+    required:
+      - datosSolicitud
+      - documentacion
+    properties:
+      datosSolicitud:
+        $ref: "#/definitions/DatosSolicitud"
+      documentacion:
+        $ref: "#/definitions/Documentacion"
+    xml:
+      name: "SolicitudIdentidad"
+  SolicitudDatos:
+    type: "object"
+    required:
+      - datosSolicitud
+      - datosPersonales
+    properties:
+      datosSolicitud:
+        $ref: "#/definitions/DatosSolicitud"
+      datosPersonales:
+        $ref: "#/definitions/DatosPersonales"
+    xml:
+      name: "SolicitudDatos"
+  SolicitudNIA:
+    type: "object"
+    required:
+      - datosSolicitud
+      - nia
+    properties:
+      datosSolicitud:
+        $ref: "#/definitions/DatosSolicitud"
+      nia:
+        type: "string"
+        description: "Identificador únic a la base de dades de padró del titular de la sol·licitud."
+        xml:
+          name: "NIA"
+    xml:
+      name: "SolicitudNIA"
+  Resultado:
+    type: "object"
+    required:
+     - "nombre"
+     - "apellido1"
+     - "historicoDomicilios"
+     - "fechaExpedicion"
+    properties:
+      nombre:
+        type: "string"
+        description: "Nom del titular de la sol·licitud."
+        xml:
+          name: "Nombre"
+      particula1:
+        type: "string"
+        description: "Partícula prèvia al primer cognom."
+        xml:
+          name: "Particula1"
+      apellido1:
+        type: "string"
+        description: "Primer cognom del titular de la sol·licitud."
+        xml:
+          name: "Apellido1"
+      particula2:
+        type: "string"
+        description: "Partícula prèvia al segon cognom."
+        xml:
+          name: "Particula2"
+      apellido2:
+        type: "string"
+        description: "Segon cognom del titular de la sol·licitud."
+        xml:
+          name: "Apellido2"
+      fechaNacimiento:
+        type: "string"
+        format: "date-time"
+        description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
+        xml:
+          name: "FechaNacimiento"
+      documentacion:
+        $ref: "#/definitions/Documentacion"
+      historicoDomicilios:
+        $ref: "#/definitions/HistoricoDomicilios"
+      fechaExpedicion:
+        type: "string"
+        format: "date-time"
+        description: "Data en la que s'expedeixen les dades sol·licitades. Format:yyyy-MM-dd"
+        xml:
+          name: "FechaExpedicion"
+    xml:
+      name: "Resultado"
+  HistoricoDomicilios:
+    type: "object"
+    properties:
+      domicilio:
+        type: "array"
+        xml:
+          name: "domicilio"
+          wrapped: true
+        items:
+          $ref: "#/definitions/Domicilio"
+    xml:
+      name: "HistoricoDomicilios"  
+  Domicilio:
+    type: "object"
+    required:
+     - "claveHojaPadronal"
+     - "direccion"
+     - "desde"
+    properties:
+      claveHojaPadronal:
+        $ref: "#/definitions/ClaveHojaPadronal"
+      provinciaRespuesta:
+        $ref: "#/definitions/ProvinciaRespuesta"
+      municipioRespuesta:
+        $ref: "#/definitions/MunicipioRespuesta"
+      entColectiva:
+        $ref: "#/definitions/EntColectiva"
+      entSingular:
+        $ref: "#/definitions/EntSingular"
+      nucleo:
+        $ref: "#/definitions/Nucleo"
+      codUnidadPoblacional:
+        type: "string"
+        description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
+        xml:
+          name: "CodUnidadPoblacional"
+      direccion:
+        $ref: "#/definitions/Direccion"
+      desde:
+        type: "string"
+        format: "date-time"
+        description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
+        xml:
+          name: "Desde"
+      motivoInscripcion:
+        $ref: "#/definitions/MotivoInscripcion"
+      hasta:
+        type: "string"
+        format: "date-time"
+        description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
+        xml:
+          name: "Hasta"
+      motivoBaja:
+        $ref: "#/definitions/MotivoBaja"
+    xml:
+      name: "Domicilio"
+  ClaveHojaPadronal:
+    type: "object"
+    required:
+      - "distrito"
+      - "seccion"
+      - "hoja"
+    properties:
+      distrito:
+        type: "string"
+        description: "Dada districte del domicili al padró municipal."
+        xml:
+          name: "Distrito"
+      seccion:
+        type: "string"
+        description: "Dada secció del domicili al padró municipal."
+        xml:
+          name: "Seccion"
+      hoja:
+        type: "string"
+        description: "Dada fulla d'inscripció del domicili al padró municipal."
+        xml:
+          name: "Hoja"
+    xml:
+      name: "ClaveHojaPadronal"
+  ProvinciaRespuesta:
+    type: "object"
+    required:
+      - "codigo"
+      - "nombre"
+    properties:
+      codigo:
+        type: "string"
+        description: "Codi INE de la provincia."
+        xml:
+          name: "Codigo"
+      nombre:
+        type: "string"
+        description: "Nom INE de la provincia."
+        xml:
+          name: "Nombre"
+    xml:
+      name: "ProvinciaRespuesta"
+  MunicipioRespuesta:
+    type: "object"
+    required:
+      - "codigo"
+      - "nombre"
+    properties:
+      codigo:
+        type: "string"
+        description: "Codi INE del municipi."
+        xml:
+          name: "Codigo"
+      nombre:
+        type: "string"
+        description: "Nom INE del municipi."
+        xml:
+          name: "Nombre"
+    xml:
+      name: "MunicipioRespuesta"
+  EntColectiva :
+    type: "object"
+    required:
+      - "codigo"
+      - "nombre"
+    properties:
+      codigo:
+        type: "string"
+        description: "Codi entitat col·lectiva del domicili."
+        xml:
+          name: "Codigo"
+      nombre:
+        type: "string"
+        description: "Nom entitat col·lectiva del domicili."
+        xml:
+          name: "Nombre"
+    xml:
+      name: "EntColectiva"
+  EntSingular:
+    type: "object"
+    required:
+      - "codigo"
+      - "nombre"
+    properties:
+      codigo:
+        type: "string"
+        description: "Codi entitat col·lectiva del domicili."
+        xml:
+          name: "Codigo"
+      nombre:
+        type: "string"
+        description: "Nom entitat col·lectiva del domicili."
+        xml:
+          name: "Nombre"
+    xml:
+      name: "EntSingular"
+  Nucleo:
+    type: "object"
+    required:
+      - "codigo"
+      - "nombre"
+    properties:
+      codigo:
+        type: "string"
+        description: "Codi del nucli del domicili."
+        xml:
+          name: "Codigo"
+      nombre:
+        type: "string"
+        description: "Nom del nucli del domicili."
+        xml:
+          name: "Nombre"
+    xml:
+      name: "Nucleo"
+  MotivoInscripcion:
+    type: "object"
+    required:
+      - "descripcion"
+    properties:
+      codigoVariacion:
+        type: "string"
+        description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
+        enum:
+          - "A"
+          - "M"
+        xml:
+          name: "CodigoVariacion"
+      causaVariacion:
+        type: "string"
+        description: "Codi variació inscripció al domicili."
+        xml:
+          name: "CausaVariacion"
+      descripcion:
+        type: "string"
+        description: "Nom del nucli del domicili."
+        xml:
+          name: "Descripcion"
+    xml:
+      name: "MotivoInscripcion"
+  MotivoBaja:
+    type: "object"
+    required:
+      - "descripcion"
+    properties:
+      codigoVariacion:
+        type: "string"
+        description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
+        enum:
+          - "A"
+          - "M"
+        xml:
+          name: "CodigoVariacion"
+      causaVariacion:
+        type: "string"
+        description: "Codi variació inscripció al domicili."
+        xml:
+          name: "CausaVariacion"
+      descripcion:
+        type: "string"
+        description: "Nom del nucli del domicili."
+        xml:
+          name: "Descripcion"
+    xml:
+      name: "MotivoBaja"
+  Direccion:
+    type: "object"
+    required:
+      - "descripcion"
+    properties:
+      codigoVariacion:
+        type: "string"
+        description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
+        enum:
+          - "A"
+          - "M"
+        xml:
+          name: "CodigoVariacion"
+      causaVariacion:
+        type: "string"
+        description: "Codi variació inscripció al domicili."
+        xml:
+          name: "CausaVariacion"
+      descripcion:
+        type: "string"
+        description: "Nom del nucli del domicili."
+        xml:
+          name: "Descripcion"
+    xml:
+      name: "Direccion"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
