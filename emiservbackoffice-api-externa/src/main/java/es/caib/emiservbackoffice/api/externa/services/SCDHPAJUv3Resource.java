@@ -71,6 +71,8 @@ public class SCDHPAJUv3Resource {
      * @param unitatOrganica la nova unitat orgànica a crear.
      * @return Un codi 201 amb la localització de la unitat orgància creada.
      */
+    
+    /*
     @POST
     @Operation(operationId = "peticionSincrona", summary = "Realitza una consulta al cedent")
     @APIResponse(responseCode = "200",
@@ -95,7 +97,7 @@ public class SCDHPAJUv3Resource {
         return Response.created(URI.create("unitats/" + newId)).build();
     }
     
-    
+    */
     
     
 }

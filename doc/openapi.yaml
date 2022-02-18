@@ -167,7 +167,7 @@ components:
           description: "Codi del municipi de la província al que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
           xml:
             name: "MunicipioSolicitud"
-        titular::
+        titular:
           $ref: "#/components/schemas/Titular"
         numeroAnyos:
           type: "string"
