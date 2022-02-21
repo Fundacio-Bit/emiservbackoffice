@@ -61,7 +61,6 @@ paths:
                 $ref: '#/components/schemas/Resultado'
         400:
           description: Petició errònia
-      x-codegen-request-body-name: body
 components:
   schemas:
 
@@ -74,11 +73,13 @@ components:
       properties:
         provinciaSolicitud:
           type: string
+          maxLength: 2
           description: "Codi de la Província a la que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
           xml:
             name: ProvinciaSolicitud
         municipioSolicitud:
           type: string
+          maxLength: 3
           description: "Codi del municipi de la província al que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
           xml:
             name: MunicipioSolicitud
@@ -275,6 +276,7 @@ components:
           $ref: "#/components/schemas/Nucleo"
         codUnidadPoblacional:
           type: string
+          maxLength: 7
           description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
           xml:
             name: CodUnidadPoblacional
@@ -282,6 +284,7 @@ components:
           $ref: "#/components/schemas/Direccion"
         desde:
           type: string
+          maxLength: 10
           format: date-time
           description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
           xml:
@@ -290,6 +293,7 @@ components:
           $ref: "#/components/schemas/MotivoInscripcion"
         hasta:
           type: string
+          maxLength: 10
           format: date-time
           description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
           xml:
@@ -308,16 +312,19 @@ components:
       properties:
         distrito:
           type: string
+          maxLength: 3
           description: "Dada districte del domicili al padró municipal."
           xml:
             name: Distrito
         seccion:
           type: string
+          maxLength: 3
           description: "Dada secció del domicili al padró municipal."
           xml:
             name: Seccion
         hoja:
           type: string
+          maxLength: 10
           description: "Dada fulla d'inscripció del domicili al padró municipal."
           xml:
             name: Hoja
@@ -332,11 +339,13 @@ components:
       properties:
         codigo:
           type: string
+          maxLength: 2
           description: "Codi INE de la provincia."
           xml:
             name: Codigo
         nombre:
           type: string
+          maxLength: 70
           description: "Nom INE de la provincia."
           xml:
             name: Nombre
@@ -351,11 +360,13 @@ components:
       properties:
         codigo:
           type: string
+          maxLength: 3
           description: "Codi INE del municipi."
           xml:
             name: Codigo
         nombre:
           type: string
+          maxLength: 70
           description: "Nom INE del municipi."
           xml:
             name: Nombre
@@ -370,11 +381,13 @@ components:
       properties:
         codigo:
           type: string
+          maxLength: 2
           description: "Codi entitat col·lectiva del domicili."
           xml:
             name: Codigo
         nombre:
           type: string
+          maxLength: 70
           description: "Nom entitat col·lectiva del domicili."
           xml:
             name: Nombre
@@ -389,11 +402,13 @@ components:
       properties:
         codigo:
           type: string
+          maxLength: 2
           description: "Codi entitat col·lectiva del domicili."
           xml:
             name: Codigo
         nombre:
           type: string
+          maxLength: 70
           description: "Nom entitat col·lectiva del domicili."
           xml:
             name: Nombre
@@ -408,11 +423,13 @@ components:
       properties:
         codigo:
           type: string
+          maxLength: 2
           description: "Codi del nucli del domicili."
           xml:
             name: Codigo
         nombre:
           type: string
+          maxLength: 70
           description: "Nom del nucli del domicili."
           xml:
             name: Nombre
@@ -426,6 +443,7 @@ components:
       properties:
         codigoVariacion:
           type: string
+          maxLength: 1
           description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
           enum:
             - A
@@ -434,11 +452,13 @@ components:
             name: CodigoVariacion
         causaVariacion:
           type: string
+          maxLength: 2
           description: "Codi variació inscripció al domicili."
           xml:
             name: CausaVariacion
         descripcion:
           type: string
+          maxLength: 80
           description: "Nom del nucli del domicili."
           xml:
             name: Descripcion
@@ -452,6 +472,7 @@ components:
       properties:
         codigoVariacion:
           type: string
+          maxLength: 1
           description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
           enum:
             - A
@@ -460,11 +481,13 @@ components:
             name: CodigoVariacion
         causaVariacion:
           type: string
+          maxLength: 2
           description: "Codi variació inscripció al domicili."
           xml:
             name: CausaVariacion
         descripcion:
           type: string
+          maxLength: 80
           description: "Nom del nucli del domicili."
           xml:
             name: Descripcion
@@ -474,40 +497,42 @@ components:
     Direccion:
       type: object
       required:
-        - descripcion
+      - via
       properties:
-        codigoVariacion:
+        via:
+          $ref: "#/components/schemas/Via"
+        numero:
+          $ref: "#/components/schemas/Numero"
+        numeroSuperior:
+          $ref: "#/components/schemas/NumeroSuperior"
+        kmt:
           type: string
-          description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
-          enum:
-            - A
-            - M
+          maxLength: 7
+          description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
           xml:
-            name: CodigoVariacion
-        causaVariacion:
+            name: CodUnidadPoblacional
+        direccion:
+          $ref: "#/components/schemas/Direccion"
+        desde:
           type: string
-          description: "Codi variació inscripció al domicili."
+          maxLength: 10
+          format: date-time
+          description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
           xml:
-            name: CausaVariacion
-        descripcion:
+            name: Desde
+        motivoInscripcion:
+          $ref: "#/components/schemas/MotivoInscripcion"
+        hasta:
           type: string
-          description: "Nom del nucli del domicili."
+          maxLength: 10
+          format: date-time
+          description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
           xml:
-            name: Descripcion
+            name: Hasta
+        motivoBaja:
+          $ref: "#/components/schemas/MotivoBaja"
       xml:
         name: Direccion
-
-
-
-
-
-
-
-
-
-
-
-
 
 tags:
 - name: SCDHPAJUv3
