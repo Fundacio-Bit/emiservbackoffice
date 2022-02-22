@@ -61,7 +61,9 @@ paths:
                 $ref: '#/components/schemas/Resultado'
         400:
           description: Petició errònia
+
 components:
+
   schemas:
 
     Solicitud:
@@ -72,27 +74,29 @@ components:
         - titular
       properties:
         provinciaSolicitud:
-          type: string
-          maxLength: 2
-          description: "Codi de la Província a la que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
-          xml:
-            name: ProvinciaSolicitud
+          $ref: "#/components/schemas/ProvinciaSolicitud"
         municipioSolicitud:
-          type: string
-          maxLength: 3
-          description: "Codi del municipi de la província al que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
-          xml:
-            name: MunicipioSolicitud
+          $ref: "#/components/schemas/MunicipioSolicitud"
         titular:
           $ref: "#/components/schemas/Titular"
         numeroAnyos:
-          type: string
-          maxLength: 2
-          description: "Nombre d'anys cap a enrere a consultar per generar l'històric. Independentment del nombre d'anys cap a enrere informats a la consulta, l'any més antic que l'emissor tindrà en compte és l'any 1996 o el primer any del que disposi de dades en format digital. Si no es rep aquesta dada, l'emissor retornarà la informació del padró relativa només al moment de la consulta."
-          xml:
-            name: NumeroAnyos
+          $ref: "#/components/schemas/NumeroAnyos"
       xml:
         name: Solicitud
+
+    ProvinciaSolicitud:
+      type: string
+      maxLength: 2
+      description: "Codi de la Província a la que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
+      xml:
+        name: ProvinciaSolicitud
+
+    MunicipioSolicitud:
+      type: string
+      maxLength: 3
+      description: "Codi del municipi de la província al que es sol·liciten les dades de padró del titular de la consulta. Aquests camps aniran codificats amb les taules de codis de l'INE."
+      xml:
+        name: MunicipioSolicitud
 
     Titular:
       oneOf:
@@ -159,13 +163,6 @@ components:
       xml:
         name: DatosPersonales
 
-    NIA:
-      type: string
-      maxLength: 15
-      description: "Identificador únic a la base de dades de padró del titular de la sol·licitud."
-      xml:
-        name: NIA
-
     Nombre:
       type: string
       maxLength: 40
@@ -208,6 +205,20 @@ components:
       xml:
         name: FechaNacimiento
 
+    NIA:
+      type: string
+      maxLength: 15
+      description: "Identificador únic a la base de dades de padró del titular de la sol·licitud."
+      xml:
+        name: NIA
+
+    NumeroAnyos:
+      type: string
+      maxLength: 2
+      description: "Nombre d'anys cap a enrere a consultar per generar l'històric. Independentment del nombre d'anys cap a enrere informats a la consulta, l'any més antic que l'emissor tindrà en compte és l'any 1996 o el primer any del que disposi de dades en format digital. Si no es rep aquesta dada, l'emissor retornarà la informació del padró relativa només al moment de la consulta."
+      xml:
+        name: NumeroAnyos
+
     Resultado:
       type: object
       required:
@@ -233,12 +244,7 @@ components:
         historicoDomicilios:
           $ref: "#/components/schemas/HistoricoDomicilios"
         fechaExpedicion:
-          type: string
-          maxLength: 10
-          format: date-time
-          description: "Data en la que s'expedeixen les dades sol·licitades. Format:yyyy-MM-dd"
-          xml:
-            name: FechaExpedicion
+          $ref: "#/components/schemas/FechaExpedicion"
       xml:
         name: Resultado
 
@@ -254,6 +260,14 @@ components:
             $ref: "#/components/schemas/Domicilio"
       xml:
         name: HistoricoDomicilios
+
+    FechaExpedicion:
+      type: string
+      maxLength: 10
+      format: date-time
+      description: "Data en la que s'expedeixen les dades sol·licitades. Format:yyyy-MM-dd"
+      xml:
+        name: FechaExpedicion
 
     Domicilio:
       type: object
@@ -275,29 +289,15 @@ components:
         nucleo:
           $ref: "#/components/schemas/Nucleo"
         codUnidadPoblacional:
-          type: string
-          maxLength: 7
-          description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
-          xml:
-            name: CodUnidadPoblacional
+          $ref: "#/components/schemas/CodUnidadPoblacional"
         direccion:
           $ref: "#/components/schemas/Direccion"
         desde:
-          type: string
-          maxLength: 10
-          format: date-time
-          description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
-          xml:
-            name: Desde
+          $ref: "#/components/schemas/Desde"
         motivoInscripcion:
           $ref: "#/components/schemas/MotivoInscripcion"
         hasta:
-          type: string
-          maxLength: 10
-          format: date-time
-          description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
-          xml:
-            name: Hasta
+          $ref: "#/components/schemas/Hasta"
         motivoBaja:
           $ref: "#/components/schemas/MotivoBaja"
       xml:
@@ -436,6 +436,170 @@ components:
       xml:
         name: Nucleo
 
+    CodUnidadPoblacional:
+      type: string
+      maxLength: 7
+      description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
+      xml:
+        name: CodUnidadPoblacional
+
+    Direccion:
+      type: object
+      required:
+        - via
+      properties:
+        via:
+          $ref: "#/components/schemas/Via"
+        numero:
+          $ref: "#/components/schemas/Numero"
+        numeroSuperior:
+          $ref: "#/components/schemas/NumeroSuperior"
+        kmt:
+          $ref: "#/components/schemas/Kmt"
+        hmt:
+          $ref: "#/components/schemas/Hmt"
+        bloque:
+          $ref: "#/components/schemas/Bloque"
+        portal:
+          $ref: "#/components/schemas/Portal"
+        escalera:
+          $ref: "#/components/schemas/Escalera"
+        planta:
+          $ref: "#/components/schemas/Planta"
+        puerta:
+          $ref: "#/components/schemas/Puerta"
+        codPostal:
+          $ref: "#/components/schemas/CodPostal"        
+      xml:
+        name: Direccion
+
+    Via:
+      type: object
+      required:
+        - tipo
+        - nombre
+      properties:
+        codigo:
+          type: string
+          maxLength: 5
+          description: "Codi de la via."
+          xml:
+            name: Codigo
+        tipo:
+          type: string
+          maxLength: 5
+          description: "Tipus de la via."
+          xml:
+            name: Tipo
+        nombre:
+          type: string
+          maxLength: 70
+          description: "Nom de la via."
+          xml:
+            name: Nombre
+      xml:
+        name: Via
+    
+    Numero:
+      type: object
+      properties:
+        calificador:
+          type: string
+          maxLength: 1
+          description: "Qualificador número."
+          xml:
+            name: Calificador
+        valor:
+          type: string
+          maxLength: 4
+          description: "Valor número."
+          xml:
+            name: Valor
+      xml:
+        name: Numero
+
+    NumeroSuperior:
+      type: object
+      properties:
+        calificador:
+          type: string
+          maxLength: 1
+          description: "Qualificador número superior."
+          xml:
+            name: Calificador
+        valor:
+          type: string
+          maxLength: 4
+          description: "Valor número superior."
+          xml:
+            name: Valor
+      xml:
+        name: NumeroSuperior
+
+    Kmt:
+      type: string
+      maxLength: 3
+      description: "Quilòmetre del domicili del titular."
+      xml:
+        name: Kmt
+
+    Hmt:
+      type: string
+      maxLength: 1
+      description: "Hectòmetre del domicili del titular."
+      xml:
+        name: Hmt
+
+    Bloque:
+      type: string
+      maxLength: 2
+      description: "Bloc del domicili del titular."
+      xml:
+        name: Bloque
+
+    Portal:
+      type: string
+      maxLength: 2
+      description: "Portal del domicili del titular."
+      xml:
+        name: Portal
+
+    Escalera:
+      type: string
+      maxLength: 2
+      description: "Escala del domicili del titular."
+      xml:
+        name: Portal
+
+    Planta:
+      type: string
+      maxLength: 3
+      description: "Planta del domicili del titular."
+      xml:
+        name: Planta
+    
+    Puerta:
+      type: string
+      maxLength: 4
+      description: "Porta del domicili del titular."
+      xml:
+        name: Puerta
+    
+    CodPostal:
+      type: string
+      maxLength: 5
+      description: "Codi postal del domicili del titular."
+      xml:
+        name: CodPostal
+
+    Desde:
+     type: string
+     maxLength: 10
+     format: date-time
+     description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
+     xml:
+       name: Desde
+
     MotivoInscripcion:
       type: object
       required:
@@ -465,6 +629,14 @@ components:
       xml:
         name: MotivoInscripcion
 
+    Hasta:
+      type: string
+      maxLength: 10
+      format: date-time
+      description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
+      xml:
+       name: Hasta
+
     MotivoBaja:
       type: object
       required:
@@ -475,7 +647,7 @@ components:
           maxLength: 1
           description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
           enum:
-            - A
+            - B
             - M
           xml:
             name: CodigoVariacion
@@ -493,46 +665,6 @@ components:
             name: Descripcion
       xml:
         name: MotivoBaja
-
-    Direccion:
-      type: object
-      required:
-      - via
-      properties:
-        via:
-          $ref: "#/components/schemas/Via"
-        numero:
-          $ref: "#/components/schemas/Numero"
-        numeroSuperior:
-          $ref: "#/components/schemas/NumeroSuperior"
-        kmt:
-          type: string
-          maxLength: 7
-          description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
-          xml:
-            name: CodUnidadPoblacional
-        direccion:
-          $ref: "#/components/schemas/Direccion"
-        desde:
-          type: string
-          maxLength: 10
-          format: date-time
-          description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
-          xml:
-            name: Desde
-        motivoInscripcion:
-          $ref: "#/components/schemas/MotivoInscripcion"
-        hasta:
-          type: string
-          maxLength: 10
-          format: date-time
-          description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
-          xml:
-            name: Hasta
-        motivoBaja:
-          $ref: "#/components/schemas/MotivoBaja"
-      xml:
-        name: Direccion
 
 tags:
 - name: SCDHPAJUv3
