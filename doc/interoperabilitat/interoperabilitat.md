@@ -40,6 +40,34 @@
 
 ## Serveis d'interoperabilitat
 
-* [Serveis que es poden consultar](http://www.caib.es/sites/interoperabilitat/ca/serveis_dintermediacio_de_dades/)
+1. [Serveis que es poden consultar](http://www.caib.es/sites/interoperabilitat/ca/serveis_dintermediacio_de_dades/)
+
+2. Serveis cedits per la CAIB
+
+    * Serveis de consulta de dades històriques de padró (SCDHPAJU)
+        
+        [Documentació del servei SCDHPAJU al Portal Interoperabilitat](http://www.caib.es/sites/interoperabilitat/ca/servei_propi_scdhpaju-64436/)
+
+
+    * Serveis de consulta de dades de convivència (SCDCPAJU)
+
+        [Documentació del servei SCDCPAJU al Portal Interoperabilitat](http://www.caib.es/sites/interoperabilitat/ca/servei_propi_scdcpaju-64433/)
+
+    * Servei de verificació i consulta de dades de família nombrosa (SVDSCTFNWS01)
+
+        [Documentació del servei SVDSCTFNWS01 al Portal Interoperabilitat](http://www.caib.es/sites/interoperabilitat/ca/servei_propi_svdsctfnws01-79259/)
+
+
+## Documentació per al cedent
+
+|Servei|Document|Enllaç|
+|:--------|-------------:|:--|
+|SCDHPAJU|Manual del cedent|[Manual](./SCDHPAJUv3/cedent/ManualCedentPadroHistoric.odt)|
+|SCDHPAJU|API del cedent|[API](./SCDHPAJUv3/cedent/openapi.yaml)|
+|SCDCPAJU|Manual del cedent||
+|SCDCPAJU|API del cedent||
+|SVDSCTFNWS01|Manual del cedent||
+|SVDSCTFNWS01|API del cedent||
+
 
 
