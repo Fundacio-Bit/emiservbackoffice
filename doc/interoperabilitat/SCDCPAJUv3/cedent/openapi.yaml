@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: SCDHPAJUv3
+  title: SCDCPAJUv3
   # CommonMark syntax allowed here
-  description: '# This is a SCDHPAJUv3 server spec
+  description: '# This is a SCDCPAJUv3 server spec
 
                 You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). For this sample, you can use the api key `special-key` to test the authorization filters.'
   termsOfService: https://www.caib.es/sites/interoperabilitat/es/plataforma_de_interoperabilidad-55365/
@@ -34,10 +34,10 @@ servers:
         # open meaning there is the opportunity to use special base paths as assigned by the provider, default is `v2`
         default: /emiservbackofficeapi/externa/services
 paths:
-  /SCDHPAJUv3/peticionSincrona:
+  /SCDCPAJUv3/peticionSincrona:
     post:
       tags:
-      - SCDHPAJUv3
+      - SCDCPAJUv3
       summary: Realitza una consulta al cedent
       description: Realitza una consulta al cedent
       operationId: peticionSincrona
@@ -79,8 +79,6 @@ components:
           $ref: "#/components/schemas/MunicipioSolicitud"
         titular:
           $ref: "#/components/schemas/Titular"
-        numeroAnyos:
-          $ref: "#/components/schemas/NumeroAnyos"
       xml:
         name: Solicitud
 
@@ -104,8 +102,6 @@ components:
           $ref: "#/components/schemas/Documentacion"
         - datosPersonales:
           $ref: "#/components/schemas/DatosPersonales"
-        - nia:
-          $ref: "#/components/schemas/NIA"
       xml:
         name: Titular
 
@@ -205,61 +201,95 @@ components:
       xml:
         name: FechaNacimiento
 
-    NIA:
-      type: string
-      maxLength: 15
-      description: "Identificador únic a la base de dades de padró del titular de la sol·licitud."
-      xml:
-        name: NIA
-
-    NumeroAnyos:
-      type: string
-      maxLength: 2
-      description: "Nombre d'anys cap a enrere a consultar per generar l'històric. Independentment del nombre d'anys cap a enrere informats a la consulta, l'any més antic que l'emissor tindrà en compte és l'any 1996 o el primer any del que disposi de dades en format digital. Si no es rep aquesta dada, l'emissor retornarà la informació del padró relativa només al moment de la consulta."
-      xml:
-        name: NumeroAnyos
-
     Resultado:
       type: object
       required:
-      - nombre
-      - apellido1
-      - historicoDomicilios
+      - claveHojaPadronal
+      - domicilio
+      - personas
       - fechaExpedicion
       properties:
-        nombre:
-          $ref: "#/components/schemas/Nombre"
-        particula1:
-          $ref: "#/components/schemas/Particula1"
-        apellido1:
-          $ref: "#/components/schemas/Apellido1"
-        particula2:
-          $ref: "#/components/schemas/Particula2"
-        apellido2:
-          $ref: "#/components/schemas/Apellido2"
-        fechaNacimiento:
-          $ref: "#/components/schemas/FechaNacimiento"
-        documentacion:
-          $ref: "#/components/schemas/Documentacion"
-        historicoDomicilios:
-          $ref: "#/components/schemas/HistoricoDomicilios"
+        claveHojaPadronal:
+          $ref: "#/components/schemas/ClaveHojaPadronal"
+        domicilio:
+          $ref: "#/components/schemas/Domicilio"
+        personas:
+          $ref: "#/components/schemas/Personas"
         fechaExpedicion:
           $ref: "#/components/schemas/FechaExpedicion"
       xml:
         name: Resultado
 
-    HistoricoDomicilios:
+    ClaveHojaPadronal:
+      type: object
+      required:
+        - distrito
+        - seccion
+        - hoja
+      properties:
+        distrito:
+          type: string
+          maxLength: 3
+          description: "Dada districte del domicili al padró municipal."
+          xml:
+            name: Distrito
+        seccion:
+          type: string
+          maxLength: 3
+          description: "Dada secció del domicili al padró municipal."
+          xml:
+            name: Seccion
+        hoja:
+          type: string
+          maxLength: 10
+          description: "Dada fulla d'inscripció del domicili al padró municipal."
+          xml:
+            name: Hoja
+      xml:
+        name: ClaveHojaPadronal
+
+    Direccion:
+      type: object
+      required:
+        - via
+      properties:
+        via:
+          $ref: "#/components/schemas/Via"
+        numero:
+          $ref: "#/components/schemas/Numero"
+        numeroSuperior:
+          $ref: "#/components/schemas/NumeroSuperior"
+        kmt:
+          $ref: "#/components/schemas/Kmt"
+        hmt:
+          $ref: "#/components/schemas/Hmt"
+        bloque:
+          $ref: "#/components/schemas/Bloque"
+        portal:
+          $ref: "#/components/schemas/Portal"
+        escalera:
+          $ref: "#/components/schemas/Escalera"
+        planta:
+          $ref: "#/components/schemas/Planta"
+        puerta:
+          $ref: "#/components/schemas/Puerta"
+        codPostal:
+          $ref: "#/components/schemas/CodPostal"
+      xml:
+        name: Direccion
+
+    Personas:
       type: object
       properties:
         domicilio:
           type: array
           xml:
-            name: Domicilio
+            name: Persona
             wrapped: false
           items:
-            $ref: "#/components/schemas/Domicilio"
+            $ref: "#/components/schemas/Persona"
       xml:
-        name: HistoricoDomicilios
+        name: Personas
 
     FechaExpedicion:
       type: string
@@ -443,7 +473,7 @@ components:
       xml:
         name: CodUnidadPoblacional
 
-    Direccion:
+    Domicilio:
       type: object
       required:
         - via
@@ -469,9 +499,9 @@ components:
         puerta:
           $ref: "#/components/schemas/Puerta"
         codPostal:
-          $ref: "#/components/schemas/CodPostal"
+          $ref: "#/components/schemas/CodPostal"        
       xml:
-        name: Direccion
+        name: Domicilio
 
     Via:
       type: object
@@ -667,7 +697,7 @@ components:
         name: MotivoBaja
 
 tags:
-- name: SCDHPAJUv3
+- name: SCDCPAJUv3
   description: '### Consultes al padró històric'
   externalDocs:
     description: 'Manual del cedent'
