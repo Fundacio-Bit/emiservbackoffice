@@ -248,7 +248,7 @@ components:
       xml:
         name: ClaveHojaPadronal
 
-    Direccion:
+    Domicilio:
       type: object
       required:
         - via
@@ -276,7 +276,7 @@ components:
         codPostal:
           $ref: "#/components/schemas/CodPostal"
       xml:
-        name: Direccion
+        name: Domicilio
 
     Personas:
       type: object
