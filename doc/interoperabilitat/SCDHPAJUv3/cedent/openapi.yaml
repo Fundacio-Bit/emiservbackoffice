@@ -671,7 +671,7 @@ tags:
   description: '### Consultes al padró històric'
   externalDocs:
     description: 'Manual del cedent'
-    url: https://github.com/Fundacio-Bit/emiservbackoffice/blob/main/doc/ManualCedentPadroHistoric.odt
+    url: https://github.com/Fundacio-Bit/emiservbackoffice/blob/main/doc/SCDHPAJUv3/cedent/ManualCedentPadroHistoric.odt
 externalDocs:
   description: "Documents d'interoperabilitat"
   url: http://interoperabilitat.caib.es
