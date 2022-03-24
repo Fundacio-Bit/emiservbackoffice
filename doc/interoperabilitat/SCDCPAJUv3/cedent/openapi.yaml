@@ -131,12 +131,6 @@ components:
           description: "Valor del document del titular sense cap espai en blanc."
           xml:
             name: Valor
-        numSoporte:
-          type: string
-          maxLength: 9
-          description: ""
-          xml:
-            name: NumSoporte
       xml:
         name: Documentacion
 
