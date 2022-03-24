@@ -61,6 +61,10 @@ paths:
                 $ref: '#/components/schemas/Resultado'
         400:
           description: Petició errònia
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
 
 components:
 
@@ -665,7 +669,16 @@ components:
             name: Descripcion
       xml:
         name: MotivoBaja
-
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
 tags:
 - name: SCDHPAJUv3
   description: '### Consultes al padró històric'
