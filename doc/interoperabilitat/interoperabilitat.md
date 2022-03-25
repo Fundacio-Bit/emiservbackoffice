@@ -64,7 +64,7 @@
 |:--------|-------------:|:--|
 |SCDHPAJU|Manual del cedent|[Manual](./SCDHPAJUv3/cedent/ManualCedentPadroHistoric.odt)|
 |SCDHPAJU|API del cedent|[API](./SCDHPAJUv3/cedent/openapi.yaml)|
-|SCDCPAJU|Manual del cedent||
+|SCDCPAJU|Manual del cedent|[Manual](./SCDCPAJUv3/cedent/ManualCedentPadroConvivencia.odt)|
 |SCDCPAJU|API del cedent|[API](./SCDCPAJUv3/cedent/openapi.yaml)|
 |SVDSCTFNWS01|Manual del cedent||
 |SVDSCTFNWS01|API del cedent||
