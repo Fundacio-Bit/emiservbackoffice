@@ -2,15 +2,20 @@ package es.caib.emiservbackoffice.ws.impl;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Atributos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.ConfirmacionPeticion;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Consentimiento;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.EmiservBackoffice;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Emisor;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Funcionario;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Peticion;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Procedimiento;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Respuesta;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Solicitante;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudRespuesta;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SolicitudTransmision;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Solicitudes;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Titular;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmision;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
@@ -55,6 +60,64 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
+
+        if (peticion==null) return null;
+        
+        Atributos peticionAtributos = peticion.getAtributos();
+        
+        Estado peticionAtributosEstado = peticionAtributos.getEstado();
+        
+        Solicitudes peticionSolicitudes = peticion.getSolicitudes();
+        
+        if (peticionSolicitudes==null) return null;
+        
+        DatosGenericos peticionDatosGenericos;
+        Object peticionDatosEspecificos;
+        
+        Emisor peticionEmisor;
+        Solicitante peticionSolicitante;
+        Titular peticionTitular;
+        Transmision peticionTransmision;
+        
+        Consentimiento peticionSolicitanteConsentimiento;
+        Funcionario peticionSolicitanteFuncionario;
+        Procedimiento peticionSolicitanteProcedimiento;
+        
+        TipoDocumentacion peticionTitularTipoDocumentacion;
+        
+        
+        ArrayList<SolicitudTransmision> peticionSolicitudesSolicitudTransmision = peticionSolicitudes.getSolicitudTransmision();
+        
+        if (peticionSolicitudesSolicitudTransmision==null) return null;
+        
+        for (SolicitudTransmision peticionSolicitudTransmision : peticionSolicitudesSolicitudTransmision) {
+
+            peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
+            peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
+
+            peticionEmisor = peticionDatosGenericos.getEmisor();
+            peticionSolicitante = peticionDatosGenericos.getSolicitante();
+            peticionTitular = peticionDatosGenericos.getTitular();
+            peticionTransmision = peticionDatosGenericos.getTransmision();
+
+            peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
+            peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
+            peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
+
+            peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
+            
+            
+            
+
+        }
+        
+        Atributos respuestaAtributos = new Atributos();
+        
+        respuestaAtributos.setCodigoCertificado(peticionAtributos.getCodigoCertificado());
+        respuestaAtributos.setIdPeticion(peticionAtributos.getIdPeticion());
+        
+        
+        
         
         Respuesta respuesta = new Respuesta();
         
@@ -62,45 +125,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
         List<TransmisionDatos> listRespuestaTransmisionDatos = new ArrayList<TransmisionDatos>();
         
-        
-        
-        Atributos atributos = peticion.getAtributos();
-        
-        String codigoCertificado = atributos.getCodigoCertificado();
-        String idPeticion = atributos.getIdPeticion();
-        String numElementos = atributos.getNumElementos();
-        String timeStamp = atributos.getTimeStamp();
-        
-        Solicitudes solicitudes = peticion.getSolicitudes();
-        ArrayList<SolicitudTransmision> listSolicitudTransmision = solicitudes.getSolicitudTransmision();
-        
-        for (SolicitudTransmision solicitudTransmision:listSolicitudTransmision){
-            
-            DatosGenericos datosGenericos = solicitudTransmision.getDatosGenericos();
-            
-            Emisor emisor = datosGenericos.getEmisor();
-            
-            String nifEmisor = emisor.getNifEmisor();
-            String nombreEmisor = emisor.getNombreEmisor();
-            
-            Solicitante solicitante = datosGenericos.getSolicitante();
-            
-            Titular titular = datosGenericos.getTitular();
-            Transmision transmision = datosGenericos.getTransmision();
-            
-            
-            break;
-        }
-        
-        
-        
-        
-        
       
-        
-        
-        
-        
         
         return respuesta;
     }
