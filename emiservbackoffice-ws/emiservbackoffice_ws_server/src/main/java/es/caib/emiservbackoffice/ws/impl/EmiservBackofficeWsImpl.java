@@ -20,6 +20,10 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Titular;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmision;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
+
+import es.caib.emiserv.logic.intf.dto.EmisorDto;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
+
 //import es.caib.emiservbackoffice.service.facade.EmiservBackofficeServiceFacade;
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
@@ -60,10 +64,18 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
     @Override
     public Respuesta peticionSincrona(Peticion peticion) {
-
-        if (peticion==null) return null;
+        
+        Respuesta respuesta = new Respuesta();
+        
+        if (peticion==null) {
+            peticionErronea("0401",  "Peticion nula");
+        }
         
         Atributos peticionAtributos = peticion.getAtributos();
+        
+        if (peticionAtributos==null) {
+            peticionErronea("0401",  "Falta camp atributs");
+        }
         
         Estado peticionAtributosEstado = peticionAtributos.getEstado();
         
@@ -71,61 +83,58 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
         if (peticionSolicitudes==null) return null;
         
-        DatosGenericos peticionDatosGenericos;
-        Object peticionDatosEspecificos;
-        
-        Emisor peticionEmisor;
-        Solicitante peticionSolicitante;
-        Titular peticionTitular;
-        Transmision peticionTransmision;
-        
-        Consentimiento peticionSolicitanteConsentimiento;
-        Funcionario peticionSolicitanteFuncionario;
-        Procedimiento peticionSolicitanteProcedimiento;
-        
-        TipoDocumentacion peticionTitularTipoDocumentacion;
-        
-        
-        ArrayList<SolicitudTransmision> peticionSolicitudesSolicitudTransmision = peticionSolicitudes.getSolicitudTransmision();
+        List<SolicitudTransmision> peticionSolicitudesSolicitudTransmision = peticionSolicitudes.getSolicitudTransmision();
         
         if (peticionSolicitudesSolicitudTransmision==null) return null;
         
+        ArrayList<TransmisionDatos> respuestaTransmisionesTransmisionDatos = new ArrayList<TransmisionDatos>();
+        
         for (SolicitudTransmision peticionSolicitudTransmision : peticionSolicitudesSolicitudTransmision) {
+        
+            DatosGenericos peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
+            Object peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
 
-            peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
-            peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
+            Emisor peticionEmisor = peticionDatosGenericos.getEmisor();
+            Solicitante peticionSolicitante = peticionDatosGenericos.getSolicitante();
+            Titular peticionTitular = peticionDatosGenericos.getTitular();
+            Transmision peticionTransmision = peticionDatosGenericos.getTransmision();
 
-            peticionEmisor = peticionDatosGenericos.getEmisor();
-            peticionSolicitante = peticionDatosGenericos.getSolicitante();
-            peticionTitular = peticionDatosGenericos.getTitular();
-            peticionTransmision = peticionDatosGenericos.getTransmision();
+            Consentimiento peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
+            Funcionario peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
+            Procedimiento peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
 
-            peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
-            peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
-            peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
-
-            peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
+            TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
             
+            TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
+            //ID
+            //Datos genericos
+            //Datos especificos
+            respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
-            
-
         }
+        
+        Transmisiones respuestaTransmisiones = new Transmisiones();
+        respuestaTransmisiones.setTransmisionDatos(respuestaTransmisionesTransmisionDatos);
+
+        respuesta.setTransmisiones(respuestaTransmisiones);
         
         Atributos respuestaAtributos = new Atributos();
         
         respuestaAtributos.setCodigoCertificado(peticionAtributos.getCodigoCertificado());
+        
+        Estado respuestaAtributosEstado  = new Estado();
+        
+        respuestaAtributosEstado.setCodigoEstado(peticionAtributosEstado.getCodigoEstado());
+        respuestaAtributosEstado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
+        respuestaAtributosEstado.setLiteralError(peticionAtributosEstado.getLiteralError());
+        respuestaAtributosEstado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
+          
+        respuestaAtributos.setEstado(respuestaAtributosEstado);
         respuestaAtributos.setIdPeticion(peticionAtributos.getIdPeticion());
+        respuestaAtributos.setNumElementos(peticionAtributos.getNumElementos());
+        respuestaAtributos.setTimeStamp(peticionAtributos.getTimeStamp());
         
-        
-        
-        
-        Respuesta respuesta = new Respuesta();
-        
-        Transmisiones respuestaTransmisiones = new Transmisiones();
-        
-        List<TransmisionDatos> listRespuestaTransmisionDatos = new ArrayList<TransmisionDatos>();
-        
-      
+        respuesta.setAtributos(respuestaAtributos);
         
         return respuesta;
     }
@@ -140,4 +149,21 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+    Respuesta peticionErronea(String codigoEstado, String literalError) {
+
+        Respuesta respuesta = new Respuesta();
+
+        SoapFaultAtributos soapFaultAtributos = new SoapFaultAtributos();
+        Atributos atributos = soapFaultAtributos.getAtributos();
+        Estado estado = new Estado();
+        estado.setCodigoEstado(codigoEstado);
+        estado.setLiteralError(literalError);
+        atributos.setEstado(estado);
+        respuesta.setAtributos(atributos);
+        
+        return respuesta;
+        
+    }
+    
 }
