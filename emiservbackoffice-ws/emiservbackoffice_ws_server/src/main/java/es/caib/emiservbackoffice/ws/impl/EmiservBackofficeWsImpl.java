@@ -105,10 +105,19 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
             TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
             
+            
+            
+            
+            
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             //ID
             //Datos genericos
             //Datos especificos
+            
+            respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
+            
+            
+            
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
         }
