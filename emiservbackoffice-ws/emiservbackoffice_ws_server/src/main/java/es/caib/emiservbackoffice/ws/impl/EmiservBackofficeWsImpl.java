@@ -21,7 +21,6 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmision;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
 
-import es.caib.emiserv.logic.intf.dto.EmisorDto;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
 
 //import es.caib.emiservbackoffice.service.facade.EmiservBackofficeServiceFacade;
@@ -29,7 +28,6 @@ import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
@@ -49,6 +47,17 @@ import javax.jws.soap.SOAPBinding;
         targetNamespace = "http://caib.es/emiserv/backoffice")
 public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackoffice {
 
+    public static final String TRAMITADA = "0003";
+    public static final String DOS_O_MES = "0232";
+    public static final String NO_IDENTIFICAT = "0233";
+    public static final String NOT_DISPONIBLE = "0238";
+    public static final String SCHEMA_INCORRECTE = "0401";
+    public static final String FALTA_SOLICITUD = "0401";
+    public static final String FALTA_ATRIBUTOS = "0401";
+    public static final String MULTIPLES_SOLICITUDS = "0415";
+    public static final String ERROR_BACKOFFICE = "0242";
+    public static final String ERROR_CEDENT = "0242";
+    
     public static final String NAME = "EmiservBackoffice";
 
     public static final String NAME_WS = NAME + "Ws";
@@ -68,29 +77,44 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         Respuesta respuesta = new Respuesta();
         
         if (peticion==null) {
-            peticionErronea("0401",  "Peticion nula");
+            respuesta = peticionErronea(SCHEMA_INCORRECTE,  "Peticion nula");
+            return respuesta;
         }
         
         Atributos peticionAtributos = peticion.getAtributos();
         
         if (peticionAtributos==null) {
-            peticionErronea("0401",  "Falta camp atributs");
+            respuesta = peticionErronea(FALTA_ATRIBUTOS,  "Falta camp atributs");
+            return respuesta;
         }
         
         Estado peticionAtributosEstado = peticionAtributos.getEstado();
         
         Solicitudes peticionSolicitudes = peticion.getSolicitudes();
         
-        if (peticionSolicitudes==null) return null;
+        if (peticionSolicitudes==null) {
+            respuesta = peticionErronea(FALTA_SOLICITUD,  "El número de sol·licituds ha de ser major que 0");
+            return respuesta;
+        }
         
         List<SolicitudTransmision> peticionSolicitudesSolicitudTransmision = peticionSolicitudes.getSolicitudTransmision();
         
-        if (peticionSolicitudesSolicitudTransmision==null) return null;
+        if (peticionSolicitudesSolicitudTransmision==null) {
+            respuesta = peticionErronea(FALTA_SOLICITUD,  "El número de sol·licituds ha de ser major que 0");
+            return respuesta;
+        }
+        
+        if (peticionSolicitudesSolicitudTransmision.size()>1){
+            respuesta = peticionErronea(MULTIPLES_SOLICITUDS,  "El número de sol·licituds no pot ser major que 1");
+            return respuesta;
+        }
         
         ArrayList<TransmisionDatos> respuestaTransmisionesTransmisionDatos = new ArrayList<TransmisionDatos>();
         
         for (SolicitudTransmision peticionSolicitudTransmision : peticionSolicitudesSolicitudTransmision) {
         
+            String peticionSolicitudTransmisionId = peticionSolicitudTransmision.getId();
+            
             DatosGenericos peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
             Object peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
 
@@ -105,18 +129,23 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
             TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
             
-            
-            
-            
-            
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
-            //ID
-            //Datos genericos
-            //Datos especificos
+            
+            respuestaTransmisionDatos.setId(peticionSolicitudTransmisionId);
+            
+            DatosGenericos respuestaDatosGenericos = new DatosGenericos();
+            
+            Emisor respuestaEmisor = peticionEmisor;
+            Solicitante respuestaSolicitante = peticionSolicitante;
+            Titular respuestaTitular = peticionTitular;
+            Transmision respuestaTransmision = peticionTransmision;
+            
+            respuestaDatosGenericos.setEmisor(respuestaEmisor);
+            respuestaDatosGenericos.setSolicitante(respuestaSolicitante);
+            respuestaDatosGenericos.setTitular(respuestaTitular);
+            respuestaDatosGenericos.setTransmision(respuestaTransmision);
             
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
-            
-            
             
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
@@ -170,6 +199,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         estado.setLiteralError(literalError);
         atributos.setEstado(estado);
         respuesta.setAtributos(atributos);
+        
+        log.info("EmiservBackofficeWsImpl :: " + "codigoEstado = " + codigoEstado + "literalError = " + literalError);
         
         return respuesta;
         
