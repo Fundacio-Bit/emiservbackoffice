@@ -104,12 +104,9 @@ components:
 
     Titular:
       oneOf:
-        - documentacion:
-          $ref: "#/components/schemas/Documentacion"
-        - datosPersonales:
-          $ref: "#/components/schemas/DatosPersonales"
-        - nia:
-          $ref: "#/components/schemas/NIA"
+        - $ref: "#/components/schemas/Documentacion"
+        - $ref: "#/components/schemas/DatosPersonales"
+        - $ref: "#/components/schemas/NIA"
       xml:
         name: Titular
 
