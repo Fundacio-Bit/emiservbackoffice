@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>emiservbackoffice</artifactId>
+        <groupId>es.caib.emiservbackoffice</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>emiservbackoffice-cedent-SCDCPAJUv3</artifactId>
+
+    <packaging>war</packaging>
+    <name>EmiservBackoffice - CEDENT - SCDCPAJUv3</name>
+    <description>Mòdul web d'exemple d'integració amb el servei SCDCPAJUv3 del CEDENT</description>
+
+    <properties>
+        <cedent-client.version>1.0.0</cedent-client.version>
+    </properties>
+
+    <dependencies>
+        <!-- Especificacions i llibreries proporcionades per JBoss -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-8.0</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!--
+        Llibreries per emprar l'api de pinbal.
+        -->
+        <dependency>
+            <groupId>es.caib.scsp</groupId>
+            <artifactId>SCDCPAJUv3-api-cedent-client</artifactId>
+            <version>${cedent-client.version}</version>
+            <exclusions>
+                <!-- evitar conflicte amb JAX-RS de JBoss -->
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>jsr311-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Dependències de test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

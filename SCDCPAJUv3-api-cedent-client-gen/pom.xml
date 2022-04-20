@@ -5,7 +5,7 @@
     <groupId>es.caib.scsp</groupId>
     <artifactId>SCDCPAJUv3-api-cedent-client-gen</artifactId>
     <packaging>jar</packaging>
-    <name>SCDCPAJUv3 - API Rest - Cedent - Client -Generador</name>
+    <name>SCDCPAJUv3 - API Rest - Cedent - Client - Generador</name>
     <version>1.0.0</version>
     <prerequisites>
         <maven>3.6.3</maven>

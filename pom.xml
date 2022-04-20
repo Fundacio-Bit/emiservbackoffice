@@ -423,6 +423,6 @@
         <module>emiservbackoffice-ws</module>
         <module>emiservbackoffice-ear</module>
         <module>emiservbackoffice-pinbal</module>
-        <module>SCDCPAJUv3-api-cedent-client</module>
+        <module>emiservbackoffice-cedent-SCDCPAJUv3</module>
     </modules>
 </project>
