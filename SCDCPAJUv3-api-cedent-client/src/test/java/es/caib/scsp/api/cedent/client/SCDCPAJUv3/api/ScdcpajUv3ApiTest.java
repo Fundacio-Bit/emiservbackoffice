@@ -65,10 +65,18 @@ public class ScdcpajUv3ApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("https://{username}.{domain}:{port}/{basePath}", ScdcpajUv3Api.class, providers);
-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
+        // Replace 'user' and 'password' by the actual values
+        String userpass = "pinbal".concat(":").concat("");
+        String authorizationHeader = "Basic "
+        + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
         
-        ClientConfiguration config = WebClient.getConfig(client); 
+        
+        api = JAXRSClientFactory.create("https://10.0.0.45:8580/pinbal-services/rest/SCDCPAJUv3/peticionSincrona", ScdcpajUv3Api.class, providers);
+        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).header(authorizationHeader);
+        
+        ClientConfiguration config = WebClient.getConfig(client);
+        System.out.println(authorizationHeader);
+        System.out.println(client.getHeaders().keySet().toArray()[0].toString());
     }
 
     /**
@@ -83,7 +91,7 @@ public class ScdcpajUv3ApiTest {
     public void peticionSincronaTest() {
         Solicitud body = null;
         //Resultado response = api.peticionSincrona(body);
-        //assertNotNull(response);
+        assertNotNull(body);
         // TODO: test validations
         
         

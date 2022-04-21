@@ -32,21 +32,21 @@ public class Configuracio {
 
     // Dades de la petició
 
-//    @Inject
-//    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.organismeSolicitant")
-//    private String organismeSolicitant;
-//
-//    @Inject
-//    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.unitatTramitadora")
-//    private String unitatTramitadora;
-//
-//    @Inject
-//    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.codiProcediment")
-//    private String codiProcediment;
-//
-//    @Inject
-//    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.finalitat")
-//    private String finalitat;
+    @Inject
+    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.organismeSolicitant")
+    private String organismeSolicitant;
+
+    @Inject
+    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.unitatTramitadora")
+    private String unitatTramitadora;
+
+    @Inject
+    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.codiProcediment")
+    private String codiProcediment;
+
+    @Inject
+    @ConfigProperty(name = "es.caib.emiservbackoffice.cedent.SCDCPAJUv3.finalitat")
+    private String finalitat;
 
 
 
@@ -62,19 +62,19 @@ public class Configuracio {
         return secret;
     }
 
-//    public String getOrganismeSolicitant() {
-//        return organismeSolicitant;
-//    }
-//
-//    public String getUnitatTramitadora() {
-//        return unitatTramitadora;
-//    }
-//
-//    public String getCodiProcediment() {
-//        return codiProcediment;
-//    }
-//
-//    public String getFinalitat() {
-//        return finalitat;
-//    }
+    public String getOrganismeSolicitant() {
+        return organismeSolicitant;
+    }
+
+    public String getUnitatTramitadora() {
+        return unitatTramitadora;
+    }
+
+    public String getCodiProcediment() {
+        return codiProcediment;
+    }
+
+    public String getFinalitat() {
+        return finalitat;
+    }
 }
