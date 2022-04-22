@@ -51,7 +51,7 @@ public class SCDCPAJUv3Client {
         
         
         clientScdcpajUv3Api = JAXRSClientFactory.create(baseURI, ScdcpajUv3Api.class, providers);
-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(clientScdcpajUv3Api).header(authorizationHeader);
+        org.apache.cxf.jaxrs.client.Client client = WebClient.client(clientScdcpajUv3Api).authorization(authorizationHeader);
         
         ClientConfiguration config = WebClient.getConfig(client); 
         

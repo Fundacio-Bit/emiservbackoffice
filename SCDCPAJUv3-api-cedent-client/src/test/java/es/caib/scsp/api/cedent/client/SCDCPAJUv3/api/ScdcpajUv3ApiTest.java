@@ -72,11 +72,13 @@ public class ScdcpajUv3ApiTest {
         
         
         api = JAXRSClientFactory.create("https://10.0.0.45:8580/pinbal-services/rest/SCDCPAJUv3/peticionSincrona", ScdcpajUv3Api.class, providers);
-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).header(authorizationHeader);
+        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).authorization(authorizationHeader);
         
         ClientConfiguration config = WebClient.getConfig(client);
         System.out.println(authorizationHeader);
-        System.out.println(client.getHeaders().keySet().toArray()[0].toString());
+        System.out.println(client.getHeaders().entrySet().toString());
+        
+        
     }
 
     /**
