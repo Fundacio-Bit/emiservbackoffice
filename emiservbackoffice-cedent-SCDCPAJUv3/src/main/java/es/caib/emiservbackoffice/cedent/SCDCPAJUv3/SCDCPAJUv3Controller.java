@@ -25,19 +25,19 @@ import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
  *
  * @author areus
  */
-@Named("sviController")
+@Named("SCDCPAJUv3Controller")
 @ViewScoped
-public class ServeiVerificacioIdentitatController implements Serializable {
+public class SCDCPAJUv3Controller implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(ServeiVerificacioIdentitatController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SCDCPAJUv3Controller.class);
 
     /**
      * Injecta l'API del client del servei de verificació d'identitat
      */
     @Inject
-    private ClientServeiVerificacioIdentitat clientSvi;
+    private SCDCPAJUv3Client clientSCDCPAJUv3;
 
     @Inject
     private Configuracio configuracio;
@@ -103,35 +103,36 @@ public class ServeiVerificacioIdentitatController implements Serializable {
         }
     }
 
-    /**
-     * Cridat per obtenir el justificant de la petició en curs.
-     * @throws IOException si es produeix un error de comunicació
-     */
-    public void descarregarJustificant() throws IOException {
-        if (resposta == null) {
-            throw new IllegalStateException("No hi ha resposta");
-        }
-
-        String idPeticio = resposta.getAtributos().getIdPeticion();
-        ScspJustificante justificant = clientSvi.getJustificant(idPeticio);
-        download(justificant.getNom(), justificant.getContentType(), justificant.getContingut());
-    }
-
-    /**
-     * Mètode d'utilitat per descarregar un fitxer
-     *
-     * @param filename Nom del fitxer
-     * @param mimetype tipus mime pel content-type
-     * @param content contingut del fitxer
-     * @throws IOException Si es produeix un error I/O
-     */
-    private void download(String filename, String mimetype, byte[] content) throws IOException {
-        ExternalContext ec = context.getExternalContext();
-        ec.responseReset(); // Hem de resetejar la reposta per si hi ha cap capçalera o res.
-        ec.setResponseContentType(mimetype);
-        ec.setResponseContentLength(content.length);
-        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-        ec.getResponseOutputStream().write(content);
-        context.responseComplete(); // Important perquè JSF no intenti seguir processant la resposta.
-    }
+    
+//    /**
+//     * Cridat per obtenir el justificant de la petició en curs.
+//     * @throws IOException si es produeix un error de comunicació
+//     */
+//    public void descarregarJustificant() throws IOException {
+//        if (resposta == null) {
+//            throw new IllegalStateException("No hi ha resposta");
+//        }
+//
+//        String idPeticio = resposta.getAtributos().getIdPeticion();
+//        ScspJustificante justificant = clientSvi.getJustificant(idPeticio);
+//        download(justificant.getNom(), justificant.getContentType(), justificant.getContingut());
+//    }
+//
+//    /**
+//     * Mètode d'utilitat per descarregar un fitxer
+//     *
+//     * @param filename Nom del fitxer
+//     * @param mimetype tipus mime pel content-type
+//     * @param content contingut del fitxer
+//     * @throws IOException Si es produeix un error I/O
+//     */
+//    private void download(String filename, String mimetype, byte[] content) throws IOException {
+//        ExternalContext ec = context.getExternalContext();
+//        ec.responseReset(); // Hem de resetejar la reposta per si hi ha cap capçalera o res.
+//        ec.setResponseContentType(mimetype);
+//        ec.setResponseContentLength(content.length);
+//        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+//        ec.getResponseOutputStream().write(content);
+//        context.responseComplete(); // Important perquè JSF no intenti seguir processant la resposta.
+//    }
 }

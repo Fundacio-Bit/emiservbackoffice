@@ -92,8 +92,8 @@ public class ScdcpajUv3ApiTest {
      */
     @Test
     public void peticionSincronaTest() {
-        Solicitud body = null;
-        //Resultado response = api.peticionSincrona(body);
+        Solicitud body = new Solicitud();
+        Resultado response = api.peticionSincrona(body);
         assertNotNull(body);
         // TODO: test validations
         
