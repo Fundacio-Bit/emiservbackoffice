@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.fundaciobit.pluginsib.utils.ssl.AuthenticatorReplacer;
 
 
 
@@ -70,6 +70,7 @@ public class ScdcpajUv3ApiTest {
         String authorizationHeader = "Basic "
         + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
         
+        AuthenticatorReplacer.verifyHost();
         
         api = JAXRSClientFactory.create("https://10.0.0.45:8580/pinbal-services/rest/SCDCPAJUv3/peticionSincrona", ScdcpajUv3Api.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).authorization(authorizationHeader);

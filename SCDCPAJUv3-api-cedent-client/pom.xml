@@ -104,6 +104,12 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.fundaciobit.pluginsib.utils</groupId>
+      <artifactId>pluginsib-utils-ssl</artifactId>
+      <version>2.0.0</version>
+      <scope>test</scope>
+    </dependency>
     <!-- CXF Client -->
     <dependency>
         <groupId>org.apache.cxf</groupId>
