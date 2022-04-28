@@ -1,6 +1,6 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3.scsp;
 
-import es.caib.pinbal.client.recobriment.model.ScspTitular;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -23,11 +23,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = TipoDocumentacionSubsetValidator.class)
-public @interface TipoDocumentacionSubset {
+@Constraint(validatedBy = ProvinciaSolicitudSubsetValidator.class)
+public @interface ProvinciaSolicitudSubset {
 
-    ScspTitular.ScspTipoDocumentacion[] anyOf();
-
+    String[] anyOf();
+  
     String message() default "ha de ser qualsevol de {anyOf}";
 
     Class<?>[] groups() default {};

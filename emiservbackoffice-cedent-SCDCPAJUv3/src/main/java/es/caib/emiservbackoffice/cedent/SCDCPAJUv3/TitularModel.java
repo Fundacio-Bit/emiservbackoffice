@@ -1,12 +1,12 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3;
 
 import es.caib.pinbal.client.recobriment.model.ScspTitular;
-import es.caib.emiservbackoffice.cedent.SCDCPAJUv3.scsp.TipoDocumentacionSubset;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import es.caib.emiservbackoffice.cedent.SCDCPAJUv3.scsp.ProvinciaSolicitudSubset;
 
 /**
  * Dades emprades al formulari per indicar les dades a verificar del titular.
@@ -23,7 +23,7 @@ public class TitularModel implements Serializable {
      * d'identitat només permet emprar DNI o NIE, per això validam que sigui un d'aquests valors.
      */
     @NotNull
-    @TipoDocumentacionSubset(anyOf = {ScspTitular.ScspTipoDocumentacion.DNI, ScspTitular.ScspTipoDocumentacion.NIE})
+    @ProvinciaSolicitudSubset(anyOf = {ScspTitular.ScspTipoDocumentacion.DNI, ScspTitular.ScspTipoDocumentacion.NIE})
     private ScspTitular.ScspTipoDocumentacion tipusDocumentacio;
 
     private String nom;

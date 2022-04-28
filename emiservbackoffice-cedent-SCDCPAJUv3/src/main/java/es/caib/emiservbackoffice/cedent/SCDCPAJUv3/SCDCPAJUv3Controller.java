@@ -1,9 +1,11 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3;
 
-import es.caib.pinbal.client.recobriment.model.ScspJustificante;
-import es.caib.pinbal.client.recobriment.model.ScspRespuesta;
-import es.caib.pinbal.client.recobriment.model.ScspSolicitante;
-import es.caib.pinbal.client.recobriment.svddgpviws02.ClientSvddgpviws02;
+//import es.caib.pinbal.client.recobriment.model.ScspJustificante;
+//import es.caib.pinbal.client.recobriment.model.ScspRespuesta;
+//import es.caib.pinbal.client.recobriment.model.ScspSolicitante;
+//import es.caib.pinbal.client.recobriment.svddgpviws02.ClientSvddgpviws02;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,15 +84,21 @@ public class SCDCPAJUv3Controller implements Serializable {
     /**
      * Cridat en fer un submit del formulari per fer la consulta al servei.
      */
-    public void verificarIdentitat() {
-        LOG.info("verificarIdentitat");
+    
+    public void peticio() {
+        
+        LOG.info("Peticio " +  SCDCPAJUv3Controller.class.getName());
 
-        ClientSvddgpviws02.SolicitudSvddgpviws02 solicitud = new ClientSvddgpviws02.SolicitudSvddgpviws02();
-        solicitud.setIdentificadorSolicitante(configuracio.getOrganismeSolicitant());
-        solicitud.setUnidadTramitadora(configuracio.getUnitatTramitadora());
-        solicitud.setCodigoProcedimiento(configuracio.getCodiProcediment());
-        solicitud.setFinalidad(configuracio.getFinalitat());
-        solicitud.setConsentimiento(ScspSolicitante.ScspConsentimiento.Si);
+        Solicitud solicitud = new Solicitud();
+        
+        
+        
+//        ClientSvddgpviws02.SolicitudSvddgpviws02 solicitud = new ClientSvddgpviws02.SolicitudSvddgpviws02();
+//        solicitud.setIdentificadorSolicitante(configuracio.getOrganismeSolicitant());
+//        solicitud.setUnidadTramitadora(configuracio.getUnitatTramitadora());
+//        solicitud.setCodigoProcedimiento(configuracio.getCodiProcediment());
+//        solicitud.setFinalidad(configuracio.getFinalitat());
+//        solicitud.setConsentimiento(ScspSolicitante.ScspConsentimiento.Si);
 
         solicitud.setFuncionario(funcionari.toScspFuncionario());
         solicitud.setTitular(titular.toScspTitular());
@@ -102,6 +110,30 @@ public class SCDCPAJUv3Controller implements Serializable {
             context.addMessage(null, message);
         }
     }
+
+
+    
+    
+//    public void verificarIdentitat() {
+//        LOG.info("verificarIdentitat");
+//
+//        ClientSvddgpviws02.SolicitudSvddgpviws02 solicitud = new ClientSvddgpviws02.SolicitudSvddgpviws02();
+//        solicitud.setIdentificadorSolicitante(configuracio.getOrganismeSolicitant());
+//        solicitud.setUnidadTramitadora(configuracio.getUnitatTramitadora());
+//        solicitud.setCodigoProcedimiento(configuracio.getCodiProcediment());
+//        solicitud.setFinalidad(configuracio.getFinalitat());
+//        solicitud.setConsentimiento(ScspSolicitante.ScspConsentimiento.Si);
+//
+//        solicitud.setFuncionario(funcionari.toScspFuncionario());
+//        solicitud.setTitular(titular.toScspTitular());
+//
+//        try {
+//            resposta = clientSvi.peticioSincrona(solicitud);
+//        } catch (Exception e) {
+//            FacesMessage message = new FacesMessage(SEVERITY_ERROR, "Error al client Pinbal", e.getMessage());
+//            context.addMessage(null, message);
+//        }
+//    }
 
     
 //    /**

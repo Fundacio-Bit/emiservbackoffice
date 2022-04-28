@@ -1,7 +1,5 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3.scsp;
 
-import es.caib.pinbal.client.recobriment.model.ScspTitular;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
@@ -9,18 +7,18 @@ import java.util.Arrays;
 /**
  * Permet validar que un camp de tipus ScspTitular.ScspTipoDocumentacion té un dels valors permsos.
  */
-public class TipoDocumentacionSubsetValidator
-        implements ConstraintValidator<TipoDocumentacionSubset, ScspTitular.ScspTipoDocumentacion> {
+public class ProvinciaSolicitudSubsetValidator
+        implements ConstraintValidator<ProvinciaSolicitudSubset, String> {
 
-    private ScspTitular.ScspTipoDocumentacion[] subset;
-
+    private String[] subset;
+    
     @Override
-    public void initialize(TipoDocumentacionSubset constraint) {
+    public void initialize(ProvinciaSolicitudSubset constraint) {
         this.subset = constraint.anyOf();
     }
 
     @Override
-    public boolean isValid(ScspTitular.ScspTipoDocumentacion value, ConstraintValidatorContext context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         return value == null || Arrays.asList(subset).contains(value);
     }
 
