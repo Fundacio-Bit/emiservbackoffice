@@ -56,6 +56,9 @@ public class SCDCPAJUv3Client {
         ClientConfiguration config = WebClient.getConfig(client); 
         
         LOG.info("Client creat");
+        
+        
+        
     }
 
     public Resultado peticioSincrona(Solicitud solicitud) throws IOException {

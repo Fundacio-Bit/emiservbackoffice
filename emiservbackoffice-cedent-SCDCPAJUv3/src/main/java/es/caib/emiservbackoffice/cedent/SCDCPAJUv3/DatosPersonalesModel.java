@@ -1,50 +1,34 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3;
 
-import es.caib.pinbal.client.recobriment.model.ScspTitular;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import es.caib.emiservbackoffice.cedent.SCDCPAJUv3.scsp.ProvinciaSolicitudSubset;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
 
 /**
  * Dades emprades al formulari per indicar les dades a verificar del titular.
  */
-public class TitularModel implements Serializable {
+public class DatosPersonalesModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @NotEmpty
-    @Size(max=9) private String documentacio;
+    @Size(max=14) private String valor;
 
     /**
      * Tipo de documentació. Aquesta enumeració permet molts de valors, però el servei concret de verificació
      * d'identitat només permet emprar DNI o NIE, per això validam que sigui un d'aquests valors.
      */
     @NotNull
-    @ProvinciaSolicitudSubset(anyOf = {ScspTitular.ScspTipoDocumentacion.DNI, ScspTitular.ScspTipoDocumentacion.NIE})
-    private ScspTitular.ScspTipoDocumentacion tipusDocumentacio;
+    @DocumentacionSubset(anyOf = {Documentacion.TipoEnum.DNI, Documentacion.TipoEnum.NIE, Documentacion.TipoEnum.NIF, Documentacion.TipoEnum.PASSAPORT })
+    private Documentacion.TipoEnum tipo;
 
-    private String nom;
-    private String primerCognom;
-    private String segonCognom;
+  
 
-    public String getDocumentacio() {
-        return documentacio;
-    }
+    
 
-    public void setDocumentacio(String documentacio) {
-        this.documentacio = documentacio;
-    }
-
-    public ScspTitular.ScspTipoDocumentacion getTipusDocumentacio() {
-        return tipusDocumentacio;
-    }
-
-    public void setTipusDocumentacio(ScspTitular.ScspTipoDocumentacion tipusDocumentacio) {
-        this.tipusDocumentacio = tipusDocumentacio;
-    }
 
     public String getNom() {
         return nom;

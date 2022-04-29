@@ -7,13 +7,13 @@ import java.util.Arrays;
 /**
  * Permet validar que un camp de tipus ScspTitular.ScspTipoDocumentacion té un dels valors permsos.
  */
-public class ProvinciaSolicitudSubsetValidator
-        implements ConstraintValidator<ProvinciaSolicitudSubset, String> {
+public class MunicipioSolicitudSubsetValidator
+        implements ConstraintValidator<MunicipioSolicitudSubset, String> {
 
     private String[] subset;
     
     @Override
-    public void initialize(ProvinciaSolicitudSubset constraint) {
+    public void initialize(MunicipioSolicitudSubset constraint) {
         this.subset = constraint.anyOf();
     }
 
@@ -24,7 +24,7 @@ public class ProvinciaSolicitudSubsetValidator
     
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value == null || value.length()==2;
+        return value == null || value.length()==3;
     }
     
 
