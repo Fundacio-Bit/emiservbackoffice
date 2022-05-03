@@ -43,10 +43,24 @@ public class SCDCPAJUv3Controller implements Serializable {
     private FacesContext context;
 
     @Valid
-    private SolicitudModel solicitud;
+    private String provinciaSolicitud;
+    
+    public String getProvinciaSolicitudModel() {
+        return provinciaSolicitud;
+    }
+    
+    @Valid
+    private String municipioSolicitud;
+    
+    public String getMunicipioSolicitud(){
+        return municipioSolicitud;
+    }
+    
+    @Valid
+    private TitularModel titular;
 
-    public SolicitudModel getSolicitud() {
-        return solicitud;
+    public TitularModel getTitular() {
+        return titular;
     }
     
     private Resultado resultado;
@@ -58,7 +72,7 @@ public class SCDCPAJUv3Controller implements Serializable {
     @PostConstruct
     protected void init() {
         LOG.info("init");
-        solicitud = new SolicitudModel();
+        titular = new TitularModel();
     }
 
     /**
@@ -76,10 +90,14 @@ public class SCDCPAJUv3Controller implements Serializable {
         
         LOG.info("Peticio " +  SCDCPAJUv3Controller.class.getName());
 
-        Solicitud sol = solicitud.toSolicitud();
+        Solicitud solicitud = new Solicitud();
   
+        solicitud.setProvinciaSolicitud(provinciaSolicitud);
+        solicitud.setMunicipioSolicitud(municipioSolicitud);
+        solicitud.setTitular(titular.toTitular());
+        
         try {
-            resultado = clientSCDCPAJUv3.peticioSincrona(sol);
+            resultado = clientSCDCPAJUv3.peticioSincrona(solicitud);
         } catch (Exception e) {
             FacesMessage message = new FacesMessage(SEVERITY_ERROR, "Error al client Pinbal", e.getMessage());
             context.addMessage(null, message);
