@@ -36,8 +36,8 @@ public class SCDCPAJUv3Controller implements Serializable {
     @Inject
     private SCDCPAJUv3Client clientSCDCPAJUv3;
 
-    //@Inject
-    //private Configuracio configuracio;
+    @Inject
+    private Configuracio configuracio;
     
     @Inject
     private FacesContext context;

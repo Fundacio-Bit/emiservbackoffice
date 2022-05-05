@@ -74,6 +74,17 @@
             <type>war</type>
         </dependency>
         <!-- PINBAL END -->
+        
+          <!-- PADRO CONVIVENCIA START -->
+        <dependency>
+            <groupId>es.caib.emiservbackoffice</groupId>
+            <artifactId>emiservbackoffice-cedent-SCDCPAJUv3</artifactId>
+            <version>1.0.0</version>
+            <type>war</type>
+        </dependency>
+        <!-- PADRO CONVIVENCIA END -->
+        
+        
         <!--
         Mòduls que van dins el lib/
         Tenir en compte a l'hora de incloure dependències només si és imprescindible i no està ja dins
@@ -170,7 +181,13 @@
                         
                         
                         
-                        
+                        <!-- PINBAL START -->
+                        <webModule>
+                            <groupId>es.caib.emiservbackoffice</groupId>
+                            <artifactId>emiservbackoffice-cedent-SCDCPAJUv3</artifactId>
+                            <contextRoot>/emiservbackoffice/cedent-SCDCPAJUv3</contextRoot>
+                            <bundleFileName>emiservbackoffice-cedent-SCDCPAJUv3.war</bundleFileName>
+                        </webModule>     
                         
                         <!-- PINBAL START -->
                         <webModule>

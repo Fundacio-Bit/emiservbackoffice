@@ -143,6 +143,11 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
             
+            
+            
+            
+            
+            
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
         }
