@@ -101,9 +101,12 @@ components:
         name: MunicipioSolicitud
 
     Titular:
-      oneOf:
-        - $ref: "#/components/schemas/Documentacion"
-        - $ref: "#/components/schemas/DatosPersonales"
+      type: object
+      properties:
+        documentacion:
+          $ref: "#/components/schemas/Documentacion"
+        datosPersonales:
+          $ref: "#/components/schemas/DatosPersonales"
       xml:
         name: Titular
 

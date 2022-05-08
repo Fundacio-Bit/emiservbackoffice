@@ -1,5 +1,7 @@
 package es.caib.scsp.api.cedent.client.SCDCPAJUv3.model;
 
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,13 +15,57 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class Titular  implements OneOfTitular  {
+public class Titular   {
+  
+  @Schema(description = "")
+  private Documentacion documentacion = null;
+  
+  @Schema(description = "")
+  private DatosPersonales datosPersonales = null;
+ /**
+   * Get documentacion
+   * @return documentacion
+  **/
+  @JsonProperty("documentacion")
+  public Documentacion getDocumentacion() {
+    return documentacion;
+  }
+
+  public void setDocumentacion(Documentacion documentacion) {
+    this.documentacion = documentacion;
+  }
+
+  public Titular documentacion(Documentacion documentacion) {
+    this.documentacion = documentacion;
+    return this;
+  }
+
+ /**
+   * Get datosPersonales
+   * @return datosPersonales
+  **/
+  @JsonProperty("datosPersonales")
+  public DatosPersonales getDatosPersonales() {
+    return datosPersonales;
+  }
+
+  public void setDatosPersonales(DatosPersonales datosPersonales) {
+    this.datosPersonales = datosPersonales;
+  }
+
+  public Titular datosPersonales(DatosPersonales datosPersonales) {
+    this.datosPersonales = datosPersonales;
+    return this;
+  }
+
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Titular {\n");
     
+    sb.append("    documentacion: ").append(toIndentedString(documentacion)).append("\n");
+    sb.append("    datosPersonales: ").append(toIndentedString(datosPersonales)).append("\n");
     sb.append("}");
     return sb.toString();
   }

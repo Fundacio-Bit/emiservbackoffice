@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class DatosPersonales  implements OneOfTitular  {
+public class DatosPersonales   {
   
   @Schema(description = "")
   private Documentacion documentacion = null;

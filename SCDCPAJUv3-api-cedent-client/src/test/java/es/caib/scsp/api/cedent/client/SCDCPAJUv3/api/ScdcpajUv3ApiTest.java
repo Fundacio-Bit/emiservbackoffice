@@ -38,12 +38,17 @@ import org.apache.cxf.jaxrs.client.WebClient;
 
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//import org.fundaciobit.pluginsib.utils.ssl.AuthenticatorReplacer;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+
 
 
 
@@ -79,7 +84,8 @@ public class ScdcpajUv3ApiTest {
         System.out.println(authorizationHeader);
         System.out.println(client.getHeaders().entrySet().toString());
         
-        
+        config.getInInterceptors().add(new LoggingInInterceptor());
+        config.getOutInterceptors().add(new LoggingOutInterceptor());
     }
 
     /**
@@ -93,8 +99,37 @@ public class ScdcpajUv3ApiTest {
     @Test
     public void peticionSincronaTest() {
         Solicitud body = new Solicitud();
-        Resultado response = api.peticionSincrona(body);
+        
+        String provinciaSolicitud = "7";
+        String municipioSolicitud = "26";
+        
+        body.setProvinciaSolicitud(provinciaSolicitud);
+        body.setMunicipioSolicitud(municipioSolicitud);
+        
+        DatosPersonales datosPersonales = new DatosPersonales();
+        Documentacion documentacion = new Documentacion();
+        
+        
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
+        String valor = "";
+        
+        documentacion.setTipo(tipo);
+        documentacion.setValor(valor);
+        
+        System.out.println(datosPersonales);
+        
+        Titular titular;
+        titular = new Titular();
+        titular.setDocumentacion(documentacion);
+        
+        System.out.println(titular);
+        
+        body.setTitular(titular);
+        
         assertNotNull(body);
+        assertNotNull(titular);
+        Resultado response = api.peticionSincrona(body);
+        System.out.println(response.toString());
         // TODO: test validations
         
         
