@@ -3,7 +3,6 @@ package es.caib.scsp.api.cedent.client.SCDCPAJUv3.model;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ClaveHojaPadronal;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Domicilio;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Personas;
-import org.joda.time.DateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
@@ -29,7 +28,7 @@ public class Resultado   {
   private Personas personas = null;
   
   @Schema(required = true, description = "")
-  private DateTime fechaExpedicion = null;
+  private String fechaExpedicion = null;
  /**
    * Get claveHojaPadronal
    * @return claveHojaPadronal
@@ -89,15 +88,15 @@ public class Resultado   {
    * @return fechaExpedicion
   **/
   @JsonProperty("fechaExpedicion")
-  public DateTime getFechaExpedicion() {
+  public String getFechaExpedicion() {
     return fechaExpedicion;
   }
 
-  public void setFechaExpedicion(DateTime fechaExpedicion) {
+  public void setFechaExpedicion(String fechaExpedicion) {
     this.fechaExpedicion = fechaExpedicion;
   }
 
-  public Resultado fechaExpedicion(DateTime fechaExpedicion) {
+  public Resultado fechaExpedicion(String fechaExpedicion) {
     this.fechaExpedicion = fechaExpedicion;
     return this;
   }

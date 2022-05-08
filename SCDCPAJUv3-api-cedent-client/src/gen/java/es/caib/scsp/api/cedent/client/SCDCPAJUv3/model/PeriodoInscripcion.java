@@ -1,7 +1,6 @@
 package es.caib.scsp.api.cedent.client.SCDCPAJUv3.model;
 
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion;
-import org.joda.time.DateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class PeriodoInscripcion   {
   
   @Schema(required = true, description = "")
-  private DateTime desde = null;
+  private String desde = null;
   
   @Schema(required = true, description = "")
   private MotivoInscripcion motivoInscripcion = null;
@@ -27,15 +26,15 @@ public class PeriodoInscripcion   {
    * @return desde
   **/
   @JsonProperty("desde")
-  public DateTime getDesde() {
+  public String getDesde() {
     return desde;
   }
 
-  public void setDesde(DateTime desde) {
+  public void setDesde(String desde) {
     this.desde = desde;
   }
 
-  public PeriodoInscripcion desde(DateTime desde) {
+  public PeriodoInscripcion desde(String desde) {
     this.desde = desde;
     return this;
   }

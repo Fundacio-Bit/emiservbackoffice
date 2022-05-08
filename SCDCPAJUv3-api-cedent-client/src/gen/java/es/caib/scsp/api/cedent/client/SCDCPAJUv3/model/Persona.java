@@ -2,7 +2,6 @@ package es.caib.scsp.api.cedent.client.SCDCPAJUv3.model;
 
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.PeriodoInscripcion;
-import org.joda.time.DateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.xml.bind.annotation.XmlElement;
@@ -34,7 +33,7 @@ public class Persona   {
   private String apellido2 = null;
   
   @Schema(description = "")
-  private DateTime fechaNacimiento = null;
+  private String fechaNacimiento = null;
   
   @Schema(description = "")
   private Documentacion documentacion = null;
@@ -139,15 +138,15 @@ public class Persona   {
    * @return fechaNacimiento
   **/
   @JsonProperty("fechaNacimiento")
-  public DateTime getFechaNacimiento() {
+  public String getFechaNacimiento() {
     return fechaNacimiento;
   }
 
-  public void setFechaNacimiento(DateTime fechaNacimiento) {
+  public void setFechaNacimiento(String fechaNacimiento) {
     this.fechaNacimiento = fechaNacimiento;
   }
 
-  public Persona fechaNacimiento(DateTime fechaNacimiento) {
+  public Persona fechaNacimiento(String fechaNacimiento) {
     this.fechaNacimiento = fechaNacimiento;
     return this;
   }

@@ -71,7 +71,7 @@ public class ScdcpajUv3ApiTest {
         providers.add(provider);
         
         // Replace 'user' and 'password' by the actual values
-        String userpass = "pinbal".concat(":").concat("");
+        String userpass = "pinbal".concat(":").concat("!puW6PHUQC%c");
         String authorizationHeader = "Basic "
         + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
         
@@ -86,6 +86,7 @@ public class ScdcpajUv3ApiTest {
         
         config.getInInterceptors().add(new LoggingInInterceptor());
         config.getOutInterceptors().add(new LoggingOutInterceptor());
+        
     }
 
     /**
@@ -98,7 +99,8 @@ public class ScdcpajUv3ApiTest {
      */
     @Test
     public void peticionSincronaTest() {
-        Solicitud body = new Solicitud();
+        
+	Solicitud body = new Solicitud();
         
         String provinciaSolicitud = "7";
         String municipioSolicitud = "26";
@@ -111,10 +113,12 @@ public class ScdcpajUv3ApiTest {
         
         
         Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
-        String valor = "";
+        String valor = "41438576M";
         
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
+        
+        
         
         System.out.println(datosPersonales);
         
@@ -131,7 +135,6 @@ public class ScdcpajUv3ApiTest {
         Resultado response = api.peticionSincrona(body);
         System.out.println(response.toString());
         // TODO: test validations
-        
         
     }
 }
