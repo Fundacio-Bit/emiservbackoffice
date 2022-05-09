@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ws.rs.client.ResponseProcessingException;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 
@@ -132,8 +133,15 @@ public class ScdcpajUv3ApiTest {
         
         assertNotNull(body);
         assertNotNull(titular);
-        Resultado response = api.peticionSincrona(body);
-        System.out.println(response.toString());
+        
+        Resultado response = null;
+        try {
+            response = api.peticionSincrona(body);
+            System.out.println(response.toString());
+        } catch (ResponseProcessingException e){
+            System.out.println(e.getMessage());
+        }
+        
         // TODO: test validations
         
     }

@@ -91,11 +91,11 @@ public class TitularModel implements Serializable {
     
     public Titular toTitular() {
         
-        OneOfTitular titular = new Documentacion();
+        Titular titular = new Titular();
         
         
         
-        return (Titular)titular;
+        return titular;
         
         /*
         DatosPersonales datosPersonales = new DatosPersonales();
