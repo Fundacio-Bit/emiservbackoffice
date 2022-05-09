@@ -77,6 +77,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             return respuesta;
         }
         
+        log.info("EmiservBackofficeWsImpl :: Peticion no nula" );
+        
         Atributos peticionAtributos = peticion.getAtributos();
         
         if (peticionAtributos==null) {
@@ -84,7 +86,12 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             return respuesta;
         }
         
+        log.info("EmiservBackofficeWsImpl :: Atributos: "  + peticionAtributos.toString());
+        
         Estado peticionAtributosEstado = peticionAtributos.getEstado();
+        
+        log.info("EmiservBackofficeWsImpl :: Estado: "  + peticionAtributosEstado.toString());
+        
         
         Solicitudes peticionSolicitudes = peticion.getSolicitudes();
         
@@ -100,6 +107,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             return respuesta;
         }
         
+        log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Size :"  + peticionSolicitudesSolicitudTransmision.size());
+        
         if (peticionSolicitudesSolicitudTransmision.size()>1){
             respuesta = peticionErronea(MULTIPLES_SOLICITUDS,  "El número de sol·licituds no pot ser major que 1");
             return respuesta;
@@ -111,13 +120,21 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
             String peticionSolicitudTransmisionId = peticionSolicitudTransmision.getId();
             
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Id :"  + peticionSolicitudTransmisionId);
+            
             DatosGenericos peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
+            
             Object peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
 
             Emisor peticionEmisor = peticionDatosGenericos.getEmisor();
             Solicitante peticionSolicitante = peticionDatosGenericos.getSolicitante();
             Titular peticionTitular = peticionDatosGenericos.getTitular();
             Transmision peticionTransmision = peticionDatosGenericos.getTransmision();
+            
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Emisor :"  + peticionEmisor.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Solicitante :"  + peticionSolicitante.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Titular :"  + peticionTitular.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Transmision :"  + peticionTransmision.toString());
 
             Consentimiento peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
             Funcionario peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
