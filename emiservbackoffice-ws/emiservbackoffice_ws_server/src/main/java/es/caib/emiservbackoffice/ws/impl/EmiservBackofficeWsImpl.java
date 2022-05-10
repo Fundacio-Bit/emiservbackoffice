@@ -90,8 +90,12 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
         Estado peticionAtributosEstado = peticionAtributos.getEstado();
         
-        log.info("EmiservBackofficeWsImpl :: Estado: "  + peticionAtributosEstado.toString());
+        if (peticionAtributosEstado==null) {
+            log.info("EmiservBackofficeWsImpl :: Estado: Petició no subministra estat. Creant objecte Estado ");
+            peticionAtributosEstado = new Estado();
+        }
         
+        log.info("EmiservBackofficeWsImpl :: Estado: "  + peticionAtributosEstado.toString());
         
         Solicitudes peticionSolicitudes = peticion.getSolicitudes();
         
@@ -103,7 +107,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         List<SolicitudTransmision> peticionSolicitudesSolicitudTransmision = peticionSolicitudes.getSolicitudTransmision();
         
         if (peticionSolicitudesSolicitudTransmision==null) {
-            respuesta = peticionErronea(FALTA_SOLICITUD,  "El número de sol·licituds ha de ser major que 0");
+            respuesta = peticionErronea(FALTA_SOLICITUD,  "El número de transmisions de la sol·licitud ha de ser major que 0");
             return respuesta;
         }
         
@@ -147,7 +151,6 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento :"  + peticionSolicitanteProcedimiento.toString());
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
 
-            
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             
             respuestaTransmisionDatos.setId(peticionSolicitudTransmisionId);
@@ -165,9 +168,6 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             respuestaDatosGenericos.setTransmision(respuestaTransmision);
             
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
-            
-            
-            
             
             
             
