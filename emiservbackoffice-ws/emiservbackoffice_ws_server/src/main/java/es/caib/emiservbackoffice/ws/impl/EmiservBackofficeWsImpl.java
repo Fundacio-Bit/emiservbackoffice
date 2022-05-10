@@ -142,6 +142,12 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
 
             TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
             
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Consentimiento :"  + peticionSolicitanteConsentimiento.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Funcionario :"  + peticionSolicitanteFuncionario.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento :"  + peticionSolicitanteProcedimiento.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
+
+            
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             
             respuestaTransmisionDatos.setId(peticionSolicitudTransmisionId);
