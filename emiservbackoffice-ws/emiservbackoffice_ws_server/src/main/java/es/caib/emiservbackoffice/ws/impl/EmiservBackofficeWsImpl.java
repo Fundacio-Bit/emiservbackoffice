@@ -129,28 +129,30 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             DatosGenericos peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
             
             Object peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
-
+           
             Emisor peticionEmisor = peticionDatosGenericos.getEmisor();
-            Solicitante peticionSolicitante = peticionDatosGenericos.getSolicitante();
-            Titular peticionTitular = peticionDatosGenericos.getTitular();
-            Transmision peticionTransmision = peticionDatosGenericos.getTransmision();
-            
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Emisor :"  + peticionEmisor.toString());
+            Solicitante peticionSolicitante = peticionDatosGenericos.getSolicitante();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Solicitante :"  + peticionSolicitante.toString());
+            Titular peticionTitular = peticionDatosGenericos.getTitular();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Titular :"  + peticionTitular.toString());
+            Transmision peticionTransmision = peticionDatosGenericos.getTransmision();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Transmision :"  + peticionTransmision.toString());
 
             Consentimiento peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
-            Funcionario peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
-            Procedimiento peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
-
-            TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
-            
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Consentimiento :"  + peticionSolicitanteConsentimiento.toString());
+            Funcionario peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Funcionario :"  + peticionSolicitanteFuncionario.toString());
+            Procedimiento peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento :"  + peticionSolicitanteProcedimiento.toString());
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
-
+            TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
+            if (peticionTitularTipoDocumentacion==null) {
+                log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion : Petició no subministra informació del titular.");
+            } else{
+                log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
+            }
+            
+            
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             
             respuestaTransmisionDatos.setId(peticionSolicitudTransmisionId);
