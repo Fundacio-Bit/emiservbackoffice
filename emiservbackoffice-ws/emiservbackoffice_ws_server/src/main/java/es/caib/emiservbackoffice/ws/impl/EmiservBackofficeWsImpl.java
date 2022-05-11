@@ -22,6 +22,11 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
+import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
+import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_ATRIBUTOS;
+import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_SOLICITUD;
+import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.MULTIPLES_SOLICITUDS;
+import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.SCHEMA_INCORRECTE;
 
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
@@ -46,16 +51,16 @@ import javax.jws.soap.SOAPBinding;
         targetNamespace = "http://caib.es/emiserv/backoffice")
 public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackoffice {
 
-    public static final String TRAMITADA = "0003";
-    public static final String DOS_O_MES = "0232";
-    public static final String NO_IDENTIFICAT = "0233";
-    public static final String NOT_DISPONIBLE = "0238";
-    public static final String SCHEMA_INCORRECTE = "0401";
-    public static final String FALTA_SOLICITUD = "0401";
-    public static final String FALTA_ATRIBUTOS = "0401";
-    public static final String MULTIPLES_SOLICITUDS = "0415";
-    public static final String ERROR_BACKOFFICE = "0242";
-    public static final String ERROR_CEDENT = "0242";
+//    public static final String TRAMITADA = "0003";
+//    public static final String DOS_O_MES = "0232";
+//    public static final String NO_IDENTIFICAT = "0233";
+//    public static final String NOT_DISPONIBLE = "0238";
+//    public static final String SCHEMA_INCORRECTE = "0401";
+//    public static final String FALTA_SOLICITUD = "0401";
+//    public static final String FALTA_ATRIBUTOS = "0401";
+//    public static final String MULTIPLES_SOLICITUDS = "0415";
+//    public static final String ERROR_BACKOFFICE = "0242";
+//    public static final String ERROR_CEDENT = "0242";
     
     public static final String NAME = "EmiservBackoffice";
 
@@ -121,6 +126,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         ArrayList<TransmisionDatos> respuestaTransmisionesTransmisionDatos = new ArrayList<TransmisionDatos>();
         
         for (SolicitudTransmision peticionSolicitudTransmision : peticionSolicitudesSolicitudTransmision) {
+            
+            // Secció de tractament de la peticio
         
             String peticionSolicitudTransmisionId = peticionSolicitudTransmision.getId();
             
@@ -146,12 +153,14 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Procedimiento peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento :"  + peticionSolicitanteProcedimiento.toString());
             TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
+            
             if (peticionTitularTipoDocumentacion==null) {
                 log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion : Petició no subministra informació del titular.");
             } else{
                 log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
             }
             
+            // Secció de tractament de la resposta
             
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             
@@ -214,22 +223,25 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
     }
 
     
-    Respuesta peticionErronea(String codigoEstado, String literalError) {
+    Respuesta peticionErronea(ErrorBackoffice error, String literalError) {
 
         Respuesta respuesta = new Respuesta();
 
         SoapFaultAtributos soapFaultAtributos = new SoapFaultAtributos();
         Atributos atributos = soapFaultAtributos.getAtributos();
         Estado estado = new Estado();
-        estado.setCodigoEstado(codigoEstado);
+        estado.setCodigoEstado(error.getEstat());
         estado.setLiteralError(literalError);
         atributos.setEstado(estado);
         respuesta.setAtributos(atributos);
         
-        log.info("EmiservBackofficeWsImpl :: " + "codigoEstado = " + codigoEstado + "literalError = " + literalError);
+        log.info("EmiservBackofficeWsImpl :: " + "codigoEstado = " + estado.getCodigoEstado() + "literalError = " + estado.getLiteralError());
         
         return respuesta;
         
     }
+    
+ 
+    
     
 }

@@ -39,10 +39,11 @@
                 
                 <div class="form-group">
                     <h:outputLabel for="tipusDocumentacio">Tipus Documentació</h:outputLabel>
-                    <h:selectOneMenu id="tipusDocumentacio" value="#{SCDCPAJUv3Controller.titular.tipusDocumentacio}"
+                    <h:selectOneMenu id="tipusDocumentacio" value="#{SCDCPAJUv3Controller.documentacion.tipo}"
                                  styleClass="form-control">
-                        <f:selectItem itemLabel="DNI" itemValue="DNI"/>
+                        <f:selectItem itemLabel="NIF" itemValue="NIF"/>
                         <f:selectItem itemLabel="NIE" itemValue="NIE"/>
+                        <f:selectItem itemLabel="DNI" itemValue="DNI"/>
                     </h:selectOneMenu>
                     <h:message for="tipusDocumentacio" errorStyle="color: red"/>
                 </div>

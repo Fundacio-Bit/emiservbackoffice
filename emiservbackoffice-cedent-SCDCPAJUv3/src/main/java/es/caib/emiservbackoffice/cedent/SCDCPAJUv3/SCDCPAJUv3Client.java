@@ -35,25 +35,25 @@ public class SCDCPAJUv3Client {
     protected void init() {
         LOG.info("Iniciant client");
         
-        ScdcpajUv3Api clientScdcpajUv3Api;
-        
-        JacksonJsonProvider provider = new JacksonJsonProvider();
-        List providers = new ArrayList();
-        providers.add(provider);
-        
-        String path = "/SCDCPAJU/peticionSincrona";
-        String baseURI = configuracio.getEndpoint().concat(path);
-        
-        // Replace 'user' and 'password' by the actual values
-        String userpass = configuracio.getUsuari().concat(":").concat(configuracio.getSecret());
-        String authorizationHeader = "Basic "
-        + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
-        
-        
-        clientScdcpajUv3Api = JAXRSClientFactory.create(baseURI, ScdcpajUv3Api.class, providers);
-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(clientScdcpajUv3Api).authorization(authorizationHeader);
-        
-        ClientConfiguration config = WebClient.getConfig(client); 
+//        ScdcpajUv3Api clientScdcpajUv3Api;
+//        
+//        JacksonJsonProvider provider = new JacksonJsonProvider();
+//        List providers = new ArrayList();
+//        providers.add(provider);
+//        
+//        String path = "/SCDCPAJU/peticionSincrona";
+//        String baseURI = configuracio.getEndpoint().concat(path);
+//        
+//        // Replace 'user' and 'password' by the actual values
+//        String userpass = configuracio.getUsuari().concat(":").concat(configuracio.getSecret());
+//        String authorizationHeader = "Basic "
+//        + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
+//        
+//        
+//        clientScdcpajUv3Api = JAXRSClientFactory.create(baseURI, ScdcpajUv3Api.class, providers);
+//        org.apache.cxf.jaxrs.client.Client client = WebClient.client(clientScdcpajUv3Api).authorization(authorizationHeader);
+//        
+//        ClientConfiguration config = WebClient.getConfig(client); 
         
         LOG.info("Client creat");
         

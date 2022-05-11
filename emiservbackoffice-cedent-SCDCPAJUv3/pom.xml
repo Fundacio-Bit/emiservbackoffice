@@ -54,12 +54,7 @@
             <version>${jackson-jaxrs-version}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>es.caib.scsp</groupId>
-            <artifactId>SCDCPAJUv3-schemas-xsd</artifactId>
-            <version>1.0.0</version>
-            <type>jar</type>
-        </dependency>
+        
         <!--
         Llibreries per emprar l'api de pinbal.
         -->

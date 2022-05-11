@@ -1,7 +1,9 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3;
 
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,10 +59,17 @@ public class SCDCPAJUv3Controller implements Serializable {
     }
     
     @Valid
-    private TitularModel titular;
+    private DocumentacionModel documentacion;
 
-    public TitularModel getTitular() {
-        return titular;
+    public DocumentacionModel getDocumentacion() {
+        return documentacion;
+    }
+
+    @Valid
+    private DatosPersonalesModel datosPersonales;
+    
+    public DatosPersonalesModel getDatosPersonales() {
+        return datosPersonales;
     }
     
     private Resultado resultado;
@@ -72,7 +81,8 @@ public class SCDCPAJUv3Controller implements Serializable {
     @PostConstruct
     protected void init() {
         LOG.info("init");
-        titular = new TitularModel();
+        documentacion = new DocumentacionModel();
+        datosPersonales = new DatosPersonalesModel();
     }
 
     /**
@@ -94,12 +104,23 @@ public class SCDCPAJUv3Controller implements Serializable {
   
         solicitud.setProvinciaSolicitud(provinciaSolicitud);
         solicitud.setMunicipioSolicitud(municipioSolicitud);
-        solicitud.setTitular(titular.toTitular());
         
+        Titular titular = new Titular();
+        
+        if (documentacion!=null){
+            titular.setDocumentacion(documentacion.toDocumentacion());
+            titular.setDatosPersonales(null);
+            solicitud.setTitular(titular);
+        } else if (datosPersonales!=null){
+            titular.setDatosPersonales(datosPersonales.toDatosPersonales());
+            titular.setDocumentacion(null);
+            solicitud.setTitular(titular);
+        }
+       
         try {
             resultado = clientSCDCPAJUv3.peticioSincrona(solicitud);
         } catch (Exception e) {
-            FacesMessage message = new FacesMessage(SEVERITY_ERROR, "Error al client Pinbal", e.getMessage());
+            FacesMessage message = new FacesMessage(SEVERITY_ERROR, "Error al client SCDCPAJUv3", e.getMessage());
             context.addMessage(null, message);
         }
     }

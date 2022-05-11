@@ -26,7 +26,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = TipoDocumentacionSubsetValidator.class)
 public @interface TipoDocumentacionSubset {
 
-    Documentacion.TipoEnum anyOf();
+    Documentacion.TipoEnum[] anyOf();
   
     String message() default "ha de ser qualsevol de {anyOf}";
 

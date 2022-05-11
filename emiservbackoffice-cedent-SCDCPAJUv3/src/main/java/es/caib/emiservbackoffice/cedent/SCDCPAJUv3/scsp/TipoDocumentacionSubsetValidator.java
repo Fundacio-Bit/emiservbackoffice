@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class TipoDocumentacionSubsetValidator
         implements ConstraintValidator<TipoDocumentacionSubset, Documentacion.TipoEnum> {
 
-    private Documentacion.TipoEnum subset;
+    private Documentacion.TipoEnum[] subset;
     
     @Override
     public void initialize(TipoDocumentacionSubset constraint) {
