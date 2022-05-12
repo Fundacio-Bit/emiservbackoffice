@@ -30,6 +30,11 @@
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
             <scope>provided</scope>
         </dependency>
+         <dependency>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- Altres mòduls del projecte -->
         <dependency>
             <groupId>es.caib.emiservbackoffice</groupId>

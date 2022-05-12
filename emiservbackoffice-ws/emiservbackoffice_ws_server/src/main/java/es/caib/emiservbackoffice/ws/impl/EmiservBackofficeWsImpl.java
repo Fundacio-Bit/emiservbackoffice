@@ -22,11 +22,15 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.TransmisionDatos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
+import es.caib.emiservbackoffice.commons.config.PropertyFileConfigSource;
+import es.caib.emiservbackoffice.ws.cedent.Propietats;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_ATRIBUTOS;
+import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_CERTIFICAT;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_SOLICITUD;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.MULTIPLES_SOLICITUDS;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.SCHEMA_INCORRECTE;
+import es.caib.emiservbackoffice.ws.specs.ServeiBackoffice;
 
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
@@ -88,6 +92,11 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
         if (peticionAtributos==null) {
             respuesta = peticionErronea(FALTA_ATRIBUTOS,  "Falta camp atributs");
+            return respuesta;
+        }
+        
+        if (peticionAtributos.getCodigoCertificado()==null) {
+            respuesta = peticionErronea(FALTA_CERTIFICAT,  "Falta codi de certificat");
             return respuesta;
         }
         
@@ -161,6 +170,24 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             }
             
             // Secció de tractament de la resposta
+            
+            String codiCertificat = peticionAtributos.getCodigoCertificado();
+            
+            ServeiBackoffice serveiBackoffice = ServeiBackoffice.valueOf(codiCertificat);
+            
+            if (serveiBackoffice==null) {
+                respuesta = peticionErronea(FALTA_CERTIFICAT,  "No s'ha trobat un certificat");
+                return respuesta;
+            }
+            
+            Propietats propietats = new Propietats(new PropertyFileConfigSource(), serveiBackoffice);
+            
+            log.info("EmiservBackofficeWsImpl :: Configurant per al servei :"  + codiCertificat);
+            log.info("EmiservBackofficeWsImpl :: Client backoffice :"  + serveiBackoffice.getClient().getName());
+            log.info("EmiservBackofficeWsImpl :: Propietats: Endpoint :"  + propietats.getEndpoint());
+            log.info("EmiservBackofficeWsImpl :: Propietats: Usuari :"  + propietats.getUsuari());
+            
+            
             
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             

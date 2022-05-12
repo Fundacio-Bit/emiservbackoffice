@@ -4,23 +4,28 @@
  */
 package es.caib.emiservbackoffice.ws.specs;
 
+import es.caib.emiservbackoffice.ws.cedent.SCDCPAJUv3Client;
+import es.caib.emiservbackoffice.ws.cedent.SCDHPAJUv3Client;
+
 /**
  *
  * @author gdeignacio
  */
 public enum ServeiBackoffice {
     
-    SCDCPAJU("SCDCPAJUv3",null),
-    SCDHPAJU("SCDHPAJUv3",null);
+    SCDCPAJU("SCDCPAJUv3", SCDCPAJUv3Client.class, null),
+    SCDHPAJU("SCDHPAJUv3", SCDHPAJUv3Client.class, null);
     
     
-    private ServeiBackoffice(String codi, Class clazz){
+    private ServeiBackoffice(String codi, Class client, Class schema){
         this.codi = codi;
-        this.clazz = clazz;
+        this.client = client;
+        this.schema = schema;
     }
     
     private String codi;
-    private Class clazz;
+    private Class client;
+    private Class schema;
 
     public String getCodi() {
         return codi;
@@ -30,12 +35,22 @@ public enum ServeiBackoffice {
         this.codi = codi;
     }
 
-    public Class getClazz() {
-        return clazz;
+    public Class getClient() {
+        return client;
     }
 
-    public void setClazz(Class clazz) {
-        this.clazz = clazz;
+    public void setClient(Class client) {
+        this.client = client;
     }
+
+    public Class getSchema() {
+        return schema;
+    }
+
+    public void setSchema(Class schema) {
+        this.schema = schema;
+    }
+
+    
 
 }
