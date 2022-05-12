@@ -67,12 +67,12 @@
         
         
         <!-- PINBAL START -->
-        <dependency>
+        <!--dependency>
             <groupId>es.caib.emiservbackoffice</groupId>
             <artifactId>emiservbackoffice-pinbal</artifactId>
             <version>1.0.0</version>
             <type>war</type>
-        </dependency>
+        </dependency-->
         <!-- PINBAL END -->
         
           <!-- PADRO CONVIVENCIA START -->
@@ -188,12 +188,13 @@
                         </webModule-->     
                         
                         <!-- PINBAL START -->
-                        <webModule>
+                        <!--webModule>
                             <groupId>es.caib.emiservbackoffice</groupId>
                             <artifactId>emiservbackoffice-pinbal</artifactId>
                             <contextRoot>/emiservbackoffice/pinbal</contextRoot>
                             <bundleFileName>emiservbackoffice-pinbal.war</bundleFileName>
-                        </webModule>                        <!-- PINBAL END -->
+                        </webModule-->
+                        <!-- PINBAL END -->
                         <!-- WS START -->
                         <ejbModule>
                             <groupId>es.caib.emiservbackoffice</groupId>
