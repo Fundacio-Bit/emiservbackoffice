@@ -25,6 +25,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
 import es.caib.emiservbackoffice.commons.config.PropertyFileConfigSource;
 import es.caib.emiservbackoffice.ws.cedent.Propietats;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
+import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.ERROR_DATOS_ESPECIFICOS;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_ATRIBUTOS;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_CERTIFICAT;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.FALTA_SOLICITUD;
@@ -34,14 +35,25 @@ import es.caib.emiservbackoffice.ws.specs.ServeiBackoffice;
 
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author gdeignacio
@@ -140,27 +152,40 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
             String peticionSolicitudTransmisionId = peticionSolicitudTransmision.getId();
             
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Id :"  + peticionSolicitudTransmisionId);
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Id : "  + peticionSolicitudTransmisionId);
             
             DatosGenericos peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
             
-            Object peticionDatosEspecificos = peticionSolicitudTransmision.getDatosEspecificos();
+            Element peticionDatosEspecificos = (Element)peticionSolicitudTransmision.getDatosEspecificos();
+            
+            String strPeticionDatosEspecificos;
+            
+            try {
+                strPeticionDatosEspecificos = elementToString(peticionDatosEspecificos);
+            } catch (TransformerException ex) {
+                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
+                respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
+                return respuesta;
+            }
+            
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Datos Especificos : "  + strPeticionDatosEspecificos);
+            
            
             Emisor peticionEmisor = peticionDatosGenericos.getEmisor();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Emisor :"  + peticionEmisor.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Emisor : "  + peticionEmisor.toString());
             Solicitante peticionSolicitante = peticionDatosGenericos.getSolicitante();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Solicitante :"  + peticionSolicitante.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Solicitante : "  + peticionSolicitante.toString());
             Titular peticionTitular = peticionDatosGenericos.getTitular();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Titular :"  + peticionTitular.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Titular : "  + peticionTitular.toString());
             Transmision peticionTransmision = peticionDatosGenericos.getTransmision();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Transmision :"  + peticionTransmision.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Transmision : "  + peticionTransmision.toString());
 
             Consentimiento peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Consentimiento :"  + peticionSolicitanteConsentimiento.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Consentimiento : "  + peticionSolicitanteConsentimiento.toString());
             Funcionario peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Funcionario :"  + peticionSolicitanteFuncionario.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Funcionario : "  + peticionSolicitanteFuncionario.toString());
             Procedimiento peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento :"  + peticionSolicitanteProcedimiento.toString());
+            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento : "  + peticionSolicitanteProcedimiento.toString());
             TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
             
             if (peticionTitularTipoDocumentacion==null) {
@@ -212,6 +237,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             
             
+            
+            
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
         }
@@ -229,7 +256,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
         respuestaAtributosEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
         //respuestaAtributosEstado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
-        respuestaAtributosEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getEstat());
+        respuestaAtributosEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
         //respuestaAtributosEstado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
           
         respuestaAtributos.setEstado(respuestaAtributosEstado);
@@ -271,7 +298,16 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
     }
     
- 
+    private String elementToString(Element element) throws TransformerException {
+        TransformerFactory transFactory = TransformerFactory.newInstance();
+        Transformer transformer = transFactory.newTransformer();
+        StringWriter buffer = new StringWriter();
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        transformer.transform(
+                new DOMSource(element),
+                new StreamResult(buffer));
+        return buffer.toString();
+    }
     
     
 }
