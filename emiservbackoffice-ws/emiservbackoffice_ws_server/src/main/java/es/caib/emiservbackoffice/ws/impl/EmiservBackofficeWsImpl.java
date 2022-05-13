@@ -182,21 +182,24 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             Propietats propietats = new Propietats(new PropertyFileConfigSource(), serveiBackoffice);
             
-            log.info("EmiservBackofficeWsImpl :: Configurant per al servei :"  + codiCertificat);
-            log.info("EmiservBackofficeWsImpl :: Client backoffice :"  + serveiBackoffice.getClient().getName());
+            log.info("EmiservBackofficeWsImpl :: Configurant per al codi de certificat : "  + codiCertificat);
+            log.info("EmiservBackofficeWsImpl :: Configurant per al servei : "  + serveiBackoffice.getCodi());
+            log.info("EmiservBackofficeWsImpl :: Client backoffice : "  + serveiBackoffice.getClient().getName());
             log.info("EmiservBackofficeWsImpl :: Propietats: Endpoint :"  + propietats.getEndpoint());
             log.info("EmiservBackofficeWsImpl :: Propietats: Usuari :"  + propietats.getUsuari());
             
             
-            
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
             
-            respuestaTransmisionDatos.setId(peticionSolicitudTransmisionId);
+            String respuestaTransmisionDatosId = peticionAtributos.getIdPeticion(); 
+            
+            respuestaTransmisionDatos.setId(respuestaTransmisionDatosId);
             
             DatosGenericos respuestaDatosGenericos = new DatosGenericos();
             
             Emisor respuestaEmisor = peticionEmisor;
             Solicitante respuestaSolicitante = peticionSolicitante;
+            // Attn rellenar
             Titular respuestaTitular = peticionTitular;
             Transmision respuestaTransmision = peticionTransmision;
             
@@ -224,10 +227,10 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
         Estado respuestaAtributosEstado  = new Estado();
         
-        respuestaAtributosEstado.setCodigoEstado(peticionAtributosEstado.getCodigoEstado());
-        respuestaAtributosEstado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
-        respuestaAtributosEstado.setLiteralError(peticionAtributosEstado.getLiteralError());
-        respuestaAtributosEstado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
+        respuestaAtributosEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
+        //respuestaAtributosEstado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
+        respuestaAtributosEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getEstat());
+        //respuestaAtributosEstado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
           
         respuestaAtributos.setEstado(respuestaAtributosEstado);
         respuestaAtributos.setIdPeticion(peticionAtributos.getIdPeticion());

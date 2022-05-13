@@ -61,8 +61,12 @@
                 <groupId>es.caib.emiserv</groupId>
                 <artifactId>emiserv-service-intf</artifactId>        
         </dependency>
-        
-     
+        <dependency>
+            <groupId>es.caib.scsp</groupId>
+            <artifactId>SCDCPAJUv3-schemas-xsd</artifactId>
+            <version>1.0.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
