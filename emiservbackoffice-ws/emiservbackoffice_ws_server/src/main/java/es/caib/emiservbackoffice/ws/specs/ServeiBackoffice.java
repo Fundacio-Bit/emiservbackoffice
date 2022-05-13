@@ -7,8 +7,6 @@ package es.caib.emiservbackoffice.ws.specs;
 import es.caib.emiservbackoffice.ws.cedent.SCDCPAJUv3Client;
 import es.caib.emiservbackoffice.ws.cedent.SCDHPAJUv3Client;
 
-//import es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos;
-//import es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos;
 
 /**
  *

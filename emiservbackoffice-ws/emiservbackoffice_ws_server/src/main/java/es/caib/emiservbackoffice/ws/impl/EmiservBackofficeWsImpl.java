@@ -169,7 +169,6 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             }
             
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Datos Especificos : "  + strPeticionDatosEspecificos);
-            
            
             Emisor peticionEmisor = peticionDatosGenericos.getEmisor();
             log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Emisor : "  + peticionEmisor.toString());

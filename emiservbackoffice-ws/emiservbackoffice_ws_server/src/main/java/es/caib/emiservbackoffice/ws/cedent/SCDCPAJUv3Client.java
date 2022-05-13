@@ -4,37 +4,27 @@
  */
 package es.caib.emiservbackoffice.ws.cedent;
 
+import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos;
 
 /**
  *
  * @author gdeignacio
  */
-public class SCDCPAJUv3Client {
-    
-    
-    
-    public SCDCPAJUv3Client(Object datosEspecificos){
-        
-    }
-    
-    private DatosEspecificos datosEspecificos;
+public class SCDCPAJUv3Client extends CedentClient {
 
-    public SCDCPAJUv3Client(DatosEspecificos datosEspecificos) {
-        this.datosEspecificos = datosEspecificos;
+    public SCDCPAJUv3Client(DatosGenericos peticionDatosGenericos, String peticionDatosEspecificos) {
+        super(peticionDatosGenericos, peticionDatosEspecificos);
     }
 
-    public DatosEspecificos getDatosEspecificos() {
-        return datosEspecificos;
+    @Override
+    public String getDatosEspecificosRespuesta() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setDatosEspecificos(DatosEspecificos datosEspecificos) {
-        this.datosEspecificos = datosEspecificos;
+    @Override
+    public DatosGenericos getDatosGenericosRespuesta() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
-    
-    
     
 }
