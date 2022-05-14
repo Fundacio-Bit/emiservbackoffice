@@ -23,6 +23,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
 import es.caib.emiservbackoffice.commons.config.PropertyFileConfigSource;
+import es.caib.emiservbackoffice.ws.cedent.CedentClient;
 import es.caib.emiservbackoffice.ws.cedent.Propietats;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
 import static es.caib.emiservbackoffice.ws.specs.ErrorBackoffice.ERROR_DATOS_ESPECIFICOS;
@@ -36,6 +37,8 @@ import es.caib.emiservbackoffice.ws.specs.ServeiBackoffice;
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
 import java.io.StringWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -234,9 +237,21 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
             
+            Class clazz = serveiBackoffice.getClient();
             
+            String[] s = new String[]{};
             
+            Class[] constructorParameters =  new Class[]{DatosGenericos.class, String.class, Propietats.class};
+            Object[] parameters = new Object[]{peticionDatosGenericos, strPeticionDatosEspecificos, propietats};
             
+            try {
+                CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
+                log.info("EmiservBackofficeWsImpl :: Clase client instanciada per :"  + client.getClass().getName());
+                client.peticionSincrona();
+                
+            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
