@@ -235,23 +235,23 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             respuestaDatosGenericos.setTitular(respuestaTitular);
             respuestaDatosGenericos.setTransmision(respuestaTransmision);
             
-            respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
-            
             Class clazz = serveiBackoffice.getClient();
             
             String[] s = new String[]{};
             
             Class[] constructorParameters =  new Class[]{DatosGenericos.class, String.class, Propietats.class};
-            Object[] parameters = new Object[]{peticionDatosGenericos, strPeticionDatosEspecificos, propietats};
+            Object[] parameters = new Object[]{respuestaDatosGenericos, strPeticionDatosEspecificos, propietats};
             
             try {
                 CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
-                log.info("EmiservBackofficeWsImpl :: Clase client instanciada per :"  + client.getClass().getName());
+                log.info("EmiservBackofficeWsImpl :: Classe client instanciada per :"  + client.getClass().getName());
                 client.peticionSincrona();
                 
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
             
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             

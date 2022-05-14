@@ -1,6 +1,8 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -8,30 +10,32 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
  */
 public abstract class CedentClient {
     
-    protected DatosGenericos peticionDatosGenericos;
-    protected String peticionDatosEspecificos;
+    protected final Logger log = LoggerFactory.getLogger(getClass());
+    
+    protected DatosGenericos datosGenericos;
+    protected String strPeticionDatosEspecificos;
     protected Propietats propietats;
 
-    public CedentClient(DatosGenericos peticionDatosGenericos, String peticionDatosEspecificos, Propietats propietats) {
-        this.peticionDatosGenericos = peticionDatosGenericos;
-        this.peticionDatosEspecificos = peticionDatosEspecificos;
+    public CedentClient(DatosGenericos datosGenericos, String strPeticionDatosEspecificos, Propietats propietats) {
+        this.datosGenericos = datosGenericos;
+        this.strPeticionDatosEspecificos = strPeticionDatosEspecificos;
         this.propietats = propietats;
     }
 
-    public DatosGenericos getPeticionDatosGenericos() {
-        return peticionDatosGenericos;
+    public DatosGenericos getDatosGenericos() {
+        return datosGenericos;
     }
 
-    public void setPeticionDatosGenericos(DatosGenericos peticionDatosGenericos) {
-        this.peticionDatosGenericos = peticionDatosGenericos;
+    public void setDatosGenericos(DatosGenericos datosGenericos) {
+        this.datosGenericos = datosGenericos;
     }
 
-    public String getPeticionDatosEspecificos() {
-        return peticionDatosEspecificos;
+    public String getStrPeticionDatosEspecificos() {
+        return strPeticionDatosEspecificos;
     }
 
-    public void setPeticionDatosEspecificos(String peticionDatosEspecificos) {
-        this.peticionDatosEspecificos = peticionDatosEspecificos;
+    public void setStrPeticionDatosEspecificos(String strPeticionDatosEspecificos) {
+        this.strPeticionDatosEspecificos = strPeticionDatosEspecificos;
     }
 
     public Propietats getPropietats() {
@@ -42,7 +46,7 @@ public abstract class CedentClient {
         this.propietats = propietats;
     }
     
-    public abstract String getDatosEspecificosRespuesta();
+    public abstract String getStrDatosEspecificosRespuesta();
     
     public abstract DatosGenericos getDatosGenericosRespuesta();
     
