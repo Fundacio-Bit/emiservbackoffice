@@ -1,6 +1,8 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
+import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
+import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,9 +20,9 @@ import org.w3c.dom.Element;
 public class SCDCPAJUv3Client extends CedentClient {
     
     
-    private es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos pde;
+    private SCDCPAJUv3PeticionDatosEspecificos pde;
         
-    private es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos rde;
+    private SCDCPAJUv3RespuestaDatosEspecificos rde;
     
     public SCDCPAJUv3Client(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
         super(datosGenericos, peticionDatosEspecificos, propietats);
@@ -28,17 +30,19 @@ public class SCDCPAJUv3Client extends CedentClient {
 
     private void setDatosPeticion() throws JAXBException, IOException{
         
-        XmlManager<es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos> manager
-                = new XmlManager<es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos>(es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos.class);
+        XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
+                = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
         pde = manager.generateItem(peticionDatosEspecificos);
-        
+
+        log.info("SCDCPAJUv3Client :: Datos Especificos Peticioon: " +  ((pde!=null)?pde.toString():""));
+
     }
     
     
     private void setDatosRespuesta() throws JAXBException, ParserConfigurationException{
         
-        XmlManager<es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos> manager
-                = new XmlManager<es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos>(es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos.class);
+        XmlManager<SCDCPAJUv3RespuestaDatosEspecificos> manager
+                = new XmlManager<SCDCPAJUv3RespuestaDatosEspecificos>(SCDCPAJUv3RespuestaDatosEspecificos.class);
         
         XmlSchema xmlSchemaAnnotation = manager.getXmlSchemaAnnotation();
 
@@ -65,7 +69,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         }
         
         
-        rde = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos();
+        rde = new SCDCPAJUv3RespuestaDatosEspecificos();
         
         try {
             setDatosRespuesta();
