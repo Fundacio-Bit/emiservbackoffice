@@ -3,6 +3,7 @@ package es.caib.emiservbackoffice.ws.cedent;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -13,12 +14,14 @@ public abstract class CedentClient {
     protected final Logger log = LoggerFactory.getLogger(getClass());
     
     protected DatosGenericos datosGenericos;
-    protected String strPeticionDatosEspecificos;
+    protected Element peticionDatosEspecificos;
     protected Propietats propietats;
+    
+    protected Element respuestaDatosEspecificos;
 
-    public CedentClient(DatosGenericos datosGenericos, String strPeticionDatosEspecificos, Propietats propietats) {
+    public CedentClient(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
         this.datosGenericos = datosGenericos;
-        this.strPeticionDatosEspecificos = strPeticionDatosEspecificos;
+        this.peticionDatosEspecificos = peticionDatosEspecificos;
         this.propietats = propietats;
     }
 
@@ -30,12 +33,12 @@ public abstract class CedentClient {
         this.datosGenericos = datosGenericos;
     }
 
-    public String getStrPeticionDatosEspecificos() {
-        return strPeticionDatosEspecificos;
+    public Element getPeticionDatosEspecificos() {
+        return peticionDatosEspecificos;
     }
 
-    public void setStrPeticionDatosEspecificos(String strPeticionDatosEspecificos) {
-        this.strPeticionDatosEspecificos = strPeticionDatosEspecificos;
+    public void setPeticionDatosEspecificos(Element peticionDatosEspecificos) {
+        this.peticionDatosEspecificos = peticionDatosEspecificos;
     }
 
     public Propietats getPropietats() {
@@ -45,10 +48,14 @@ public abstract class CedentClient {
     public void setPropietats(Propietats propietats) {
         this.propietats = propietats;
     }
-    
-    public abstract String getStrDatosEspecificosRespuesta();
-    
-    public abstract DatosGenericos getDatosGenericosRespuesta();
+
+    public Element getRespuestaDatosEspecificos() {
+        return respuestaDatosEspecificos;
+    }
+
+    public void setRespuestaDatosEspecificos(Element respuestaDatosEspecificos) {
+        this.respuestaDatosEspecificos = respuestaDatosEspecificos;
+    }
     
     public abstract void peticionSincrona();
     

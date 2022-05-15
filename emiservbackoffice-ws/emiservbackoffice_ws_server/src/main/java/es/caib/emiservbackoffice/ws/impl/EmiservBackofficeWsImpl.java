@@ -239,19 +239,34 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             String[] s = new String[]{};
             
-            Class[] constructorParameters =  new Class[]{DatosGenericos.class, String.class, Propietats.class};
-            Object[] parameters = new Object[]{respuestaDatosGenericos, strPeticionDatosEspecificos, propietats};
+            Class[] constructorParameters =  new Class[]{DatosGenericos.class, Element.class, Propietats.class};
+            Object[] parameters = new Object[]{respuestaDatosGenericos, peticionDatosEspecificos, propietats};
+            
+            Element respuestaDatosEspecificos = null;
             
             try {
                 CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
                 log.info("EmiservBackofficeWsImpl :: Classe client instanciada per :"  + client.getClass().getName());
                 client.peticionSincrona();
-                
+                respuestaDatosEspecificos = client.getRespuestaDatosEspecificos();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             
+            String strRespuestaDatosEspecificos;
+            
+            try {
+                strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
+            } catch (TransformerException ex) {
+                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
+                respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
+                return respuesta;
+            }
+            
+            log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : "  + strRespuestaDatosEspecificos);
+            
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
+            respuestaTransmisionDatos.setDatosEspecificos(respuestaDatosEspecificos);
             
             respuestaTransmisionesTransmisionDatos.add(respuestaTransmisionDatos);
             
