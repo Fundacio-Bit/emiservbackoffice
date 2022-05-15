@@ -39,15 +39,16 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         XmlManager<es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos> manager
                 = new XmlManager<es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos>(es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos.class);
+        
         XmlSchema xmlSchemaAnnotation = manager.getXmlSchemaAnnotation();
 
-        log.info("SCDCPAJUv3Client :: Datos Especificos NAMESPACE: " + xmlSchemaAnnotation.namespace());
-        log.info("SCDCPAJUv3Client :: Datos Especificos LOCATION: " + xmlSchemaAnnotation.location());
+        log.info("SCDCPAJUv3Client :: Datos Especificos NAMESPACE: " + ((xmlSchemaAnnotation!=null)?xmlSchemaAnnotation.namespace():"No xmlSchemaAnnotation"));
+        log.info("SCDCPAJUv3Client :: Datos Especificos LOCATION: " + ((xmlSchemaAnnotation!=null)?xmlSchemaAnnotation.location():"No xmlSchemaAnnotation"));
 
         XmlRootElement xmlRootElementAnnotation = manager.getXmlRootElementAnnotation();
 
-        log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot NAMESPACE: " + xmlRootElementAnnotation.namespace());
-        log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot LOCATION: " + xmlRootElementAnnotation.name());
+        log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot NAMESPACE: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.namespace():"No xmlRootElementAnnotation"));
+        log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot LOCATION: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.name():"No xmlRootElementAnnotation"));
 
         respuestaDatosEspecificos = manager.generateElement(rde);
    
