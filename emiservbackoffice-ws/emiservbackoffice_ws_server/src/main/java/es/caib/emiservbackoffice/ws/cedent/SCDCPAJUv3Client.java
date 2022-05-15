@@ -6,12 +6,14 @@ import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.parsers.ParserConfigurationException;
 import org.fundaciobit.pluginsib.utils.xml.XmlManager;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 /**
  *
@@ -29,6 +31,12 @@ public class SCDCPAJUv3Client extends CedentClient {
     }
 
     private void setDatosPeticion() throws JAXBException, IOException{
+        
+        NamedNodeMap attrs = peticionDatosEspecificos.getAttributes();
+        
+        while (attrs.getLength() > 0) {
+            attrs.removeNamedItem(attrs.item(0).getNodeName());
+        }
         
         XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
                 = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
