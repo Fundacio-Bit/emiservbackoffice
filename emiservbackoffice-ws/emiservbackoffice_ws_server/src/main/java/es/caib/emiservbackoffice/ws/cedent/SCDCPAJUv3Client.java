@@ -20,9 +20,9 @@ import org.w3c.dom.Element;
 public class SCDCPAJUv3Client extends CedentClient {
     
     
-    private SCDCPAJUv3PeticionDatosEspecificos pde;
+    protected SCDCPAJUv3PeticionDatosEspecificos pde;
         
-    private SCDCPAJUv3RespuestaDatosEspecificos rde;
+    protected SCDCPAJUv3RespuestaDatosEspecificos rde;
     
     public SCDCPAJUv3Client(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
         super(datosGenericos, peticionDatosEspecificos, propietats);
@@ -68,7 +68,7 @@ public class SCDCPAJUv3Client extends CedentClient {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (pde!=null){
-            
+             
              log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getProvinciaSolicitud());
              log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getMunicipioSolicitud());
              log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
