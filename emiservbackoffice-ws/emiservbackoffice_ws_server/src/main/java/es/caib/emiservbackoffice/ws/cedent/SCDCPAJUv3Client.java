@@ -40,7 +40,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
                 = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
-        pde = manager.generateItem(peticionDatosEspecificos, false, false);
+        pde = manager.generateItem(peticionDatosEspecificos, false, true);
 
         log.info("SCDCPAJUv3Client :: Datos Especificos Peticion: " +  ((pde!=null)?pde.toString():""));
 
@@ -77,10 +77,13 @@ public class SCDCPAJUv3Client extends CedentClient {
         }
         if (pde!=null){
              
-             log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getProvinciaSolicitud());
-             log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getMunicipioSolicitud());
-             log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
-             log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Document: " + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+             log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Solicitud: " + pde.getSolicitud());   
+             if (pde.getSolicitud()!=null){
+                log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getProvinciaSolicitud());
+                log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getMunicipioSolicitud());
+                log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
+                log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Document: " + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+             }
         }
         
         rde = new SCDCPAJUv3RespuestaDatosEspecificos();
