@@ -40,7 +40,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
                 = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
-        pde = manager.generateItem(peticionDatosEspecificos);
+        pde = manager.generateItem(peticionDatosEspecificos, false, false);
 
         log.info("SCDCPAJUv3Client :: Datos Especificos Peticion: " +  ((pde!=null)?pde.toString():""));
 
