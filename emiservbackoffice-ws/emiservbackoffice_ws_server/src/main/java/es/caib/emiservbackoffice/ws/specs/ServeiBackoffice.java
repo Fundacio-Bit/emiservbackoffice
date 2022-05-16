@@ -7,33 +7,23 @@ package es.caib.emiservbackoffice.ws.specs;
 import es.caib.emiservbackoffice.ws.cedent.SCDCPAJUv3Client;
 import es.caib.emiservbackoffice.ws.cedent.SCDHPAJUv3Client;
 
-
 /**
  *
  * @author gdeignacio
  */
 public enum ServeiBackoffice {
     
-    SCDCPAJU("SCDCPAJUv3", 
-            SCDCPAJUv3Client.class, 
-            es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos.class, 
-            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.DatosEspecificos.class),
-    SCDHPAJU("SCDHPAJUv3",
-            SCDHPAJUv3Client.class,
-            null,
-            null);
+    SCDCPAJU("SCDCPAJUv3", SCDCPAJUv3Client.class),
+    SCDHPAJU("SCDHPAJUv3", SCDHPAJUv3Client.class);
     
-    private ServeiBackoffice(String codi, Class client, Class datosEspecificosPeticion, Class datosEspecificosRespuesta){
+    private ServeiBackoffice(String codi, Class client){
         this.codi = codi;
         this.client = client;
-        this.datosEspecificosPeticion = datosEspecificosPeticion;
-        this.datosEspecificosRespuesta = datosEspecificosRespuesta;
     }
     
     private String codi;
     private Class client;
-    private Class datosEspecificosPeticion;
-    private Class datosEspecificosRespuesta;
+  
 
     public String getCodi() {
         return codi;
@@ -50,25 +40,6 @@ public enum ServeiBackoffice {
     public void setClient(Class client) {
         this.client = client;
     }
-
-    public Class getDatosEspecificosPeticion() {
-        return datosEspecificosPeticion;
-    }
-
-    public void setDatosEspecificosPeticion(Class datosEspecificosPeticion) {
-        this.datosEspecificosPeticion = datosEspecificosPeticion;
-    }
-
-    public Class getDatosEspecificosRespuesta() {
-        return datosEspecificosRespuesta;
-    }
-
-    public void setDatosEspecificosRespuesta(Class datosEspecificosRespuesta) {
-        this.datosEspecificosRespuesta = datosEspecificosRespuesta;
-    }
-
-   
-
-    
+  
 
 }

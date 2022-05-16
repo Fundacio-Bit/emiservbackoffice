@@ -1,8 +1,13 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion;
+import es.caib.emiserv.logic.intf.service.ws.backoffice.Titular;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
+import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,7 +91,34 @@ public class SCDCPAJUv3Client extends CedentClient {
              }
         }
         
+        
+        log.info("SCDCPAJUv3Client :: Iniciant client ");   
+        
+        ScdcpajUv3Api clientScdcpajUv3Api;
+        
+        
         rde = new SCDCPAJUv3RespuestaDatosEspecificos();
+        
+        Estado respuestaEstado = new Estado();
+        respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
+        //estado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
+        respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
+        //estado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
+        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud respuestaSolicitud = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud();
+        respuestaSolicitud.setProvinciaSolicitud("07");
+        respuestaSolicitud.setMunicipioSolicitud("026");
+        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Titular respuestaTitular = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Titular();
+        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion respuestaDocumentacion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion();
+        respuestaDocumentacion.setTipo("NIF");
+        respuestaDocumentacion.setValor("12345678Z");
+        respuestaTitular.setDocumentacion(respuestaDocumentacion);
+        respuestaSolicitud.setTitular(respuestaTitular);
+        
+        datosGenericos.getTitular().setTipoDocumentacion(TipoDocumentacion.valueOf(respuestaDocumentacion.getTipo()));
+        datosGenericos.getTitular().setDocumentacion(respuestaDocumentacion.getValor());
+        
+        rde.setSolicitud(respuestaSolicitud);
+        
         
         try {
             setDatosRespuesta();

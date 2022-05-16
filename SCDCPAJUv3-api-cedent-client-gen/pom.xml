@@ -39,9 +39,10 @@
                         <phase>install</phase>
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.yaml</inputSpec>
-                            <language>jaxrs-cxf-client</language>
+                            <language>java</language>
+                            <!--language>jaxrs-cxf-client</language-->
                             <configHelp>java</configHelp>
-                            <!--library>resteasy</library-->
+                            <library>resteasy</library>
                             <configOptions>
                                 <groupId>es.caib.scsp</groupId>
                                 <artifactId>SCDCPAJUv3-api-cedent-client</artifactId>

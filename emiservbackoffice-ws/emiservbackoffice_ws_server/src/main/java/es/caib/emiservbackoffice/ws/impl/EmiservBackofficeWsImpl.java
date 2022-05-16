@@ -212,8 +212,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             log.info("EmiservBackofficeWsImpl :: Configurant per al codi de certificat : "  + codiCertificat);
             log.info("EmiservBackofficeWsImpl :: Configurant per al servei : "  + serveiBackoffice.getCodi());
             log.info("EmiservBackofficeWsImpl :: Client backoffice : "  + serveiBackoffice.getClient().getName());
-            log.info("EmiservBackofficeWsImpl :: Propietats: Endpoint :"  + propietats.getEndpoint());
-            log.info("EmiservBackofficeWsImpl :: Propietats: Usuari :"  + propietats.getUsuari());
+            log.info("EmiservBackofficeWsImpl :: Propietats: Endpoint : "  + propietats.getEndpoint());
+            log.info("EmiservBackofficeWsImpl :: Propietats: Usuari : "  + propietats.getUsuari());
             
             
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
@@ -246,7 +246,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             try {
                 CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
-                log.info("EmiservBackofficeWsImpl :: Classe client instanciada per :"  + client.getClass().getName());
+                log.info("EmiservBackofficeWsImpl :: Classe client instanciada per : "  + client.getClass().getName());
                 client.peticionSincrona();
                 respuestaDatosEspecificos = client.getRespuestaDatosEspecificos();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {

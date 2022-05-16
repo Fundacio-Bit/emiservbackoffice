@@ -1,9 +1,9 @@
 package es.caib.emiservbackoffice.cedent.SCDCPAJUv3;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.cxf.jaxrs.client.ClientConfiguration;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
-import org.apache.cxf.jaxrs.client.WebClient;
 
 /**
  * Adapter entorn al client del servei de verificació d'identitat.
@@ -64,6 +59,7 @@ public class SCDCPAJUv3Client {
     public Resultado peticioSincrona(Solicitud solicitud) throws IOException {
         
         return clientScdcpajUv3Api.peticionSincrona(solicitud);
+        //return null;
         
     }
 

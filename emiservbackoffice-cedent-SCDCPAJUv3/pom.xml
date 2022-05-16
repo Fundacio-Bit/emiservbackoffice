@@ -64,10 +64,10 @@
             <version>${cedent-client.version}</version>
             <exclusions>
                 <!-- evitar conflicte amb JAX-RS de JBoss -->
-                <!--exclusion>
+                <exclusion>
                     <groupId>javax.ws.rs</groupId>
                     <artifactId>jsr311-api</artifactId>
-                </exclusion-->
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- Dependències de test -->
