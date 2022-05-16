@@ -56,41 +56,6 @@ public class ScdcpajUv3ApiTest {
          String userpass = "pinbal".concat(":").concat("!puW6PHUQC%c");
          
          api.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
-         
-         //headerParams.add(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(str.getBytes(StandardCharsets.UTF_8)));
-         
-           // Replace 'user' and 'password' by the actual values
-        //String userpass = "pinbal".concat(":").concat("!puW6PHUQC%c");
-        //String authorizationHeader = "Basic "
-        //+ org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
-
-        
-
-         //api.getApiClient().setUsername("pinbal");
-         //api.getApiClient().setPassword("!puW6PHUQC%c");
-         
-         
-        
-        //JacksonJsonProvider provider = new JacksonJsonProvider();
-        //List providers = new ArrayList();
-        //providers.add(provider);
-        
-        // Replace 'user' and 'password' by the actual values
-        //String userpass = "pinbal".concat(":").concat("!puW6PHUQC%c");
-        //String authorizationHeader = "Basic "
-        //+ org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
-        
-        //AuthenticatorReplacer.verifyHost();
-        
-        //api = JAXRSClientFactory.create("http://pinbalcedent:8580/pinbal-services/rest", ScdcpajUv3Api.class, providers);
-        //org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).authorization(authorizationHeader);
-        
-        //ClientConfiguration config = WebClient.getConfig(client);
-        //System.out.println(authorizationHeader);
-        //System.out.println(client.getHeaders().entrySet().toString());
-        
-        //config.getInInterceptors().add(new LoggingInInterceptor());
-        //config.getOutInterceptors().add(new LoggingOutInterceptor());
         
     }
 
@@ -126,8 +91,6 @@ public class ScdcpajUv3ApiTest {
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         
-        
-        
         System.out.println(datosPersonales);
         
         Titular titular;
@@ -143,8 +106,8 @@ public class ScdcpajUv3ApiTest {
         
         Resultado response = null;
        
-            response = api.peticionSincrona(body);
-            System.out.println(response.toString());
+        response = api.peticionSincrona(body);
+        System.out.println(response.toString());
         //} catch (ResponseProcessingException e){
         //    System.out.println(e.getMessage());
         //}
