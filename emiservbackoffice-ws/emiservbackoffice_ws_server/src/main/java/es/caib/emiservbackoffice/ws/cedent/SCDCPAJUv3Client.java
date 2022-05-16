@@ -37,6 +37,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
     private void setDatosPeticion() throws JAXBException, IOException{
         
+        
         NamedNodeMap attrs = peticionDatosEspecificos.getAttributes();
         
         while (attrs.getLength() > 0) {
@@ -67,7 +68,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot NAMESPACE: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.namespace():"No xmlRootElementAnnotation"));
         log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot LOCATION: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.name():"No xmlRootElementAnnotation"));
 
-        respuestaDatosEspecificos = manager.generateElement(rde);
+        respuestaDatosEspecificos = manager.generateElement(rde, true);
         
     }
     

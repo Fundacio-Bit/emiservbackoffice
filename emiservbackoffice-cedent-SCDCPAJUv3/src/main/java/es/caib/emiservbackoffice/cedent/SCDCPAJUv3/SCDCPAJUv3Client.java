@@ -24,7 +24,7 @@ public class SCDCPAJUv3Client {
     @Inject
     private Configuracio configuracio;
 
-    private ScdcpajUv3Api clientScdcpajUv3Api;
+    //private ScdcpajUv3Api clientScdcpajUv3Api;
 
     @PostConstruct
     protected void init() {
@@ -58,8 +58,8 @@ public class SCDCPAJUv3Client {
 
     public Resultado peticioSincrona(Solicitud solicitud) throws IOException {
         
-        return clientScdcpajUv3Api.peticionSincrona(solicitud);
-        //return null;
+        //return clientScdcpajUv3Api.peticionSincrona(solicitud);
+        return null;
         
     }
 
