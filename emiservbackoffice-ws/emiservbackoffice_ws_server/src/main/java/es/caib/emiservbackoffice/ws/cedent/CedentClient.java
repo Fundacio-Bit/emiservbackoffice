@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
  */
 public abstract class CedentClient {
     
-    protected static String EMISERV_XMLNS = "";
+    protected static String EMISERV_BACKOFFICE_XMLNS = "http://caib.es/emiserv/backoffice";
     
     protected final Logger log = LoggerFactory.getLogger(getClass());
     

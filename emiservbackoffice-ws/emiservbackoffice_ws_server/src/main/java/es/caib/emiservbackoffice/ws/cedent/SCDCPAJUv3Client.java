@@ -57,6 +57,8 @@ public class SCDCPAJUv3Client extends CedentClient {
             attrs.removeNamedItem(attrs.item(0).getNodeName());
         }
         
+        peticionDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
+        
         XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
                 = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
         pde = manager.generateItem(peticionDatosEspecificos, false, true);
@@ -83,7 +85,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         respuestaDatosEspecificos = manager.generateElement(rde);
         
-        respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_XMLNS);
+        respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
         
     }
     
