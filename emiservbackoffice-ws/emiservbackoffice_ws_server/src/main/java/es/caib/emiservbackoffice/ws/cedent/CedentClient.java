@@ -11,6 +11,8 @@ import org.w3c.dom.Element;
  */
 public abstract class CedentClient {
     
+    protected static String EMISERV_XMLNS = "";
+    
     protected final Logger log = LoggerFactory.getLogger(getClass());
     
     protected DatosGenericos datosGenericos;

@@ -15,9 +15,11 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.HttpHeaders;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
@@ -81,6 +83,8 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         respuestaDatosEspecificos = manager.generateElement(rde);
         
+        respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_XMLNS);
+        
     }
     
     
@@ -110,6 +114,153 @@ public class SCDCPAJUv3Client extends CedentClient {
     
     
     
+    private es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado adaptaResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado res) {
+
+        if (res == null) {
+            return null;
+        }
+
+        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado();
+
+        // Set fechaExpedicion 
+        resultado.setFechaExpedicion(res.getFechaExpedicion());
+
+        // Set ClaveHojaPadronal 
+        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ClaveHojaPadronal chp = res.getClaveHojaPadronal();
+
+        if (chp != null) {
+            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.ClaveHojaPadronal claveHojaPadronal = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.ClaveHojaPadronal();
+            claveHojaPadronal.setDistrito(chp.getDistrito());
+            claveHojaPadronal.setSeccion(chp.getSeccion());
+            claveHojaPadronal.setHoja(chp.getHoja());
+            resultado.setClaveHojaPadronal(claveHojaPadronal);
+        }
+
+        // Set Domicilio
+        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Domicilio dom = res.getDomicilio();
+
+        if (dom != null) {
+            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Domicilio domicilio = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Domicilio();
+            domicilio.setBloque(dom.getBloque());
+            domicilio.setCodPostal(dom.getCodPostal());
+            domicilio.setEscalera(dom.getEscalera());
+            domicilio.setHmt(dom.getHmt());
+            domicilio.setKmt(dom.getKmt());
+
+            // Set numero   
+            es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Numero num = dom.getNumero();
+
+            if (num != null) {
+                es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Numero numero = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Numero();
+                numero.setCalificador(num.getCalificador());
+                numero.setValor(num.getValor());
+                domicilio.setNumero(numero);
+            }
+
+            // Set numero superior   
+            es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.NumeroSuperior numsup = dom.getNumeroSuperior();
+            if (numsup != null) {
+                es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.NumeroSuperior numeroSuperior = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.NumeroSuperior();
+                numeroSuperior.setCalificador(numsup.getCalificador());
+                numeroSuperior.setValor(numsup.getValor());
+                domicilio.setNumeroSuperior(numeroSuperior);
+            }
+
+            domicilio.setPlanta(dom.getPlanta());
+            domicilio.setPortal(dom.getPortal());
+            domicilio.setPuerta(dom.getPuerta());
+
+            // Set via   
+            es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Via va  = dom.getVia();
+            if (va != null) {
+                es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via via = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via();
+                via.setCodigo(va.getCodigo());
+                via.setNombre(va.getNombre());
+                via.setTipo(va.getTipo());
+                domicilio.setVia(via);
+            }
+            resultado.setDomicilio(domicilio);
+        }
+
+        // Set personas
+        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Personas prs = res.getPersonas();
+        if (prs != null) {
+            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Personas personas = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Personas();
+
+            List<es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Persona> lPrs = prs.getDomicilio();
+
+            if (lPrs != null) {
+
+                for (es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Persona per : lPrs) {
+
+                    if (per != null) {
+
+                        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Persona persona = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Persona();
+                        persona.setApellido1(per.getApellido1());
+                        persona.setApellido2(per.getApellido2());
+                        persona.setNIA(per.getNia());
+                        persona.setNombre(per.getNombre());
+                        persona.setParticula1(per.getParticula1());
+                        persona.setParticula2(per.getParticula2());
+
+                        // set Documentacion
+                        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion doc = per.getDocumentacion();
+                        if (doc != null) {
+                            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion documentacion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion();
+                            es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum tipo = doc.getTipo();
+                            if (tipo != null) {
+                                documentacion.setTipo(tipo.getValue());
+                            }
+                            documentacion.setValor(doc.getValor());
+                            persona.setDocumentacion(documentacion);
+                        }
+
+                        // Set periodo inscripcion
+                        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.PeriodoInscripcion pin = per.getPeriodoInscripcion();
+                        if (pin != null) {
+                            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion periodoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion();
+                            periodoInscripcion.setDesde(pin.getDesde());
+
+                            // Set motivo inscripcion
+                            es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion mins = pin.getMotivoInscripcion();
+                            if (mins != null) {
+                                es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
+                                motivoInscripcion.setCausaVariacion(mins.getCausaVariacion());
+                                es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion.CodigoVariacionEnum codigo = mins.getCodigoVariacion();
+                                if (codigo != null){
+                                    motivoInscripcion.setCodigoVariacion(codigo.getValue());
+                                }
+                                motivoInscripcion.setDescripcion(mins.getDescripcion());
+                                periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
+                            }
+                            persona.setPeriodoInscripcion(periodoInscripcion);
+                        }
+
+                        // set fecha nacimiento
+                        Date date;
+                        Timestamp timestamp = null;
+                        try {
+                            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS").parse(per.getFechaNacimiento());
+                            timestamp = new java.sql.Timestamp(date.getTime());
+                        } catch (ParseException ex) {
+                            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        XMLGregorianCalendar fechaNacimiento = GregorianCalendars.timestampToXMLGregorianCalendar(timestamp);
+                        persona.setFechaNacimiento(fechaNacimiento);
+                        
+                        // add persona
+                        personas.getPersona().add(persona);
+
+                    }
+                }
+            }
+            resultado.setPersonas(personas);
+        }
+        return resultado;
+    }
+    
+    
     @Override
     public void peticionSincrona() {
         
@@ -133,101 +284,18 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado res = getResultado(sol);
         
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.ClaveHojaPadronal claveHojaPadronal = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.ClaveHojaPadronal();
-        
-        claveHojaPadronal.setDistrito(res.getClaveHojaPadronal().getDistrito());
-        claveHojaPadronal.setSeccion(res.getClaveHojaPadronal().getSeccion());
-        claveHojaPadronal.setHoja(res.getClaveHojaPadronal().getHoja());
-        
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Domicilio domicilio = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Domicilio();
-        domicilio.setBloque(res.getDomicilio().getBloque());
-        domicilio.setCodPostal(res.getDomicilio().getCodPostal());
-        domicilio.setEscalera(res.getDomicilio().getEscalera());
-        domicilio.setHmt(res.getDomicilio().getHmt());
-        domicilio.setKmt(res.getDomicilio().getKmt());
-        
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Numero numero = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Numero();
-        numero.setCalificador(res.getDomicilio().getNumero().getCalificador());
-        numero.setValor(res.getDomicilio().getNumero().getValor());
-        domicilio.setNumero(numero);
-        
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.NumeroSuperior numeroSuperior = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.NumeroSuperior();
-        numeroSuperior.setCalificador(res.getDomicilio().getNumeroSuperior().getCalificador());
-        numeroSuperior.setValor(res.getDomicilio().getNumeroSuperior().getValor());
-        domicilio.setNumeroSuperior(numeroSuperior);
-        
-        domicilio.setPlanta(res.getDomicilio().getPlanta());
-        domicilio.setPortal(res.getDomicilio().getPortal());
-        domicilio.setPuerta(res.getDomicilio().getPuerta());
-        
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via via = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via();
-        via.setCodigo(res.getDomicilio().getVia().getCodigo());
-        via.setNombre(res.getDomicilio().getVia().getNombre());
-        via.setTipo(res.getDomicilio().getVia().getTipo());
-        domicilio.setVia(via);
-        
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Personas personas = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Personas();
-        
-        for ( es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Persona per:res.getPersonas().getDomicilio()){
-            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Persona persona = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Persona();
-            persona.setApellido1(per.getApellido1());
-            persona.setApellido2(per.getApellido2());
-            persona.setNIA(per.getNia());
-            persona.setNombre(per.getNombre());
-            persona.setParticula1(per.getParticula1());
-            persona.setParticula2(per.getParticula2());
-            
-            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion documentacion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion();
-            documentacion.setTipo(per.getDocumentacion().getTipo().getValue());
-            documentacion.setValor(per.getDocumentacion().getValor());
-            persona.setDocumentacion(documentacion);
-            
-            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion periodoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion();
-            periodoInscripcion.setDesde(per.getPeriodoInscripcion().getDesde());
-            
-            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
-            motivoInscripcion.setCausaVariacion(per.getPeriodoInscripcion().getMotivoInscripcion().getCausaVariacion());
-            motivoInscripcion.setCodigoVariacion(per.getPeriodoInscripcion().getMotivoInscripcion().getCodigoVariacion().getValue());
-            motivoInscripcion.setDescripcion(per.getPeriodoInscripcion().getMotivoInscripcion().getDescripcion());
-            
-            periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
-            
-            persona.setPeriodoInscripcion(periodoInscripcion);
-            
-            Date date;
-            Timestamp timestamp = null;
-            try {
-                date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS").parse(per.getFechaNacimiento());
-                timestamp = new java.sql.Timestamp(date.getTime());
-            } catch (ParseException ex) {
-                Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            XMLGregorianCalendar fechaNacimiento = GregorianCalendars.timestampToXMLGregorianCalendar(timestamp);
-            
-            persona.setFechaNacimiento(fechaNacimiento);
-            personas.getPersona().add(persona);
-        
-        }
-        
         rde = new SCDCPAJUv3RespuestaDatosEspecificos();
         
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado();
-        resultado.setClaveHojaPadronal(claveHojaPadronal);
-        resultado.setDomicilio(domicilio);
-        resultado.setFechaExpedicion(res.getFechaExpedicion());
-        resultado.setPersonas(personas);
+        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = adaptaResultado(res);
         
+        rde.setResultado(resultado);
         
-        
-        
-        
-
         Estado respuestaEstado = new Estado();
         respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
         //estado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
         respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
         //estado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
+        
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud respuestaSolicitud = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud();
         respuestaSolicitud.setProvinciaSolicitud("07");
         respuestaSolicitud.setMunicipioSolicitud("026");
@@ -250,7 +318,6 @@ public class SCDCPAJUv3Client extends CedentClient {
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
     }
     
