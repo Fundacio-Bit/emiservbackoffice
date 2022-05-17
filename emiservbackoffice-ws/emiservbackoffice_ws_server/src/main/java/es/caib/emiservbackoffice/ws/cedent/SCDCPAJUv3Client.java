@@ -31,7 +31,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
 import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
-
+import org.springframework.web.client.HttpServerErrorException;
 
 /**
  *
@@ -40,9 +40,9 @@ import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
 public class SCDCPAJUv3Client extends CedentClient {
     
     
-    protected SCDCPAJUv3PeticionDatosEspecificos pde;
+    protected es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos pde;
         
-    protected SCDCPAJUv3RespuestaDatosEspecificos rde;
+    protected es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos rde;
     
     public SCDCPAJUv3Client(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
         super(datosGenericos, peticionDatosEspecificos, propietats);
@@ -57,7 +57,9 @@ public class SCDCPAJUv3Client extends CedentClient {
             attrs.removeNamedItem(attrs.item(0).getNodeName());
         }
         
-        peticionDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
+        //peticionDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
+       
+        
         
         XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
                 = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
@@ -109,7 +111,11 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         Resultado response = null;
         
-        response = api.peticionSincrona(solicitud);
+        try {
+            response = api.peticionSincrona(solicitud);
+        } catch (HttpServerErrorException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return response;
     }
