@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author gdeignacio
  */
-@XmlRootElement(name = "datosEspecificos", namespace = "http://intermediacion.redsara.es/scsp/esquemas/datosespecificos")
+@XmlRootElement(name = "datosEspecificos")
 public class SCDHPAJUv3PeticionDatosEspecificos 
         extends es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos {
     public SCDHPAJUv3PeticionDatosEspecificos(){

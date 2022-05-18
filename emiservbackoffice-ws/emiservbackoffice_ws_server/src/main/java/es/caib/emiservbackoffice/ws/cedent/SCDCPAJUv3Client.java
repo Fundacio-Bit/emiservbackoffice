@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import org.fundaciobit.pluginsib.utils.xml.XmlManager;
 import org.springframework.util.Base64Utils;
 import org.w3c.dom.Element;
@@ -32,6 +33,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
 import org.springframework.web.client.HttpServerErrorException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -44,28 +46,37 @@ public class SCDCPAJUv3Client extends CedentClient {
         
     protected es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos rde;
     
-    public SCDCPAJUv3Client(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
-        super(datosGenericos, peticionDatosEspecificos, propietats);
+    public SCDCPAJUv3Client(DatosGenericos datosGenericos, String strPeticionDatosEspecificos, Propietats propietats) {
+        super(datosGenericos, strPeticionDatosEspecificos, propietats);
     }
 
     private void setDatosPeticion() throws JAXBException, IOException{
         
-        
-        NamedNodeMap attrs = peticionDatosEspecificos.getAttributes();
-        
-        while (attrs.getLength() > 0) {
-            attrs.removeNamedItem(attrs.item(0).getNodeName());
+        try {
+            XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
+                    = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
+            
+            Element peticionDatosEspecificos = manager.stringToElement(strPeticionDatosEspecificos);
+            
+            NamedNodeMap attrs = peticionDatosEspecificos.getAttributes();
+            
+            while (attrs.getLength() > 0) {
+                attrs.removeNamedItem(attrs.item(0).getNodeName());
+            }
+            
+            //peticionDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
+            
+            
+            pde = manager.generateItem(peticionDatosEspecificos, false, true);
+            
+            log.info("SCDCPAJUv3Client :: Datos Especificos Peticion: " +  ((pde!=null)?pde.toString():""));
+        } catch (TransformerException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //peticionDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
-       
-        
-        
-        XmlManager<SCDCPAJUv3PeticionDatosEspecificos> manager
-                = new XmlManager<SCDCPAJUv3PeticionDatosEspecificos>(SCDCPAJUv3PeticionDatosEspecificos.class);
-        pde = manager.generateItem(peticionDatosEspecificos, false, true);
-
-        log.info("SCDCPAJUv3Client :: Datos Especificos Peticion: " +  ((pde!=null)?pde.toString():""));
 
     }
     
@@ -85,7 +96,13 @@ public class SCDCPAJUv3Client extends CedentClient {
         log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot NAMESPACE: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.namespace():"No xmlRootElementAnnotation"));
         log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot LOCATION: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.name():"No xmlRootElementAnnotation"));
 
-        respuestaDatosEspecificos = manager.generateElement(rde);
+        Element respuestaDatosEspecificos = manager.generateElement(rde);
+        
+        try {
+            strRespuestaDatosEspecificos = manager.elementToString(respuestaDatosEspecificos);
+        } catch (TransformerException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
         
@@ -328,6 +345,16 @@ public class SCDCPAJUv3Client extends CedentClient {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @Override
+    public Element getRespuestaDatosEspecificos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setPeticionDatosEspecificos(Element element) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

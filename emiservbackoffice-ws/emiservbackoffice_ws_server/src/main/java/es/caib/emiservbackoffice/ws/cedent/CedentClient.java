@@ -16,14 +16,13 @@ public abstract class CedentClient {
     protected final Logger log = LoggerFactory.getLogger(getClass());
     
     protected DatosGenericos datosGenericos;
-    protected Element peticionDatosEspecificos;
+    protected String strPeticionDatosEspecificos;
     protected Propietats propietats;
-    
-    protected Element respuestaDatosEspecificos;
+    protected String strRespuestaDatosEspecificos;
 
-    public CedentClient(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
+    public CedentClient(DatosGenericos datosGenericos, String strPeticionDatosEspecificos, Propietats propietats) {
         this.datosGenericos = datosGenericos;
-        this.peticionDatosEspecificos = peticionDatosEspecificos;
+        this.strPeticionDatosEspecificos = strPeticionDatosEspecificos;
         this.propietats = propietats;
     }
 
@@ -35,12 +34,12 @@ public abstract class CedentClient {
         this.datosGenericos = datosGenericos;
     }
 
-    public Element getPeticionDatosEspecificos() {
-        return peticionDatosEspecificos;
+    public String getStrPeticionDatosEspecificos() {
+        return strPeticionDatosEspecificos;
     }
 
-    public void setPeticionDatosEspecificos(Element peticionDatosEspecificos) {
-        this.peticionDatosEspecificos = peticionDatosEspecificos;
+    public void setStrPeticionDatosEspecificos(String strPeticionDatosEspecificos) {
+        this.strPeticionDatosEspecificos = strPeticionDatosEspecificos;
     }
 
     public Propietats getPropietats() {
@@ -51,13 +50,17 @@ public abstract class CedentClient {
         this.propietats = propietats;
     }
 
-    public Element getRespuestaDatosEspecificos() {
-        return respuestaDatosEspecificos;
+    public String getStrRespuestaDatosEspecificos() {
+        return strRespuestaDatosEspecificos;
     }
 
-    public void setRespuestaDatosEspecificos(Element respuestaDatosEspecificos) {
-        this.respuestaDatosEspecificos = respuestaDatosEspecificos;
+    public void setStrRespuestaDatosEspecificos(String strRespuestaDatosEspecificos) {
+        this.strRespuestaDatosEspecificos = strRespuestaDatosEspecificos;
     }
+    
+    public abstract Element getRespuestaDatosEspecificos();
+    
+    public abstract void setPeticionDatosEspecificos(Element element);
     
     public abstract void peticionSincrona();
     

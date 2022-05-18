@@ -14,8 +14,8 @@ public class SCDHPAJUv3Client extends CedentClient {
     //private es.caib.scsp.esquemas.SCDHPAJUv3.peticion.datosespecificos.DatosEspecificos rde;
     
     
-    public SCDHPAJUv3Client(DatosGenericos datosGenericos, Element peticionDatosEspecificos, Propietats propietats) {
-        super(datosGenericos, peticionDatosEspecificos, propietats);
+    public SCDHPAJUv3Client(DatosGenericos datosGenericos, String strPeticionDatosEspecificos, Propietats propietats) {
+        super(datosGenericos, strPeticionDatosEspecificos, propietats);
     }
 
  
@@ -25,6 +25,16 @@ public class SCDHPAJUv3Client extends CedentClient {
         
         
     
+    }
+
+    @Override
+    public Element getRespuestaDatosEspecificos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setPeticionDatosEspecificos(Element element) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

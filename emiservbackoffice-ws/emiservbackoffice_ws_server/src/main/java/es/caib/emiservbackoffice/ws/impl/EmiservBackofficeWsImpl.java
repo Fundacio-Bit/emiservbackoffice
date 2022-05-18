@@ -36,6 +36,8 @@ import es.caib.emiservbackoffice.ws.specs.ServeiBackoffice;
 
 import es.caib.emiservbackoffice.ws.utils.BaseWsImpl;
 import es.caib.emiservbackoffice.ws.utils.WsI18NException;
+import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -49,6 +51,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -57,6 +62,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * @author gdeignacio
@@ -239,31 +246,34 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             String[] s = new String[]{};
             
-            Class[] constructorParameters =  new Class[]{DatosGenericos.class, Element.class, Propietats.class};
-            Object[] parameters = new Object[]{respuestaDatosGenericos, peticionDatosEspecificos, propietats};
+            Class[] constructorParameters =  new Class[]{DatosGenericos.class, String.class, Propietats.class};
+            Object[] parameters = new Object[]{respuestaDatosGenericos, strPeticionDatosEspecificos, propietats};
             
-            Element respuestaDatosEspecificos = null;
+            
+            String strRespuestaDatosEspecificos;
             
             try {
                 CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
                 log.info("EmiservBackofficeWsImpl :: Classe client instanciada per : "  + client.getClass().getName());
                 client.peticionSincrona();
-                respuestaDatosEspecificos = client.getRespuestaDatosEspecificos();
+                strRespuestaDatosEspecificos = client.getStrRespuestaDatosEspecificos();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            String strRespuestaDatosEspecificos;
-            
-            try {
-                strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
-            } catch (TransformerException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
                 return respuesta;
             }
             
             log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : "  + strRespuestaDatosEspecificos);
+            
+            Element respuestaDatosEspecificos = null;
+            
+            try {
+                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
+            } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
+                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
+                respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
+                return respuesta;
+            }
             
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
             respuestaTransmisionDatos.setDatosEspecificos(respuestaDatosEspecificos);
@@ -326,6 +336,23 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         return respuesta;
         
     }
+    
+    
+    
+    private Element stringToElement(String xml) throws TransformerException, ParserConfigurationException, SAXException, IOException{
+        return stringToElement(xml, Boolean.FALSE);
+    }
+    
+   private Element stringToElement(String xml, boolean namespaceAware) throws TransformerException, ParserConfigurationException, SAXException, IOException {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setNamespaceAware(namespaceAware);
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        StringReader reader = new StringReader(xml);
+        InputSource inputSource = new InputSource(reader);
+        Document doc = dBuilder.parse(inputSource);
+        return doc.getDocumentElement();
+    }
+
     
     private String elementToString(Element element) throws TransformerException {
         TransformerFactory transFactory = TransformerFactory.newInstance();
