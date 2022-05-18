@@ -58,8 +58,11 @@ public abstract class CedentClient {
         this.strRespuestaDatosEspecificos = strRespuestaDatosEspecificos;
     }
     
+    @Deprecated
     public abstract Element getRespuestaDatosEspecificos();
     
+    
+    @Deprecated
     public abstract void setPeticionDatosEspecificos(Element element);
     
     public abstract void peticionSincrona();
