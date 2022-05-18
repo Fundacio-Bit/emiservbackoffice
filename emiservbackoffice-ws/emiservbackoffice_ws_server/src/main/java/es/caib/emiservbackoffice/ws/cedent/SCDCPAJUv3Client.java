@@ -111,11 +111,12 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         Resultado response = null;
         
+        /*
         try {
             response = api.peticionSincrona(solicitud);
         } catch (HttpServerErrorException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
         return response;
     }
