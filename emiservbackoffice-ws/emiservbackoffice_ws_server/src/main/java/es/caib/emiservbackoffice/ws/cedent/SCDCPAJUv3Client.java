@@ -2,14 +2,10 @@ package es.caib.emiservbackoffice.ws.cedent;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
-import es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -27,7 +23,6 @@ import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import org.apache.commons.lang.StringUtils;
 import org.fundaciobit.pluginsib.utils.xml.XmlManager;
 import org.springframework.util.Base64Utils;
 import org.w3c.dom.Element;
@@ -102,7 +97,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot LOCATION: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.name():"No xmlRootElementAnnotation"));
 
         Element respuestaDatosEspecificos = manager.generateElement(rde);
-        respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), EMISERV_BACKOFFICE_XMLNS);
+        respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE, xmlSchemaAnnotation.namespace());
         
         try {
             strRespuestaDatosEspecificos = manager.elementToString(respuestaDatosEspecificos);
@@ -113,34 +108,36 @@ public class SCDCPAJUv3Client extends CedentClient {
     }
     
     
-    private Resultado getResultado(Solicitud solicitud){
-        
-        log.info("SCDCPAJUv3Client :: Iniciant client ");   
-        
+    private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud solicitud) {
+
+        log.info("SCDCPAJUv3Client :: Iniciant client ");
+
         ScdcpajUv3Api api = new ScdcpajUv3Api();
-         
+
         api.getApiClient().setBasePath(propietats.getEndpoint());
-         
+
         api.getApiClient().setDebugging(true);
-         
+
         String usuari = propietats.getUsuari();
         String secret = propietats.getSecret();
-        
+
         String userpass = usuari.concat(":").concat(secret);
-         
+
         api.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
-        
-        Resultado response = null;
-        
-        
+
+        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado response = null;
+
         try {
             response = api.peticionSincrona(solicitud);
         } catch (HttpServerErrorException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return response;
     }
+    
+    
+    
     
     private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud adaptaSolicitud(es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.Solicitud solicitud) {
 
@@ -184,7 +181,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
                 tipo = documentacion.getTipo();
                 valor = documentacion.getValor();
-                dc.setTipo(Documentacion.TipoEnum.fromValue(tipo));
+                dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                 dc.setValor(valor);
                 ti.setDocumentacion(dc);
                 
@@ -198,7 +195,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                     es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
                     tipo = documentacion.getTipo();
                     valor = documentacion.getValor();
-                    dc.setTipo(Documentacion.TipoEnum.fromValue(tipo));
+                    dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                     dc.setValor(valor);
                     dp.setDocumentacion(dc);
                 }
@@ -424,18 +421,33 @@ public class SCDCPAJUv3Client extends CedentClient {
         respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
         //estado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
 
+        
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud respuestaSolicitud = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud();
+        
         respuestaSolicitud.setProvinciaSolicitud(provinciaSolicitud);
         respuestaSolicitud.setMunicipioSolicitud(municipioSolicitud);
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Titular respuestaTitular = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Titular();
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion respuestaDocumentacion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion();
-        respuestaDocumentacion.setTipo("NIF");
-        respuestaDocumentacion.setValor("12345678Z");
+        
+        String tipo = null;
+        String valor = null;
+        
+        if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDocumentacion()!=null){
+            tipo = solicitud.getTitular().getDocumentacion().getTipo();
+            valor = solicitud.getTitular().getDocumentacion().getValor();
+        } else if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDatosPersonales()!=null && solicitud.getTitular().getDatosPersonales().getDocumentacion()!=null){
+            tipo = solicitud.getTitular().getDatosPersonales().getDocumentacion().getTipo();
+            valor = solicitud.getTitular().getDatosPersonales().getDocumentacion().getValor();
+        }
+        
+        respuestaDocumentacion.setTipo(tipo);
+        respuestaDocumentacion.setValor(valor);
         respuestaTitular.setDocumentacion(respuestaDocumentacion);
         respuestaSolicitud.setTitular(respuestaTitular);
-
-        datosGenericos.getTitular().setTipoDocumentacion(TipoDocumentacion.valueOf(respuestaDocumentacion.getTipo()));
+        
+        datosGenericos.getTitular().setTipoDocumentacion(es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.valueOf(respuestaDocumentacion.getTipo()));
         datosGenericos.getTitular().setDocumentacion(respuestaDocumentacion.getValor());
+        
 
         rde.setSolicitud(respuestaSolicitud);
 
