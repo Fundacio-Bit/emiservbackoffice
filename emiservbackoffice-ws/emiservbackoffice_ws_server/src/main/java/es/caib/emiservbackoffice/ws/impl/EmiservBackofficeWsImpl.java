@@ -62,6 +62,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -268,7 +270,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
-                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos, true);
+                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
+                respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
             } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
@@ -365,5 +368,39 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         return buffer.toString();
     }
     
+    
+    private Element camelCaseToCamelCaseLower(Element element){
+        
+        Document document = element.getOwnerDocument();
+        
+        NodeList nl = element.getElementsByTagName("*");
+        
+        for (int i=0;i<nl.getLength();i++){
+            Node n = nl.item(i);
+            if (n.getNodeType() == Node.ELEMENT_NODE){
+                String nombre = n.getNodeName();
+                document.renameNode(n, n.getNodeName(), nombre.substring(0,1).toLowerCase() + nombre.substring(1));
+            }
+        }
+        
+        String xml = null;
+        try {
+            xml = elementToString(element);
+            xml = xml.replaceAll(" xmlns=\".*\"", "");
+        } catch (TransformerException ex) {
+            Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : Adaptado "  + xml);
+      
+        try {
+            element  = stringToElement(xml);
+        } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return element;
+    
+    }
     
 }

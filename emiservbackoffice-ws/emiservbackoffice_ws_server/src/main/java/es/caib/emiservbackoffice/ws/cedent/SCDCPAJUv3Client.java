@@ -97,7 +97,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         log.info("SCDCPAJUv3Client :: Datos Especificos XmlRoot LOCATION: " + ((xmlRootElementAnnotation!=null)?xmlRootElementAnnotation.name():"No xmlRootElementAnnotation"));
 
         Element respuestaDatosEspecificos = manager.generateElement(rde);
-        respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE, xmlSchemaAnnotation.namespace());
+        //respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE, xmlSchemaAnnotation.namespace());
         
         try {
             strRespuestaDatosEspecificos = manager.elementToString(respuestaDatosEspecificos);
@@ -106,6 +106,8 @@ public class SCDCPAJUv3Client extends CedentClient {
         }
         
     }
+    
+    
     
     
     private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud solicitud) {
