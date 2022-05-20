@@ -268,7 +268,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
-                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
+                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos, true);
             } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
