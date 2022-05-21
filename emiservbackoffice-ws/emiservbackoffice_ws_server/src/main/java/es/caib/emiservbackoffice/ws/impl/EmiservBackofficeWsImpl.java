@@ -51,6 +51,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -272,6 +273,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             try {
                 respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
                 respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
+                respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE, CedentClient.EMISERV_BACKOFFICE_XMLNS);
+                
             } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
