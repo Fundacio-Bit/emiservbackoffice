@@ -272,20 +272,21 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
-                /*
+                
                 respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
                 respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
-                respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
-                strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
-                log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos Namespace: "  + strRespuestaDatosEspecificos);
-                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
-                */
-                respuestaDatosEspecificos = XmlUtils.stringToElement(strRespuestaDatosEspecificos);
+                //respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
+                //strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
+                //log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos Namespace: "  + strRespuestaDatosEspecificos);
+                //respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
+                respuestaDatosEspecificos = XmlUtils.node2Element(respuestaDatosEspecificos);
                 
             } catch (ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
                 return respuesta;
+            } catch (TransformerException ex) {
+                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             respuestaTransmisionDatos.setDatosGenericos(respuestaDatosGenericos);
