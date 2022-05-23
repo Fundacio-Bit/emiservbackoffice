@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: SCDHPAJUv3
+  title: SCDCPAJUv3
   # CommonMark syntax allowed here
-  description: '# This is a SCDHPAJUv3 server spec
+  description: '# This is a SCDCPAJUv3 server spec
 
                 You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). For this sample, you can use the api key `special-key` to test the authorization filters.'
   termsOfService: https://www.caib.es/sites/interoperabilitat/es/plataforma_de_interoperabilidad-55365/
@@ -34,10 +34,10 @@ servers:
         # open meaning there is the opportunity to use special base paths as assigned by the provider, default is `v2`
         default: /emiservbackofficeapi/externa/services
 paths:
-  /SCDHPAJUv3/peticionSincrona:
+  /SCDCPAJUv3/peticionSincrona:
     post:
       tags:
-      - SCDHPAJUv3
+      - SCDCPAJUv3
       summary: Realitza una consulta al cedent
       description: Realitza una consulta al cedent
       operationId: peticionSincrona
@@ -83,8 +83,6 @@ components:
           $ref: "#/components/schemas/MunicipioSolicitud"
         titular:
           $ref: "#/components/schemas/Titular"
-        numeroAnyos:
-          $ref: "#/components/schemas/NumeroAnyos"
       xml:
         name: Solicitud
 
@@ -103,14 +101,9 @@ components:
         name: MunicipioSolicitud
 
     Titular:
-      type: object
-      properties:
-        documentacion:
-          $ref: "#/components/schemas/Documentacion"
-        datosPersonales:
-          $ref: "#/components/schemas/DatosPersonales"
-        nia:
-          $ref: "#/components/schemas/NIA"
+      oneOf:
+        - $ref: "#/components/schemas/Documentacion"
+        - $ref: "#/components/schemas/DatosPersonales"
       xml:
         name: Titular
 
@@ -136,12 +129,6 @@ components:
           description: "Valor del document del titular sense cap espai en blanc."
           xml:
             name: Valor
-        numSoporte:
-          type: string
-          maxLength: 9
-          description: ""
-          xml:
-            name: NumSoporte
       xml:
         name: Documentacion
 
@@ -205,108 +192,29 @@ components:
 
     FechaNacimiento:
       type: string
-      format: full-date full-time
+      format: date-time
       description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
       xml:
         name: FechaNacimiento
 
-    NIA:
-      type: string
-      maxLength: 15
-      description: "Identificador únic a la base de dades de padró del titular de la sol·licitud."
-      xml:
-        name: NIA
-
-    NumeroAnyos:
-      type: string
-      maxLength: 2
-      description: "Nombre d'anys cap a enrere a consultar per generar l'històric. Independentment del nombre d'anys cap a enrere informats a la consulta, l'any més antic que l'emissor tindrà en compte és l'any 1996 o el primer any del que disposi de dades en format digital. Si no es rep aquesta dada, l'emissor retornarà la informació del padró relativa només al moment de la consulta."
-      xml:
-        name: NumeroAnyos
-
     Resultado:
       type: object
       required:
-      - nombre
-      - apellido1
-      - historicoDomicilios
+      - claveHojaPadronal
+      - domicilio
+      - personas
       - fechaExpedicion
       properties:
-        nombre:
-          $ref: "#/components/schemas/Nombre"
-        particula1:
-          $ref: "#/components/schemas/Particula1"
-        apellido1:
-          $ref: "#/components/schemas/Apellido1"
-        particula2:
-          $ref: "#/components/schemas/Particula2"
-        apellido2:
-          $ref: "#/components/schemas/Apellido2"
-        fechaNacimiento:
-          $ref: "#/components/schemas/FechaNacimiento"
-        documentacion:
-          $ref: "#/components/schemas/Documentacion"
-        historicoDomicilios:
-          $ref: "#/components/schemas/HistoricoDomicilios"
+        claveHojaPadronal:
+          $ref: "#/components/schemas/ClaveHojaPadronal"
+        domicilio:
+          $ref: "#/components/schemas/Domicilio"
+        personas:
+          $ref: "#/components/schemas/Personas"
         fechaExpedicion:
           $ref: "#/components/schemas/FechaExpedicion"
       xml:
         name: Resultado
-
-    HistoricoDomicilios:
-      type: object
-      properties:
-        domicilio:
-          type: array
-          xml:
-            name: Domicilio
-            wrapped: false
-          items:
-            $ref: "#/components/schemas/Domicilio"
-      xml:
-        name: HistoricoDomicilios
-
-    FechaExpedicion:
-      type: string
-      maxLength: 10
-      format: full-date full-time
-      description: "Data en la que s'expedeixen les dades sol·licitades. Format:yyyy-MM-dd"
-      xml:
-        name: FechaExpedicion
-
-    Domicilio:
-      type: object
-      required:
-      - claveHojaPadronal
-      - direccion
-      - desde
-      properties:
-        claveHojaPadronal:
-          $ref: "#/components/schemas/ClaveHojaPadronal"
-        provinciaRespuesta:
-          $ref: "#/components/schemas/ProvinciaRespuesta"
-        municipioRespuesta:
-          $ref: "#/components/schemas/MunicipioRespuesta"
-        entColectiva:
-          $ref: "#/components/schemas/EntColectiva"
-        entSingular:
-          $ref: "#/components/schemas/EntSingular"
-        nucleo:
-          $ref: "#/components/schemas/Nucleo"
-        codUnidadPoblacional:
-          $ref: "#/components/schemas/CodUnidadPoblacional"
-        direccion:
-          $ref: "#/components/schemas/Direccion"
-        desde:
-          $ref: "#/components/schemas/Desde"
-        motivoInscripcion:
-          $ref: "#/components/schemas/MotivoInscripcion"
-        hasta:
-          $ref: "#/components/schemas/Hasta"
-        motivoBaja:
-          $ref: "#/components/schemas/MotivoBaja"
-      xml:
-        name: Domicilio
 
     ClaveHojaPadronal:
       type: object
@@ -336,119 +244,7 @@ components:
       xml:
         name: ClaveHojaPadronal
 
-    ProvinciaRespuesta:
-      type: object
-      required:
-        - codigo
-        - nombre
-      properties:
-        codigo:
-          type: string
-          maxLength: 2
-          description: "Codi INE de la provincia."
-          xml:
-            name: Codigo
-        nombre:
-          type: string
-          maxLength: 70
-          description: "Nom INE de la provincia."
-          xml:
-            name: Nombre
-      xml:
-        name: ProvinciaRespuesta
-
-    MunicipioRespuesta:
-      type: object
-      required:
-        - codigo
-        - nombre
-      properties:
-        codigo:
-          type: string
-          maxLength: 3
-          description: "Codi INE del municipi."
-          xml:
-            name: Codigo
-        nombre:
-          type: string
-          maxLength: 70
-          description: "Nom INE del municipi."
-          xml:
-            name: Nombre
-      xml:
-        name: MunicipioRespuesta
-
-    EntColectiva :
-      type: object
-      required:
-        - codigo
-        - nombre
-      properties:
-        codigo:
-          type: string
-          maxLength: 2
-          description: "Codi entitat col·lectiva del domicili."
-          xml:
-            name: Codigo
-        nombre:
-          type: string
-          maxLength: 70
-          description: "Nom entitat col·lectiva del domicili."
-          xml:
-            name: Nombre
-      xml:
-        name: EntColectiva
-
-    EntSingular:
-      type: object
-      required:
-        - codigo
-        - nombre
-      properties:
-        codigo:
-          type: string
-          maxLength: 2
-          description: "Codi entitat col·lectiva del domicili."
-          xml:
-            name: Codigo
-        nombre:
-          type: string
-          maxLength: 70
-          description: "Nom entitat col·lectiva del domicili."
-          xml:
-            name: Nombre
-      xml:
-        name: EntSingular
-
-    Nucleo:
-      type: object
-      required:
-        - codigo
-        - nombre
-      properties:
-        codigo:
-          type: string
-          maxLength: 2
-          description: "Codi del nucli del domicili."
-          xml:
-            name: Codigo
-        nombre:
-          type: string
-          maxLength: 70
-          description: "Nom del nucli del domicili."
-          xml:
-            name: Nombre
-      xml:
-        name: Nucleo
-
-    CodUnidadPoblacional:
-      type: string
-      maxLength: 7
-      description: "Codi Unitat Poblacional del domicili del ciutadà. Es compon dels següents camps: Codi Entitat Col·lectiva (String 2) + Codi Entitat Singular (String 2) + Dígit de Control (String 1) + Codi Nucli (String 2)"
-      xml:
-        name: CodUnidadPoblacional
-
-    Direccion:
+    Domicilio:
       type: object
       required:
         - via
@@ -476,7 +272,69 @@ components:
         codPostal:
           $ref: "#/components/schemas/CodPostal"
       xml:
-        name: Direccion
+        name: Domicilio
+
+    Personas:
+      type: object
+      properties:
+        domicilio:
+          type: array
+          xml:
+            name: Persona
+            wrapped: false
+          items:
+            $ref: "#/components/schemas/Persona"
+      xml:
+        name: Personas
+
+    FechaExpedicion:
+      type: string
+      maxLength: 10
+      format: date-time
+      description: "Data en la que s'expedeixen les dades sol·licitades. Format:yyyy-MM-dd"
+      xml:
+        name: FechaExpedicion
+
+    Persona:
+      type: object
+      required:
+      - nombre
+      - apellido1
+      - NIA
+      properties:
+        nombre:
+          $ref: "#/components/schemas/Nombre"
+        particula1:
+          $ref: "#/components/schemas/Particula1"
+        apellido1:
+          $ref: "#/components/schemas/Apellido1"
+        particula2:
+          $ref: "#/components/schemas/Particula2"
+        apellido2:
+          $ref: "#/components/schemas/Apellido2"
+        fechaNacimiento:
+          $ref: "#/components/schemas/FechaNacimiento"
+        documentacion:
+          $ref: "#/components/schemas/Documentacion"
+        nia:
+          $ref: "#/components/schemas/NIA"
+        periodoInscripcion:
+          $ref: "#/components/schemas/PeriodoInscripcion"
+      xml:
+        name: Persona
+
+    PeriodoInscripcion:
+      type: object
+      required:
+      - desde
+      - motivoInscripcion
+      properties:
+        desde:
+          $ref: "#/components/schemas/Desde"
+        motivoInscripcion:
+          $ref: "#/components/schemas/MotivoInscripcion"
+      xml:
+        name: PeriodoInscripcion
 
     Via:
       type: object
@@ -504,7 +362,7 @@ components:
             name: Nombre
       xml:
         name: Via
-    
+
     Numero:
       type: object
       properties:
@@ -597,10 +455,18 @@ components:
       xml:
         name: CodPostal
 
+    NIA:
+      type: string
+      maxLength: 15
+      description: "Identificador únic a la base de dades de padró del titular de la sol·licitud."
+      xml:
+        name: NIA
+
+
     Desde:
      type: string
      maxLength: 10
-     format: full-date full-time
+     format: date-time
      description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
      xml:
        name: Desde
@@ -633,43 +499,6 @@ components:
             name: Descripcion
       xml:
         name: MotivoInscripcion
-
-    Hasta:
-      type: string
-      maxLength: 10
-      format: full-date full-time
-      description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
-      xml:
-       name: Hasta
-
-    MotivoBaja:
-      type: object
-      required:
-        - descripcion
-      properties:
-        codigoVariacion:
-          type: string
-          maxLength: 1
-          description: "Codi causa d'inscripció al domicili. (A: Alta, M: Modificacion) Si no és cap d'aquestes, no s'informa aquest valor."
-          enum:
-            - B
-            - M
-          xml:
-            name: CodigoVariacion
-        causaVariacion:
-          type: string
-          maxLength: 2
-          description: "Codi variació inscripció al domicili."
-          xml:
-            name: CausaVariacion
-        descripcion:
-          type: string
-          maxLength: 80
-          description: "Nom del nucli del domicili."
-          xml:
-            name: Descripcion
-      xml:
-        name: MotivoBaja
     ApiResponse:
       type: object
       properties:
@@ -681,11 +510,11 @@ components:
         message:
           type: string
 tags:
-- name: SCDHPAJUv3
+- name: SCDCPAJUv3
   description: '### Consultes al padró històric'
   externalDocs:
     description: 'Manual del cedent'
-    url: https://github.com/Fundacio-Bit/emiservbackoffice/blob/main/doc/SCDHPAJUv3/cedent/ManualCedentPadroHistoric.odt
+    url: https://github.com/Fundacio-Bit/emiservbackoffice/blob/main/doc/interoperabilitat/SCDCHPAJUv3/cedent/ManualCedentPadroConvivencia.odt
 externalDocs:
   description: "Documents d'interoperabilitat"
   url: http://interoperabilitat.caib.es

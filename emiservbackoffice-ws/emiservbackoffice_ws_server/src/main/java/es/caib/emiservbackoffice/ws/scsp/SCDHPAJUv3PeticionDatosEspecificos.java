@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "datosEspecificos")
 public class SCDHPAJUv3PeticionDatosEspecificos 
-        extends es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosEspecificos {
+        extends es.caib.scsp.esquemas.SCDHPAJUv3.peticion.datosespecificos.DatosEspecificos {
     public SCDHPAJUv3PeticionDatosEspecificos(){
         super();
     }

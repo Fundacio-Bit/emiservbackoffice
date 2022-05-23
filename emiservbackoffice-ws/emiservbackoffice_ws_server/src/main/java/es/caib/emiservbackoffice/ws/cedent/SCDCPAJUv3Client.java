@@ -235,7 +235,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         if (res == null) {
             return null;
         }
-
+        
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado();
 
         // Set fechaExpedicion 
@@ -356,7 +356,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                         Date date;
                         Timestamp timestamp = null;
                         try {
-                            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS").parse(per.getFechaNacimiento());
+                            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(per.getFechaNacimiento());
                             timestamp = new java.sql.Timestamp(date.getTime());
                         } catch (ParseException ex) {
                             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);

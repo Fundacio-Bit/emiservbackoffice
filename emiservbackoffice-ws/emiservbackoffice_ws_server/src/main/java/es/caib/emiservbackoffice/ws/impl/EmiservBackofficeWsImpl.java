@@ -61,6 +61,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.fundaciobit.pluginsib.utils.xml.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -271,13 +272,17 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
+                /*
                 respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
                 respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
                 respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
                 strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
                 log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos Namespace: "  + strRespuestaDatosEspecificos);
                 respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
-            } catch (TransformerException | ParserConfigurationException | SAXException | IOException ex) {
+                */
+                respuestaDatosEspecificos = XmlUtils.stringToElement(strRespuestaDatosEspecificos);
+                
+            } catch (ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
                 return respuesta;

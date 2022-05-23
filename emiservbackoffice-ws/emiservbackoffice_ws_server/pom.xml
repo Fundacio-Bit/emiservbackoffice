@@ -58,6 +58,21 @@
             </exclusions>
         </dependency>
       
+       <dependency>
+            <groupId>es.caib.scsp</groupId>
+            <artifactId>SCDHPAJUv3-api-cedent-client</artifactId>
+            <version>${cedent-client.version}</version>
+            <exclusions>
+                <!-- evitar conflicte amb JAX-RS de JBoss -->
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>jsr311-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+      
+      
+      
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
