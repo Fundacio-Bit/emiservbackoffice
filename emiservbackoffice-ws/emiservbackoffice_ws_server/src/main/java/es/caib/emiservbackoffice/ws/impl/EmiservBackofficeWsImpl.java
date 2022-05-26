@@ -274,12 +274,14 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             try {
                 
                 respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
-                respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
-                respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
-                strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
-                log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos Namespace: "  + strRespuestaDatosEspecificos);
-                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
-                respuestaDatosEspecificos = XmlUtils.node2Element(respuestaDatosEspecificos);
+                
+                
+                //respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
+                //respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
+                //strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
+                //log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos Namespace: "  + strRespuestaDatosEspecificos);
+                //respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
+                //respuestaDatosEspecificos = XmlUtils.node2Element(respuestaDatosEspecificos);
                 
             } catch (ParserConfigurationException | SAXException | IOException ex) {
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
