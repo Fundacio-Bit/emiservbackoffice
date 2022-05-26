@@ -62,6 +62,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.fundaciobit.pluginsib.utils.xml.XmlUtils;
+import static org.fundaciobit.pluginsib.utils.xml.XmlUtils.node2Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -272,9 +273,19 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
+                    
+                Element element = stringToElement(strRespuestaDatosEspecificos, true);
+                element.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
+                for (int i = 0; i < element.getChildNodes().getLength(); i++) {
+                    Node childNode = element.getChildNodes().item(i);
+                    if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element childElement = node2Element(childNode);
+                        childElement.setPrefix("ns2");
+                        element.replaceChild(childElement, childNode);
+                    }
+                }
                 
-                respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos);
-                
+                respuestaDatosEspecificos = element;
                 
                 //respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
                 //respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
