@@ -273,20 +273,9 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
-                /*    
-                Element element = stringToElement(strRespuestaDatosEspecificos, true);
-                element.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
-                for (int i = 0; i < element.getChildNodes().getLength(); i++) {
-                    Node childNode = element.getChildNodes().item(i);
-                    if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element childElement = node2Element(childNode);
-                        childElement.setPrefix("ns2");
-                        element.replaceChild(childElement, childNode);
-                    }
-                }
-                */
-                respuestaDatosEspecificos = (Element)strRespuestaDatosEspecificos.getBytes();
                 
+               respuestaDatosEspecificos = stringToElement(strRespuestaDatosEspecificos, true);
+               
                 //respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
                 //respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
                 //strRespuestaDatosEspecificos = elementToString(respuestaDatosEspecificos);
