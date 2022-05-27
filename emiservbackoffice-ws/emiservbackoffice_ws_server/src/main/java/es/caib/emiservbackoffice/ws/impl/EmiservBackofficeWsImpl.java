@@ -273,7 +273,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Element respuestaDatosEspecificos = null;
             
             try {
-                    
+                /*    
                 Element element = stringToElement(strRespuestaDatosEspecificos, true);
                 element.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
                 for (int i = 0; i < element.getChildNodes().getLength(); i++) {
@@ -284,8 +284,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
                         element.replaceChild(childElement, childNode);
                     }
                 }
-                
-                respuestaDatosEspecificos = element;
+                */
+                respuestaDatosEspecificos = (Element)strRespuestaDatosEspecificos.getBytes();
                 
                 //respuestaDatosEspecificos = camelCaseToCamelCaseLower(respuestaDatosEspecificos);
                 //respuestaDatosEspecificos.setAttribute(XMLConstants.XMLNS_ATTRIBUTE.concat(":ns2"), CedentClient.EMISERV_BACKOFFICE_XMLNS);
