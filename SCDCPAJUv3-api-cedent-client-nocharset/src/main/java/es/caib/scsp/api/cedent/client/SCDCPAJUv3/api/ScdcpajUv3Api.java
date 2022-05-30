@@ -51,7 +51,6 @@ public class ScdcpajUv3Api {
      * Realitza una consulta al cedent
      * <p><b>200</b> - Petició processada
      * <p><b>400</b> - Petició errònia
-     * <p><b>0</b> - Codi de resposta incorrecte
      * @param body Dades de la consulta
      * @return Resultado
      * @throws RestClientException if an error occurs while attempting to invoke the API
@@ -69,11 +68,11 @@ public class ScdcpajUv3Api {
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
         final String[] accepts = { 
-            "application/json; charset&#x3D;UTF-8", "text/plain; charset&#x3D;UTF-8"
+            "application/json"
          };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
         final String[] contentTypes = { 
-            "application/json; charset&#x3D;UTF-8"
+            "application/json"
          };
         final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
 

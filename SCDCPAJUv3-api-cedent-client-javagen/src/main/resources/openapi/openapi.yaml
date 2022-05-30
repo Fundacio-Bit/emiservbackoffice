@@ -44,7 +44,7 @@ paths:
       requestBody:
         description: Dades de la consulta
         content:
-          application/json:
+          application/json; charset=UTF-8:
             schema:
               $ref: '#/components/schemas/Solicitud'
             examples:
@@ -56,19 +56,31 @@ paths:
         200:
           description: Petició processada
           content:
-            application/json:
+            application/json; charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/Resultado'
         400:
           description: Petició errònia
           content:
-            application/json:
+            application/json; charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+        default:
+          description: Codi de resposta incorrecte
+          content:
+            text/plain; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MsgResponse'
 
 components:
 
   schemas:
+
+    MsgResponse:
+      type: string
+      description: "Resposta del servei en format lliure"
+      xml:
+        name: MsgResponse
 
     Solicitud:
       type: object
