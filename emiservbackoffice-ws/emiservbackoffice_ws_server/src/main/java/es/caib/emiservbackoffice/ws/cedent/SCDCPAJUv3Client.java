@@ -33,6 +33,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 import org.xml.sax.SAXException;
 
 /**
@@ -133,6 +134,9 @@ public class SCDCPAJUv3Client extends CedentClient {
             response = api.peticionSincrona(solicitud);
         } catch (HttpServerErrorException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnknownHttpStatusCodeException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
 
         return response;
