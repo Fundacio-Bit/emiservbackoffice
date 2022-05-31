@@ -30,6 +30,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.web.client.HttpServerErrorException;
@@ -242,8 +243,11 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado();
 
-        // Set fechaExpedicion 
-        resultado.setFechaExpedicion(res.getFechaExpedicion());
+        // Set fechaExpedicion
+        
+        LocalDate fexp = res.getFechaExpedicion();
+        String fechaExpedicion = fexp.toString("yyyy-MM-dd");
+        resultado.setFechaExpedicion(fechaExpedicion);
 
         // Set ClaveHojaPadronal 
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ClaveHojaPadronal chp = res.getClaveHojaPadronal();
@@ -339,7 +343,10 @@ public class SCDCPAJUv3Client extends CedentClient {
                         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.PeriodoInscripcion pin = per.getPeriodoInscripcion();
                         if (pin != null) {
                             es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion periodoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion();
-                            periodoInscripcion.setDesde(pin.getDesde());
+                            
+                            LocalDate dsd = pin.getDesde();
+                            String desde = dsd.toString("yyyy-MM-dd");                    
+                            periodoInscripcion.setDesde(desde);
 
                             // Set motivo inscripcion
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion mins = pin.getMotivoInscripcion();

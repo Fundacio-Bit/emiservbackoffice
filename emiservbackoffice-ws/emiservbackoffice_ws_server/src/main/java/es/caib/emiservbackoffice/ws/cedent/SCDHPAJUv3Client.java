@@ -30,6 +30,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.web.client.HttpServerErrorException;
@@ -261,8 +262,10 @@ public class SCDHPAJUv3Client extends CedentClient {
             resultado.setDocumentacion(documentacion);
         }
 
-        resultado.setFechaExpedicion(res.getFechaExpedicion());
-       
+        LocalDate fexp = res.getFechaExpedicion();
+        String fechaExpedicion = fexp.toString("yyyy-MM-dd");
+        resultado.setFechaExpedicion(fechaExpedicion);
+        
         
         // set fecha nacimiento
         Date date;
@@ -308,7 +311,9 @@ public class SCDHPAJUv3Client extends CedentClient {
                         // set codUnidadPoblacional
                         domicilio.setCodUnidadPoblacional(dom.getCodUnidadPoblacional());
                         
-                        domicilio.setDesde(dom.getDesde());
+                        LocalDate dsd = dom.getDesde();
+                        String desde = dsd.toString("yyyy-MM-dd");                    
+                        domicilio.setDesde(desde);
                         
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Direccion dir = dom.getDireccion();
                         
@@ -375,8 +380,9 @@ public class SCDHPAJUv3Client extends CedentClient {
                             domicilio.setEntSingular(entSingular);
                         }
                         
-                        domicilio.setHasta(dom.getHasta());
-                        
+                        LocalDate hst = dom.getHasta();
+                        String hasta = hst.toString("yyyy-MM-dd");                    
+                        domicilio.setHasta(hasta);
                         
                         // Set motivo baja
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoBaja motb = dom.getMotivoBaja();
