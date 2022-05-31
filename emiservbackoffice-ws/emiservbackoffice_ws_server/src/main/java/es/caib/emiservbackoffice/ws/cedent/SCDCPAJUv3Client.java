@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -129,6 +130,9 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         api.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
 
+        api.getApiClient().addDefaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON + "; charset=" + StandardCharsets.UTF_8.name());
+        api.getApiClient().addDefaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON + "; charset=" + StandardCharsets.UTF_8.name());
+        
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado response = null;
 
         try {
