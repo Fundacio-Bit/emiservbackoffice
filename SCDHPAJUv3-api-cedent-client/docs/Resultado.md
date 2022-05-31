@@ -11,4 +11,4 @@ Name | Type | Description | Notes
 **fechaNacimiento** | **String** |  |  [optional]
 **documentacion** | [**Documentacion**](Documentacion.md) |  |  [optional]
 **historicoDomicilios** | [**HistoricoDomicilios**](HistoricoDomicilios.md) |  | 
-**fechaExpedicion** | [**LocalDate**](LocalDate.md) |  | 
+**fechaExpedicion** | **String** |  | 

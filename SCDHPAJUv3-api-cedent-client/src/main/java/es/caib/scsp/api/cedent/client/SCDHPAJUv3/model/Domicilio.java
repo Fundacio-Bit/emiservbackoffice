@@ -27,7 +27,6 @@ import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MunicipioRespuesta;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Nucleo;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.ProvinciaRespuesta;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.joda.time.LocalDate;
 /**
  * Domicilio
  */
@@ -59,13 +58,13 @@ public class Domicilio {
   private Direccion direccion = null;
 
   @JsonProperty("desde")
-  private LocalDate desde = null;
+  private String desde = null;
 
   @JsonProperty("motivoInscripcion")
   private MotivoInscripcion motivoInscripcion = null;
 
   @JsonProperty("hasta")
-  private LocalDate hasta = null;
+  private String hasta = null;
 
   @JsonProperty("motivoBaja")
   private MotivoBaja motivoBaja = null;
@@ -214,7 +213,7 @@ public class Domicilio {
     this.direccion = direccion;
   }
 
-  public Domicilio desde(LocalDate desde) {
+  public Domicilio desde(String desde) {
     this.desde = desde;
     return this;
   }
@@ -224,11 +223,11 @@ public class Domicilio {
    * @return desde
   **/
   @Schema(required = true, description = "")
-  public LocalDate getDesde() {
+  public String getDesde() {
     return desde;
   }
 
-  public void setDesde(LocalDate desde) {
+  public void setDesde(String desde) {
     this.desde = desde;
   }
 
@@ -250,7 +249,7 @@ public class Domicilio {
     this.motivoInscripcion = motivoInscripcion;
   }
 
-  public Domicilio hasta(LocalDate hasta) {
+  public Domicilio hasta(String hasta) {
     this.hasta = hasta;
     return this;
   }
@@ -260,11 +259,11 @@ public class Domicilio {
    * @return hasta
   **/
   @Schema(description = "")
-  public LocalDate getHasta() {
+  public String getHasta() {
     return hasta;
   }
 
-  public void setHasta(LocalDate hasta) {
+  public void setHasta(String hasta) {
     this.hasta = hasta;
   }
 

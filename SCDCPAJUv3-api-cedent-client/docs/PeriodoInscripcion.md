@@ -3,5 +3,5 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**desde** | [**LocalDate**](LocalDate.md) |  | 
+**desde** | **String** |  | 
 **motivoInscripcion** | [**MotivoInscripcion**](MotivoInscripcion.md) |  | 

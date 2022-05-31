@@ -1,6 +1,9 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
@@ -66,6 +69,17 @@ public abstract class CedentClient {
     public abstract void setPeticionDatosEspecificos(Element element);
     
     public abstract void peticionSincrona();
+    
+    protected String fullDateToDate(String fullDate) throws ParseException{
+        
+        String strDate = fullDate;
+        SimpleDateFormat sdfFullDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = sdfFullDate.parse(fullDate);
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        strDate = sdfDate.format(date);
+        return strDate;
+        
+    }
     
     
 }

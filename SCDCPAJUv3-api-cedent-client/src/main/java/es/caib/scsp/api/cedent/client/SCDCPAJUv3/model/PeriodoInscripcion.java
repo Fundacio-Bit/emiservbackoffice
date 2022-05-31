@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.joda.time.LocalDate;
 /**
  * PeriodoInscripcion
  */
@@ -27,12 +26,12 @@ import org.joda.time.LocalDate;
 
 public class PeriodoInscripcion {
   @JsonProperty("desde")
-  private LocalDate desde = null;
+  private String desde = null;
 
   @JsonProperty("motivoInscripcion")
   private MotivoInscripcion motivoInscripcion = null;
 
-  public PeriodoInscripcion desde(LocalDate desde) {
+  public PeriodoInscripcion desde(String desde) {
     this.desde = desde;
     return this;
   }
@@ -42,11 +41,11 @@ public class PeriodoInscripcion {
    * @return desde
   **/
   @Schema(required = true, description = "")
-  public LocalDate getDesde() {
+  public String getDesde() {
     return desde;
   }
 
-  public void setDesde(LocalDate desde) {
+  public void setDesde(String desde) {
     this.desde = desde;
   }
 

@@ -281,7 +281,7 @@ components:
     FechaExpedicion:
       type: string
       maxLength: 10
-      format: date
+      format: full-date
       description: "Data en la que s'expedeixen les dades sol·licitades. Format:yyyy-MM-dd"
       xml:
         name: FechaExpedicion
@@ -612,7 +612,7 @@ components:
     Desde:
      type: string
      maxLength: 10
-     format: date
+     format: full-date
      description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
      xml:
        name: Desde
@@ -649,7 +649,7 @@ components:
     Hasta:
       type: string
       maxLength: 10
-      format: date
+      format: full-date
       description: "Data de naixement del titular de la sol·licitud. Format:yyyy-MM-dd"
       xml:
        name: Hasta

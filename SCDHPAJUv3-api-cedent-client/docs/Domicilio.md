@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **nucleo** | [**Nucleo**](Nucleo.md) |  |  [optional]
 **codUnidadPoblacional** | **String** |  |  [optional]
 **direccion** | [**Direccion**](Direccion.md) |  | 
-**desde** | [**LocalDate**](LocalDate.md) |  | 
+**desde** | **String** |  | 
 **motivoInscripcion** | [**MotivoInscripcion**](MotivoInscripcion.md) |  |  [optional]
-**hasta** | [**LocalDate**](LocalDate.md) |  |  [optional]
+**hasta** | **String** |  |  [optional]
 **motivoBaja** | [**MotivoBaja**](MotivoBaja.md) |  |  [optional]

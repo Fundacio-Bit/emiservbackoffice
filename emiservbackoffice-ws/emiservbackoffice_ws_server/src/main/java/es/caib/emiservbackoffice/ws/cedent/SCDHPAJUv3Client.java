@@ -262,8 +262,17 @@ public class SCDHPAJUv3Client extends CedentClient {
             resultado.setDocumentacion(documentacion);
         }
 
-        LocalDate fexp = res.getFechaExpedicion();
-        String fechaExpedicion = fexp.toString("yyyy-MM-dd");
+        //LocalDate fexp = res.getFechaExpedicion();
+        //String fechaExpedicion = fexp.toString("yyyy-MM-dd");
+        //resultado.setFechaExpedicion(fechaExpedicion);
+        
+        String fexp = res.getFechaExpedicion();
+        String fechaExpedicion = fexp;
+        try {
+            fechaExpedicion = fullDateToDate(fexp);
+        } catch (ParseException ex) {
+            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resultado.setFechaExpedicion(fechaExpedicion);
         
         
@@ -311,9 +320,19 @@ public class SCDHPAJUv3Client extends CedentClient {
                         // set codUnidadPoblacional
                         domicilio.setCodUnidadPoblacional(dom.getCodUnidadPoblacional());
                         
-                        LocalDate dsd = dom.getDesde();
-                        String desde = dsd.toString("yyyy-MM-dd");                    
+                        //LocalDate dsd = dom.getDesde();
+                        //String desde = dsd.toString("yyyy-MM-dd");                    
+                        //domicilio.setDesde(desde);
+                        
+                        String dsd = dom.getDesde();
+                        String desde = dsd;
+                        try {
+                            desde = fullDateToDate(dsd);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         domicilio.setDesde(desde);
+
                         
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Direccion dir = dom.getDireccion();
                         
@@ -380,10 +399,20 @@ public class SCDHPAJUv3Client extends CedentClient {
                             domicilio.setEntSingular(entSingular);
                         }
                         
-                        LocalDate hst = dom.getHasta();
-                        String hasta = hst.toString("yyyy-MM-dd");                    
-                        domicilio.setHasta(hasta);
+                        //LocalDate hst = dom.getHasta();
+                        //String hasta = hst.toString("yyyy-MM-dd");                    
+                        //domicilio.setHasta(hasta);
                         
+                        String hst = dom.getHasta();
+                        String hasta = hst;
+                        try {
+                            hasta = fullDateToDate(hst);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        domicilio.setHasta(hasta);
+
+
                         // Set motivo baja
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoBaja motb = dom.getMotivoBaja();
                         if (motb != null) {

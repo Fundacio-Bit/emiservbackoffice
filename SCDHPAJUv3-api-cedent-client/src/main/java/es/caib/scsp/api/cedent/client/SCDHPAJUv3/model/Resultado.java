@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.HistoricoDomicilios;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.joda.time.LocalDate;
 /**
  * Resultado
  */
@@ -52,7 +51,7 @@ public class Resultado {
   private HistoricoDomicilios historicoDomicilios = null;
 
   @JsonProperty("fechaExpedicion")
-  private LocalDate fechaExpedicion = null;
+  private String fechaExpedicion = null;
 
   public Resultado nombre(String nombre) {
     this.nombre = nombre;
@@ -198,7 +197,7 @@ public class Resultado {
     this.historicoDomicilios = historicoDomicilios;
   }
 
-  public Resultado fechaExpedicion(LocalDate fechaExpedicion) {
+  public Resultado fechaExpedicion(String fechaExpedicion) {
     this.fechaExpedicion = fechaExpedicion;
     return this;
   }
@@ -208,11 +207,11 @@ public class Resultado {
    * @return fechaExpedicion
   **/
   @Schema(required = true, description = "")
-  public LocalDate getFechaExpedicion() {
+  public String getFechaExpedicion() {
     return fechaExpedicion;
   }
 
-  public void setFechaExpedicion(LocalDate fechaExpedicion) {
+  public void setFechaExpedicion(String fechaExpedicion) {
     this.fechaExpedicion = fechaExpedicion;
   }
 

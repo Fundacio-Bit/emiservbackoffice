@@ -245,10 +245,20 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         // Set fechaExpedicion
         
-        LocalDate fexp = res.getFechaExpedicion();
-        String fechaExpedicion = fexp.toString("yyyy-MM-dd");
-        resultado.setFechaExpedicion(fechaExpedicion);
+        //LocalDate fexp = res.getFechaExpedicion();
+        //String fechaExpedicion = fexp.toString("yyyy-MM-dd");
+        //resultado.setFechaExpedicion(fechaExpedicion);
 
+        String fexp = res.getFechaExpedicion();
+        String fechaExpedicion = fexp;
+        try {
+            fechaExpedicion = fullDateToDate(fexp);
+        } catch (ParseException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        resultado.setFechaExpedicion(fechaExpedicion);
+        
+        
         // Set ClaveHojaPadronal 
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ClaveHojaPadronal chp = res.getClaveHojaPadronal();
 
@@ -344,10 +354,20 @@ public class SCDCPAJUv3Client extends CedentClient {
                         if (pin != null) {
                             es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion periodoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.PeriodoInscripcion();
                             
-                            LocalDate dsd = pin.getDesde();
-                            String desde = dsd.toString("yyyy-MM-dd");                    
+                            //LocalDate dsd = pin.getDesde();
+                            //String desde = dsd.toString("yyyy-MM-dd");                    
+                            //periodoInscripcion.setDesde(desde);
+                            
+                            String dsd = pin.getDesde();
+                            String desde = dsd; 
+                            try {        
+                                desde = fullDateToDate(dsd);
+                            } catch (ParseException ex) {
+                                Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+                            }              
                             periodoInscripcion.setDesde(desde);
-
+                            
+                         
                             // Set motivo inscripcion
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion mins = pin.getMotivoInscripcion();
                             if (mins != null) {
