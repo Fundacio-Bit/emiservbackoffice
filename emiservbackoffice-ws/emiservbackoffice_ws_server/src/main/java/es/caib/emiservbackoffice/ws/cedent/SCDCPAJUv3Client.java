@@ -130,8 +130,8 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         api.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
 
-        api.getApiClient().addDefaultHeader(HttpHeaders.ACCEPT, "; charset=" + StandardCharsets.UTF_8.name());
-        api.getApiClient().addDefaultHeader(HttpHeaders.CONTENT_TYPE, "; charset=" + StandardCharsets.UTF_8.name());
+        //api.getApiClient().addDefaultHeader(HttpHeaders.ACCEPT, "; charset=" + StandardCharsets.UTF_8.name());
+        //api.getApiClient().addDefaultHeader(HttpHeaders.CONTENT_TYPE, "; charset=" + StandardCharsets.UTF_8.name());
         
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado response = null;
 
