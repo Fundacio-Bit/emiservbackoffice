@@ -4,16 +4,19 @@
  */
 package es.caib.emiservbackoffice.ws.cedent;
 
+import java.nio.charset.Charset;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
 
@@ -93,13 +96,20 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
      */
     @Override
     protected RestTemplate buildRestTemplate() {
+        
         RestTemplate restTemplate = new RestTemplate();
-        // This allows us to read the response more than once - Necessary for debugging.
-        restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
-        
-        restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-        
+        Iterator<HttpMessageConverter<?>> iterator = restTemplate.getMessageConverters().iterator();
+        while (iterator.hasNext()) {
+            final HttpMessageConverter<?> converter = iterator.next();
+            if (converter instanceof StringHttpMessageConverter) {
+                iterator.remove();
+            }
+        }
+
+        restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+
         return restTemplate;
+      
     }
     
 }
