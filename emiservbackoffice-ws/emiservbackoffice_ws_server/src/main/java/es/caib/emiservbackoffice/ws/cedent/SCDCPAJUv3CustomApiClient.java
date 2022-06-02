@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
 
@@ -20,6 +21,19 @@ import org.springframework.http.converter.StringHttpMessageConverter;
  */
 public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient {
  
+    private RestTemplate restTemplate;
+    
+    public SCDCPAJUv3CustomApiClient() {
+        this.restTemplate = buildRestTemplate();
+        init();
+    }
+    
+    @Autowired
+    public SCDCPAJUv3CustomApiClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+        init();
+    }
+    
     
      /**
      * Select the Accept header's value from the given accepts array:
