@@ -99,12 +99,9 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
         // This allows us to read the response more than once - Necessary for debugging.
         restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
         
-        log.debug("MessageConverters: " + restTemplate.getMessageConverters().toString());
+        log.debug("MessageConverters");
         
         restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-        
-        log.debug("MessageConverters 2: " + restTemplate.getMessageConverters().toString());
-        
         return restTemplate;
     }
     
