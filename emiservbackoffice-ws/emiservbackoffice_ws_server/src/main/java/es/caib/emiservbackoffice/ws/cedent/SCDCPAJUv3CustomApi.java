@@ -4,34 +4,8 @@
  */
 package es.caib.emiservbackoffice.ws.cedent;
 
-
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
-
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ModelApiResponse;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.util.StringUtils;
 
 /**
  *

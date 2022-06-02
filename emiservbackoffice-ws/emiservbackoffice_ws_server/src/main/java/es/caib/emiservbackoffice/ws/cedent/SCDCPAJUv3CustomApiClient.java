@@ -5,10 +5,13 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
-
+import org.springframework.http.converter.StringHttpMessageConverter;
 
 
 /**
@@ -67,5 +70,18 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
         return MediaType.parseMediaType(contentTypes[0]);
     }
     
+    
+    /**
+     * Build the RestTemplate used to make HTTP requests.
+     * @return RestTemplate
+     */
+    @Override
+    protected RestTemplate buildRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        // This allows us to read the response more than once - Necessary for debugging.
+        restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(restTemplate.getRequestFactory()));
+        restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+        return restTemplate;
+    }
     
 }
