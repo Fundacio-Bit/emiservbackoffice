@@ -117,7 +117,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         log.info("SCDCPAJUv3Client :: Iniciant client ");
 
-        ScdcpajUv3Api api = new ScdcpajUv3Api();
+        SCDCPAJUv3CustomApi api = new SCDCPAJUv3CustomApi();
 
         api.getApiClient().setBasePath(propietats.getEndpoint());
 
