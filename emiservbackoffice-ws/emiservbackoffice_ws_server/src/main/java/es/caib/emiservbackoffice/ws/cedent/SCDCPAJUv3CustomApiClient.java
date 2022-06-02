@@ -26,6 +26,8 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
      * @param accepts The accepts array to select from
      * @return List The list of MediaTypes to use for the Accept header
      */
+    
+    @Override
     public List<MediaType> selectHeaderAccept(String[] accepts) {
         if (accepts.length == 0) {
             return null;
@@ -48,6 +50,7 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
      * @param contentTypes The Content-Type array to select from
      * @return MediaType The Content-Type header to use. If the given array is empty, JSON will be used.
      */
+    
     @Override
     public MediaType selectHeaderContentType(String[] contentTypes) {
         if (contentTypes.length == 0) {
@@ -57,7 +60,8 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
         for (String contentType : contentTypes) {
             MediaType mediaType = MediaType.parseMediaType(contentType);
             if (isJsonMime(mediaType)) {
-                return mediaType;
+                //return mediaType;
+                return MediaType.APPLICATION_JSON_UTF8;
             }
         }
         return MediaType.parseMediaType(contentTypes[0]);
