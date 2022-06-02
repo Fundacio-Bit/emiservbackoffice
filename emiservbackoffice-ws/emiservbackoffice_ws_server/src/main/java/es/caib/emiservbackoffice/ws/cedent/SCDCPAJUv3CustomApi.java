@@ -39,26 +39,14 @@ import org.springframework.util.StringUtils;
  */
 public class SCDCPAJUv3CustomApi extends ScdcpajUv3Api {
     
-    private SCDCPAJUv3CustomApiClient apiClient;
-
     public SCDCPAJUv3CustomApi() {
         this(new SCDCPAJUv3CustomApiClient());
     }
 
     @Autowired
     public SCDCPAJUv3CustomApi(SCDCPAJUv3CustomApiClient apiClient) {
-        this.apiClient = apiClient;
+        super();
+        super.setApiClient(apiClient);
     }
-
-    @Override
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    @Override
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = (SCDCPAJUv3CustomApiClient) apiClient;
-    }
-    
    
 }

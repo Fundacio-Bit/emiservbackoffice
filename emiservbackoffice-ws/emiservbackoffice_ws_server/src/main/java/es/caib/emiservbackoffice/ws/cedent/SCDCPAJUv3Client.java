@@ -118,17 +118,19 @@ public class SCDCPAJUv3Client extends CedentClient {
         log.info("SCDCPAJUv3Client :: Iniciant client ");
 
         SCDCPAJUv3CustomApi api = new SCDCPAJUv3CustomApi();
+        
+        SCDCPAJUv3CustomApiClient apiClient = (SCDCPAJUv3CustomApiClient) api.getApiClient();
 
-        api.getApiClient().setBasePath(propietats.getEndpoint());
+        apiClient.setBasePath(propietats.getEndpoint());
 
-        api.getApiClient().setDebugging(true);
+        apiClient.setDebugging(true);
 
         String usuari = propietats.getUsuari();
         String secret = propietats.getSecret();
 
         String userpass = usuari.concat(":").concat(secret);
 
-        api.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
 
         //api.getApiClient().addDefaultHeader(HttpHeaders.ACCEPT, "; charset=" + StandardCharsets.UTF_8.name());
         //api.getApiClient().addDefaultHeader(HttpHeaders.CONTENT_TYPE, "; charset=" + StandardCharsets.UTF_8.name());
