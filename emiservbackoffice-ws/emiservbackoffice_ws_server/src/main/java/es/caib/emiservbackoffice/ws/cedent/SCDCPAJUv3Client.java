@@ -382,8 +382,10 @@ public class SCDCPAJUv3Client extends CedentClient {
                                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion.CodigoVariacionEnum codigo = mins.getCodigoVariacion();
                                 if (codigo != null){
                                     motivoInscripcion.setCodigoVariacion(codigo.getValue());
+                                } else {
+                                    motivoInscripcion.setCodigoVariacion("");
                                 }
-                                motivoInscripcion.setDescripcion(mins.getDescripcion());
+                                motivoInscripcion.setDescripcion((mins.getDescripcion()!=null)?mins.getDescripcion():"");
                                 periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
                             }
                             persona.setPeriodoInscripcion(periodoInscripcion);
