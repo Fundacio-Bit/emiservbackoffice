@@ -376,6 +376,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                          
                             // Set motivo inscripcion
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion mins = pin.getMotivoInscripcion();
+                            
                             if (mins != null) {
                                 es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
                                 motivoInscripcion.setCausaVariacion((mins.getCausaVariacion()!=null)?mins.getCausaVariacion():"OM");
