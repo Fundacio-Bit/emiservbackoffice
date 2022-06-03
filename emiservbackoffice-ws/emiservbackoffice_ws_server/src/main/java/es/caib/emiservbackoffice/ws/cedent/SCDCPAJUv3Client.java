@@ -378,14 +378,14 @@ public class SCDCPAJUv3Client extends CedentClient {
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion mins = pin.getMotivoInscripcion();
                             if (mins != null) {
                                 es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
-                                motivoInscripcion.setCausaVariacion(mins.getCausaVariacion());
+                                motivoInscripcion.setCausaVariacion((mins.getCausaVariacion()!=null)?mins.getCausaVariacion():"OM");
                                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion.CodigoVariacionEnum codigo = mins.getCodigoVariacion();
                                 if (codigo != null){
                                     motivoInscripcion.setCodigoVariacion(codigo.getValue());
                                 } else {
-                                    motivoInscripcion.setCodigoVariacion("");
+                                    motivoInscripcion.setCodigoVariacion("A");
                                 }
-                                motivoInscripcion.setDescripcion((mins.getDescripcion()!=null)?mins.getDescripcion():"");
+                                motivoInscripcion.setDescripcion((mins.getDescripcion()!=null)?mins.getDescripcion():"OM");
                                 periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
                             }
                             persona.setPeriodoInscripcion(periodoInscripcion);
