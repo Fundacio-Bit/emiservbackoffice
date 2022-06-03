@@ -94,6 +94,7 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
      * Build the RestTemplate used to make HTTP requests.
      * @return RestTemplate
      */
+    /*
     @Override
     protected RestTemplate buildRestTemplate() {
         
@@ -111,5 +112,5 @@ public class SCDCPAJUv3CustomApiClient extends es.caib.scsp.api.cedent.client.SC
         return restTemplate;
       
     }
-    
+    */
 }

@@ -316,7 +316,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                 es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via via = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via();
                 via.setCodigo(va.getCodigo());
                 via.setNombre(va.getNombre());
-                via.setTipo(va.getTipo());
+                via.setTipo(va.getTipo().substring(0, 1));
                 domicilio.setVia(via);
             }
             resultado.setDomicilio(domicilio);
