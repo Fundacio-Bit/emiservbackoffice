@@ -1,5 +1,6 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
+import es.caib.emiserv.logic.intf.exception.BackofficeException;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
@@ -143,7 +144,7 @@ public class SCDCPAJUv3Client extends CedentClient {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnknownHttpStatusCodeException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-            
+            throw new BackofficeException(api.getApiClient().getStatusCode().toString(), ex);
         }
 
         return response;
