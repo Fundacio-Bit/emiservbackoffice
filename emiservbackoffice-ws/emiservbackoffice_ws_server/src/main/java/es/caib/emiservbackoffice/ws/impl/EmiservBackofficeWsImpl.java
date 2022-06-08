@@ -23,6 +23,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Transmisiones;
 
 import es.caib.emiserv.logic.intf.service.ws.backoffice.SoapFaultAtributos;
 import es.caib.emiservbackoffice.commons.config.PropertyFileConfigSource;
+import es.caib.emiservbackoffice.ws.cedent.ApiResponseException;
 import es.caib.emiservbackoffice.ws.cedent.CedentClient;
 import es.caib.emiservbackoffice.ws.cedent.Propietats;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
@@ -255,7 +256,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Object[] parameters = new Object[]{respuestaDatosGenericos, strPeticionDatosEspecificos, propietats};
             
             
-            String strRespuestaDatosEspecificos;
+            String strRespuestaDatosEspecificos = null;
             
             try {
                 CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
@@ -266,6 +267,8 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
                 return respuesta;
+            } catch (ApiResponseException ex) {
+                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : "  + strRespuestaDatosEspecificos);

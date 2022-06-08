@@ -68,7 +68,7 @@ public abstract class CedentClient {
     @Deprecated
     public abstract void setPeticionDatosEspecificos(Element element);
     
-    public abstract void peticionSincrona();
+    public abstract void peticionSincrona() throws ApiResponseException;
     
     protected String fullDateToDate(String fullDate) throws ParseException{
         

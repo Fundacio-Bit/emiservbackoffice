@@ -114,7 +114,7 @@ public class SCDCPAJUv3Client extends CedentClient {
     
     
     
-    private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud solicitud) {
+    private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud solicitud) throws WrongApiStatusException {
 
         log.info("SCDCPAJUv3Client :: Iniciant client ");
 
@@ -143,8 +143,8 @@ public class SCDCPAJUv3Client extends CedentClient {
         } catch (HttpServerErrorException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnknownHttpStatusCodeException ex) {
-            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BackofficeException(api.getApiClient().getStatusCode().toString(), ex);
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING, null, ex);
+            throw new WrongApiStatusException(ex.getStatusText(), ex.getResponseBodyAsString(), "Format de resposta no especificat: "  + ex.getResponseBodyAsString() , ex);
         }
 
         return response;
@@ -419,7 +419,7 @@ public class SCDCPAJUv3Client extends CedentClient {
     
     
     @Override
-    public void peticionSincrona() {
+    public void peticionSincrona() throws ApiResponseException {
 
         try {
             setDatosPeticion();
@@ -450,21 +450,30 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud sol = adaptaSolicitud(pde.getSolicitud());
         
-        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado res = getResultado(sol);
-
         rde = new SCDCPAJUv3RespuestaDatosEspecificos();
-
-        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = adaptaResultado(res);
-
-        rde.setResultado(resultado);
-
         Estado respuestaEstado = new Estado();
-        respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
-        //estado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
-        respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
-        //estado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
-
         
+        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado res = null;
+        
+        try {
+            
+            res = getResultado(sol);
+            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Resultado resultado = adaptaResultado(res);
+            rde.setResultado(resultado);
+            
+            respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
+            respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
+        
+        } catch (WrongApiStatusException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING, null, ex);
+            if (ErrorBackoffice.NO_IDENTIFICAT.getEstat().endsWith(ex.getStatus())){
+                respuestaEstado.setCodigoEstado(ErrorBackoffice.NO_IDENTIFICAT.getEstat());
+                respuestaEstado.setLiteralError(ErrorBackoffice.NO_IDENTIFICAT.getCodi());
+            } else {
+                throw new BackofficeException(ex.getMessage(), ex);
+            }
+        }
+
         es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud respuestaSolicitud = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Solicitud();
         
         respuestaSolicitud.setProvinciaSolicitud(provinciaSolicitud);
