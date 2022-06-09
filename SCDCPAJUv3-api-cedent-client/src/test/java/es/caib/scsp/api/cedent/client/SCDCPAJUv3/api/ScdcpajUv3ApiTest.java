@@ -12,21 +12,31 @@
 
 package es.caib.scsp.api.cedent.client.SCDCPAJUv3.api;
 
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
+import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 import org.junit.Ignore;
+
+import org.springframework.util.Base64Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ws.rs.core.HttpHeaders;
+import static org.junit.Assert.assertNotNull;
+
 
 /**
  * API tests for ScdcpajUv3Api
  */
-@Ignore
+
 public class ScdcpajUv3ApiTest {
 
     private final ScdcpajUv3Api api = new ScdcpajUv3Api();
@@ -36,13 +46,61 @@ public class ScdcpajUv3ApiTest {
      *
      * Realitza una consulta al cedent
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void peticionSincronaTest() {
-        Solicitud body = null;
-        Resultado response = api.peticionSincrona(body);
+    public void peticionSincronaTest() throws Exception {
+        
+        
+        ApiClient apiClient =  api.getApiClient();
+
+        apiClient.setBasePath("http://pinbalcedent:8580/pinbal-services/rest");
+
+        apiClient.setDebugging(true);
+
+        String usuari = "pinbal";
+        String secret = "!puW6PHUQC%c";
+
+        String userpass = usuari.concat(":").concat(secret);
+
+        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+
+         Solicitud body = new Solicitud();
+        
+        String provinciaSolicitud = "7";
+        String municipioSolicitud = "26";
+        
+        body.setProvinciaSolicitud(provinciaSolicitud);
+        body.setMunicipioSolicitud(municipioSolicitud);
+        
+        DatosPersonales datosPersonales = new DatosPersonales();
+        Documentacion documentacion = new Documentacion();
+        
+        
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
+        String valor = "41438576M";
+        
+        documentacion.setTipo(tipo);
+        documentacion.setValor(valor);
+        
+        System.out.println(datosPersonales);
+        
+        Titular titular;
+        titular = new Titular();
+        titular.setDocumentacion(documentacion);
+        
+        System.out.println(titular);
+        
+        body.setTitular(titular);
+        
+        assertNotNull(body);
+        assertNotNull(titular);
+        
+        Resultado response = null;
+       
+        response = api.peticionSincrona(body);
+        System.out.println(response.toString());
 
         // TODO: test validations
     }

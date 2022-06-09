@@ -1,6 +1,11 @@
 package es.caib.scsp.api.cedent.client.SCDCPAJUv3.api;
 
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.Configuration;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.Pair;
+
+import javax.ws.rs.core.GenericType;
 
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
@@ -11,75 +16,61 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-
-@Component("es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api")
 public class ScdcpajUv3Api {
-    private ApiClient apiClient;
+  private ApiClient apiClient;
 
-    public ScdcpajUv3Api() {
-        this(new ApiClient());
+  public ScdcpajUv3Api() {
+    this(Configuration.getDefaultApiClient());
+  }
+
+  public ScdcpajUv3Api(ApiClient apiClient) {
+    this.apiClient = apiClient;
+  }
+
+  public ApiClient getApiClient() {
+    return apiClient;
+  }
+
+  public void setApiClient(ApiClient apiClient) {
+    this.apiClient = apiClient;
+  }
+
+  /**
+   * Realitza una consulta al cedent
+   * Realitza una consulta al cedent
+   * @param body Dades de la consulta (required)
+   * @return Resultado
+   * @throws ApiException if fails to make API call
+   */
+  public Resultado peticionSincrona(Solicitud body) throws ApiException {
+    Object localVarPostBody = body;
+    // verify the required parameter 'body' is set
+    if (body == null) {
+      throw new ApiException(400, "Missing the required parameter 'body' when calling peticionSincrona");
     }
+    // create path and map variables
+    String localVarPath = "/SCDCPAJUv3/peticionSincrona".replaceAll("\\{format\\}","json");
 
-    @Autowired
-    public ScdcpajUv3Api(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
 
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
+    
+    final String[] localVarAccepts = {
+      "application/json; charset=UTF-8", "text/plain; charset=UTF-8"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
-    /**
-     * Realitza una consulta al cedent
-     * Realitza una consulta al cedent
-     * <p><b>200</b> - Petició processada
-     * <p><b>400</b> - Petició errònia
-     * <p><b>0</b> - Codi de resposta incorrecte
-     * @param body Dades de la consulta
-     * @return Resultado
-     * @throws RestClientException if an error occurs while attempting to invoke the API
-     */
-    public Resultado peticionSincrona(Solicitud body) throws RestClientException {
-        Object postBody = body;
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'body' when calling peticionSincrona");
-        }
-        String path = UriComponentsBuilder.fromPath("/SCDCPAJUv3/peticionSincrona").build().toUriString();
-        
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
-        final HttpHeaders headerParams = new HttpHeaders();
-        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
+    final String[] localVarContentTypes = {
+      "application/json; charset=UTF-8"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        final String[] accepts = { 
-            "application/json; charset&#x3D;UTF-8", "text/plain; charset&#x3D;UTF-8"
-         };
-        final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);
-        final String[] contentTypes = { 
-            "application/json; charset&#x3D;UTF-8"
-         };
-        final MediaType contentType = apiClient.selectHeaderContentType(contentTypes);
+    String[] localVarAuthNames = new String[] {  };
 
-        String[] authNames = new String[] {  };
-
-        ParameterizedTypeReference<Resultado> returnType = new ParameterizedTypeReference<Resultado>() {};
-        return apiClient.invokeAPI(path, HttpMethod.POST, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
-    }
+    GenericType<Resultado> localVarReturnType = new GenericType<Resultado>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+  }
 }

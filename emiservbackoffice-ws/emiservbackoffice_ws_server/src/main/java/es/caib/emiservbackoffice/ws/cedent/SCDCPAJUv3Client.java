@@ -7,6 +7,8 @@ import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -118,9 +120,9 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         log.info("SCDCPAJUv3Client :: Iniciant client ");
 
-        SCDCPAJUv3CustomApi api = new SCDCPAJUv3CustomApi();
+        ScdcpajUv3Api api = new ScdcpajUv3Api();
         
-        SCDCPAJUv3CustomApiClient apiClient = (SCDCPAJUv3CustomApiClient) api.getApiClient();
+        ApiClient apiClient =  api.getApiClient();
 
         apiClient.setBasePath(propietats.getEndpoint());
 
@@ -145,6 +147,8 @@ public class SCDCPAJUv3Client extends CedentClient {
         } catch (UnknownHttpStatusCodeException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING, null, ex);
             throw new WrongApiStatusException(ex.getStatusText(), ex.getResponseBodyAsString(), "Format de resposta no especificat: "  + ex.getResponseBodyAsString() , ex);
+        } catch (ApiException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return response;
