@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.xml.XMLConstants;
@@ -140,8 +141,11 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado response = null;
 
-        response = api.peticionSincrona(solicitud);
-        
+        try {
+            response = api.peticionSincrona(solicitud);
+        } catch (ProcessingException ex) {
+            throw new ApiException(ex.getMessage(), ex, api.getApiClient().getStatusCode(), api.getApiClient().getResponseHeaders());
+        }
         /*
         try {
             response = api.peticionSincrona(solicitud);
@@ -324,7 +328,8 @@ public class SCDCPAJUv3Client extends CedentClient {
                 es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via via = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via();
                 via.setCodigo(va.getCodigo());
                 via.setNombre(va.getNombre());
-                via.setTipo(va.getTipo().substring(0, 1));
+                via.setTipo(va.getTipo());
+                //via.setTipo(va.getTipo().substring(0, 1));
                 domicilio.setVia(via);
             }
             resultado.setDomicilio(domicilio);
