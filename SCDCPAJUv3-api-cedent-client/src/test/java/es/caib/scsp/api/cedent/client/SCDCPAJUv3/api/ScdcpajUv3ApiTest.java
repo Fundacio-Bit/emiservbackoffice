@@ -39,7 +39,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * API tests for ScdcpajUv3Api
  */
-
+@Ignore
 public class ScdcpajUv3ApiTest {
 
     private final ScdcpajUv3Api api = new ScdcpajUv3Api();

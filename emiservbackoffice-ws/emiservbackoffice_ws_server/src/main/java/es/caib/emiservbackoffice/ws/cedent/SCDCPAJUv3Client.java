@@ -328,8 +328,8 @@ public class SCDCPAJUv3Client extends CedentClient {
                 es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via via = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Via();
                 via.setCodigo(va.getCodigo());
                 via.setNombre(va.getNombre());
-                via.setTipo(va.getTipo());
-                //via.setTipo(va.getTipo().substring(0, 1));
+                //via.setTipo(va.getTipo());
+                via.setTipo(va.getTipo().substring(0, 5));
                 domicilio.setVia(via);
             }
             resultado.setDomicilio(domicilio);
@@ -389,9 +389,8 @@ public class SCDCPAJUv3Client extends CedentClient {
                          
                             // Set motivo inscripcion
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion mins = pin.getMotivoInscripcion();
-                            
+                            es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
                             if (mins != null) {
-                                es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
                                 motivoInscripcion.setCausaVariacion((mins.getCausaVariacion()!=null)?mins.getCausaVariacion():"OM");
                                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.MotivoInscripcion.CodigoVariacionEnum codigo = mins.getCodigoVariacion();
                                 if (codigo != null){
@@ -400,6 +399,11 @@ public class SCDCPAJUv3Client extends CedentClient {
                                     motivoInscripcion.setCodigoVariacion("A");
                                 }
                                 motivoInscripcion.setDescripcion((mins.getDescripcion()!=null)?mins.getDescripcion():"OM");
+                                periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
+                            } else { // REVISAR
+                                motivoInscripcion.setCausaVariacion("OM");
+                                motivoInscripcion.setCodigoVariacion("A");
+                                motivoInscripcion.setDescripcion("-");
                                 periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
                             }
                             persona.setPeriodoInscripcion(periodoInscripcion);
@@ -463,7 +467,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud sol = adaptaSolicitud(pde.getSolicitud());
         
         rde = new SCDCPAJUv3RespuestaDatosEspecificos();
-        Estado respuestaEstado = new Estado();
+        es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Estado respuestaEstado = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Estado();
         
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado res = null;
         
@@ -475,12 +479,14 @@ public class SCDCPAJUv3Client extends CedentClient {
             
             respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
             respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
-        
+            rde.setEstado(respuestaEstado);
+            
         } catch (ApiException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING, null, ex);
             if (ErrorBackoffice.NO_IDENTIFICAT.getEstat().endsWith(String.valueOf(ex.getCode()))){
                 respuestaEstado.setCodigoEstado(ErrorBackoffice.NO_IDENTIFICAT.getEstat());
                 respuestaEstado.setLiteralError(ErrorBackoffice.NO_IDENTIFICAT.getCodi());
+                rde.setEstado(respuestaEstado);
             } else {
                 throw new BackofficeException(ex.getMessage(), ex);
             }
@@ -514,7 +520,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         
 
         rde.setSolicitud(respuestaSolicitud);
-
+        
         try {
             setDatosRespuesta();
         } catch (JAXBException | ParserConfigurationException ex) {
