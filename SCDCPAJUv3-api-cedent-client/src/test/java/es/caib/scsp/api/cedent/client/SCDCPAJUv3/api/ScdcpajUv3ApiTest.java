@@ -77,7 +77,8 @@ public class ScdcpajUv3ApiTest {
 
 
         api = JAXRSClientFactory.create("http://pinbalcedent:8580/pinbal-services/rest", ScdcpajUv3Api.class, providers);
-        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
+        org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).authorization(authorizationHeader);
+        
         
         ClientConfiguration config = WebClient.getConfig(client);
         System.out.println(authorizationHeader);
