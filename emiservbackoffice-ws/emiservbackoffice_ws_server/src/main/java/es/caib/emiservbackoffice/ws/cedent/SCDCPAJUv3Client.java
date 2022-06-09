@@ -116,7 +116,7 @@ public class SCDCPAJUv3Client extends CedentClient {
     
     
     
-    private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud solicitud) throws WrongApiStatusException {
+    private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud solicitud) throws ApiException {
 
         log.info("SCDCPAJUv3Client :: Iniciant client ");
 
@@ -140,6 +140,9 @@ public class SCDCPAJUv3Client extends CedentClient {
         
         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado response = null;
 
+        response = api.peticionSincrona(solicitud);
+        
+        /*
         try {
             response = api.peticionSincrona(solicitud);
         } catch (HttpServerErrorException ex) {
@@ -149,7 +152,7 @@ public class SCDCPAJUv3Client extends CedentClient {
             throw new WrongApiStatusException(ex.getStatusText(), ex.getResponseBodyAsString(), "Format de resposta no especificat: "  + ex.getResponseBodyAsString() , ex);
         } catch (ApiException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
         return response;
     }
@@ -423,7 +426,7 @@ public class SCDCPAJUv3Client extends CedentClient {
     
     
     @Override
-    public void peticionSincrona() throws ApiResponseException {
+    public void peticionSincrona() {
 
         try {
             setDatosPeticion();
@@ -468,9 +471,9 @@ public class SCDCPAJUv3Client extends CedentClient {
             respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
             respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
         
-        } catch (WrongApiStatusException ex) {
+        } catch (ApiException ex) {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING, null, ex);
-            if (ErrorBackoffice.NO_IDENTIFICAT.getEstat().endsWith(ex.getStatus())){
+            if (ErrorBackoffice.NO_IDENTIFICAT.getEstat().endsWith(String.valueOf(ex.getCode()))){
                 respuestaEstado.setCodigoEstado(ErrorBackoffice.NO_IDENTIFICAT.getEstat());
                 respuestaEstado.setLiteralError(ErrorBackoffice.NO_IDENTIFICAT.getCodi());
             } else {

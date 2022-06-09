@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
 import static org.junit.Assert.assertNotNull;
 
@@ -99,9 +102,15 @@ public class ScdcpajUv3ApiTest {
         
         Resultado response = null;
        
-        response = api.peticionSincrona(body);
-        System.out.println(response.toString());
+        try {
+            response = api.peticionSincrona(body);
+            System.out.println(response.toString());
+        } catch (ProcessingException ex) {
+            Logger.getLogger(ScdcpajUv3ApiTest.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No identificat");
+        }
 
-        // TODO: test validations
+
+        
     }
 }

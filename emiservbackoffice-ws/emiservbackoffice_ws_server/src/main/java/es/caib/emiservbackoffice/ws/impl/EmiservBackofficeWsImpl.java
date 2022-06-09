@@ -267,8 +267,6 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
                 Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
                 respuesta = peticionErronea(ERROR_DATOS_ESPECIFICOS,  "Error al tractar dades específiques");
                 return respuesta;
-            } catch (ApiResponseException ex) {
-                Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : "  + strRespuestaDatosEspecificos);
