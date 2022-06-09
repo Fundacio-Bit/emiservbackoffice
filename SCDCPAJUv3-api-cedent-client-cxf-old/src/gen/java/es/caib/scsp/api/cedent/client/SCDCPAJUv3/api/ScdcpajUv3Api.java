@@ -37,12 +37,11 @@ public interface ScdcpajUv3Api  {
      */
     @POST
     @Path("/SCDCPAJUv3/peticionSincrona")
-    @Consumes({ "application/json; charset=UTF-8" })
-    @Produces({ "application/json; charset=UTF-8", "text/plain; charset=UTF-8" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @Operation(summary = "Realitza una consulta al cedent", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Petició processada", content = @Content(mediaType = "application/json; charset&#x3D;UTF-8", schema = @Schema(implementation = Resultado.class))),
-        @ApiResponse(responseCode = "400", description = "Petició errònia", content = @Content(mediaType = "application/json; charset&#x3D;UTF-8", schema = @Schema(implementation = ModelApiResponse.class))),
-        @ApiResponse(responseCode = "233", description = "Codi de resposta incorrecte", content = @Content(mediaType = "text/plain; charset&#x3D;UTF-8", schema = @Schema(implementation = String.class))) })
+        @ApiResponse(responseCode = "200", description = "Petició processada", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Resultado.class))),
+        @ApiResponse(responseCode = "400", description = "Petició errònia", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
     public Resultado peticionSincrona(Solicitud body);
 }

@@ -24,12 +24,14 @@
 
 package es.caib.scsp.api.cedent.client.SCDCPAJUv3.api;
 
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
+import javax.ws.rs.core.Response;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
@@ -41,7 +43,9 @@ import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.client.ResponseProcessingException;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
@@ -66,19 +70,16 @@ public class ScdcpajUv3ApiTest {
         JacksonJsonProvider provider = new JacksonJsonProvider();
         List providers = new ArrayList();
         providers.add(provider);
-
-        String usuari = "pinbal";
-        String secret = "!puW6PHUQC%c";
-
-         // Replace 'user' and 'password' by the actual values
-         String userpass = usuari.concat(":").concat(secret);
-         String authorizationHeader = "Basic "
-         + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
-
-
+        
+        // Replace 'user' and 'password' by the actual values
+        String userpass = "pinbal".concat(":").concat("!puW6PHUQC%c");
+        String authorizationHeader = "Basic "
+        + org.apache.cxf.common.util.Base64Utility.encode(userpass.getBytes());
+        
+        //AuthenticatorReplacer.verifyHost();
+        
         api = JAXRSClientFactory.create("http://pinbalcedent:8580/pinbal-services/rest", ScdcpajUv3Api.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api).authorization(authorizationHeader);
-        
         
         ClientConfiguration config = WebClient.getConfig(client);
         System.out.println(authorizationHeader);
@@ -86,6 +87,7 @@ public class ScdcpajUv3ApiTest {
         
         config.getInInterceptors().add(new LoggingInInterceptor());
         config.getOutInterceptors().add(new LoggingOutInterceptor());
+        
     }
 
     /**
@@ -98,7 +100,8 @@ public class ScdcpajUv3ApiTest {
      */
     @Test
     public void peticionSincronaTest() {
-        Solicitud body = new Solicitud();
+        
+	Solicitud body = new Solicitud();
         
         String provinciaSolicitud = "7";
         String municipioSolicitud = "26";
@@ -111,8 +114,8 @@ public class ScdcpajUv3ApiTest {
         
         
         Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
-        //String valor = "41438576M";
-        String valor = "43105084W";
+        String valor = "41438576M";
+        
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         
@@ -137,9 +140,9 @@ public class ScdcpajUv3ApiTest {
             System.out.println(response.toString());
         } catch (ResponseProcessingException e){
             System.out.println(e.getMessage());
-            System.out.println("No identificat");
         }
         
+        // TODO: test validations
         
     }
 }
