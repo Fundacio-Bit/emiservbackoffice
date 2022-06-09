@@ -24,25 +24,27 @@
 
 package es.caib.scsp.api.cedent.client.SCDCPAJUv3.api;
 
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
-import javax.ws.rs.core.Response;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.ws.rs.client.ResponseProcessingException;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 
 
 
