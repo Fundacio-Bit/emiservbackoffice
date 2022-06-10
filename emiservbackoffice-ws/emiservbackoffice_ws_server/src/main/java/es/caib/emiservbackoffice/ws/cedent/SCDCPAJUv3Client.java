@@ -329,7 +329,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                 via.setCodigo(va.getCodigo());
                 via.setNombre(va.getNombre());
                 //via.setTipo(va.getTipo());
-                via.setTipo(va.getTipo().substring(0, 3));
+                via.setTipo(va.getTipo().substring(0, 2));
                 domicilio.setVia(via);
             }
             resultado.setDomicilio(domicilio);
