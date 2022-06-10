@@ -46,9 +46,9 @@ public class MotivoBaja {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static CodigoVariacionEnum fromValue(String text) {
+    public static CodigoVariacionEnum fromValue(String input) {
       for (CodigoVariacionEnum b : CodigoVariacionEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }

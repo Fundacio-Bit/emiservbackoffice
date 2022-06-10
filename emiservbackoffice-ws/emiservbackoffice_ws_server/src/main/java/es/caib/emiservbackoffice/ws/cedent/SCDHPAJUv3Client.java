@@ -6,6 +6,8 @@ import es.caib.emiservbackoffice.ws.scsp.SCDHPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDHPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.api.ScdhpajUv3Api;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiClient;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
@@ -15,9 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
@@ -31,7 +32,6 @@ import org.w3c.dom.NamedNodeMap;
 
 import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.web.client.HttpServerErrorException;
@@ -112,36 +112,35 @@ public class SCDHPAJUv3Client extends CedentClient {
     
     
     
-    private es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud solicitud) {
+    private es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud solicitud) throws ApiException {
 
         log.info("SCDHPAJUv3Client :: Iniciant client ");
 
         ScdhpajUv3Api api = new ScdhpajUv3Api();
+        
+        ApiClient apiClient = api.getApiClient();
 
-        api.getApiClient().setBasePath(propietats.getEndpoint());
+        apiClient.setBasePath(propietats.getEndpoint());
 
-        api.getApiClient().setDebugging(true);
+        apiClient.setDebugging(true);
 
         String usuari = propietats.getUsuari();
         String secret = propietats.getSecret();
 
         String userpass = usuari.concat(":").concat(secret);
 
-        api.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
 
-        
-        
         //api.getApiClient().addDefaultHeader(HttpHeaders.ACCEPT, "; charset=" + StandardCharsets.UTF_8.name());
         //api.getApiClient().addDefaultHeader(HttpHeaders.CONTENT_TYPE, "; charset=" + StandardCharsets.UTF_8.name());
         
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado response = null;
 
-        try {
+       try {
             response = api.peticionSincrona(solicitud);
-        } catch (HttpServerErrorException ex) {
-            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProcessingException ex) {
+            throw new ApiException(ex.getMessage(), ex, api.getApiClient().getStatusCode(), api.getApiClient().getResponseHeaders());
         }
-
         return response;
     }
     

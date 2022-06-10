@@ -13,7 +13,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: https://{username}.{domain}:{port}/{basePath}
+  - url: http://emiservbackoffice.fundaciobit.org:8080/emiservbackofficeapi/externa/services
     description: The production API server
     variables:
       username:
@@ -64,7 +64,7 @@ paths:
           content:
             application/json; charset=UTF-8:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/ModelApiResponse'
         default:
           description: Codi de resposta incorrecte
           content:
@@ -682,7 +682,7 @@ components:
             name: Descripcion
       xml:
         name: MotivoBaja
-    ApiResponse:
+    ModelApiResponse:
       type: object
       properties:
         code:

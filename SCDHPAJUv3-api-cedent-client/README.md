@@ -97,7 +97,7 @@ public class ScdhpajUv3ApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://{username}.{domain}:{port}/{basePath}*
+All URIs are relative to *http://emiservbackoffice.fundaciobit.org:8080/emiservbackofficeapi/externa/services*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

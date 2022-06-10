@@ -10,20 +10,21 @@
     <prerequisites>
         <maven>3.6.3</maven>
     </prerequisites>
+
     <properties>
-        <server.auth.method>BASIC</server.auth.method>
-        <client.default.package>es.caib.scsp.api.cedent.client.SCDHPAJUv3</client.default.package>
-        <swagger-ui.version>3.35.1</swagger-ui.version>
-         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <server.auth.method>BASIC</server.auth.method>
+
+        <client.default.package>es.caib.scsp.api.cedent.client.SCDHPAJUv3</client.default.package>
+
+        <swagger-ui.version>3.35.1</swagger-ui.version>    
     </properties>
 
-    <!--
-    <dependencies>
-    </dependencies>
-    -->
     
     <build>
         <plugins>
@@ -33,7 +34,7 @@
             <plugin>
                 <groupId>io.swagger.codegen.v3</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>3.0.27</version>
+                <version>3.0.34</version>
 
                 <executions>
                     <execution>
@@ -46,8 +47,8 @@
                             <language>java</language>
                             <!--language>jaxrs-cxf-client</language-->
                             <configHelp>java</configHelp>
-                            <!--library>resteasy</library-->
-                            <library>resttemplate</library>
+                            <library>resteasy</library>
+                            <!--library>resttemplate</library-->
                             <apiPackage>${client.default.package}.api</apiPackage>
                             <modelPackage>${client.default.package}.model</modelPackage>
                             <invokerPackage>${client.default.package}.services</invokerPackage>
@@ -84,15 +85,5 @@
             </plugin>
         </plugins>
     </build>
-		
-  <!--   <distributionManagement>
-		<repository>
-		  <id>github_governib_maven</id>
-		  <name>GitHub GovernIB Maven Repository</name>
-		  <url>file://${project.build.directory}/mvn-repo</url>
-		</repository>
-	</distributionManagement> -->
-
    
-    
 </project>

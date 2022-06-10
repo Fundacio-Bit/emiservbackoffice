@@ -1,6 +1,6 @@
 # ScdhpajUv3Api
 
-All URIs are relative to *https://{username}.{domain}:{port}/{basePath}*
+All URIs are relative to *http://emiservbackoffice.fundaciobit.org:8080/emiservbackofficeapi/externa/services*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

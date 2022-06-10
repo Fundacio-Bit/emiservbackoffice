@@ -48,9 +48,9 @@ public class Documentacion {
       return String.valueOf(value);
     }
     @JsonCreator
-    public static TipoEnum fromValue(String text) {
+    public static TipoEnum fromValue(String input) {
       for (TipoEnum b : TipoEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
+        if (b.value.equals(input)) {
           return b;
         }
       }

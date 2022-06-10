@@ -18,10 +18,12 @@ import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud;
 import org.junit.Test;
 import org.junit.Ignore;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * API tests for ScdhpajUv3Api
@@ -36,11 +38,11 @@ public class ScdhpajUv3ApiTest {
      *
      * Realitza una consulta al cedent
      *
-     * @throws ApiException
+     * @throws Exception
      *          if the Api call fails
      */
     @Test
-    public void peticionSincronaTest() {
+    public void peticionSincronaTest() throws Exception {
         Solicitud body = null;
         Resultado response = api.peticionSincrona(body);
 

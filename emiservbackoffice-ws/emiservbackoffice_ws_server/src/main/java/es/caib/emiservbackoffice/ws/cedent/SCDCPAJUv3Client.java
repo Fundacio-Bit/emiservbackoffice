@@ -2,7 +2,6 @@ package es.caib.emiservbackoffice.ws.cedent;
 
 import es.caib.emiserv.logic.intf.exception.BackofficeException;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
-import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
@@ -20,8 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
@@ -35,11 +32,8 @@ import org.w3c.dom.NamedNodeMap;
 
 import org.fundaciobit.pluginsib.utils.commons.GregorianCalendars;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
 import org.xml.sax.SAXException;
 
 /**
