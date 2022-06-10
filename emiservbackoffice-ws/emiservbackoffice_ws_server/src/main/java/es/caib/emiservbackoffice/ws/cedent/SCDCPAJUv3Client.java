@@ -329,7 +329,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                 via.setCodigo(va.getCodigo());
                 via.setNombre(va.getNombre());
                 //via.setTipo(va.getTipo());
-                via.setTipo(va.getTipo().substring(0, 5));
+                via.setTipo(va.getTipo().substring(0, 3));
                 domicilio.setVia(via);
             }
             resultado.setDomicilio(domicilio);
@@ -485,7 +485,7 @@ public class SCDCPAJUv3Client extends CedentClient {
             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING, null, ex);
             if (ErrorBackoffice.NO_IDENTIFICAT.getEstat().endsWith(String.valueOf(ex.getCode()))){
                 respuestaEstado.setCodigoEstado(ErrorBackoffice.NO_IDENTIFICAT.getEstat());
-                respuestaEstado.setLiteralError(ErrorBackoffice.NO_IDENTIFICAT.getCodi());
+                respuestaEstado.setLiteralError("Titular No Identificat");
                 rde.setEstado(respuestaEstado);
             } else {
                 throw new BackofficeException(ex.getMessage(), ex);
