@@ -158,8 +158,8 @@ public class SCDHPAJUv3Client extends CedentClient {
         String provinciaSolicitud = null;
         String municipioSolicitud = null;
         String numeroAnyos = null;
-
         String nia = null;
+        
         es.caib.scsp.esquemas.SCDHPAJUv3.peticion.datosespecificos.Documentacion documentacion;
         es.caib.scsp.esquemas.SCDHPAJUv3.peticion.datosespecificos.DatosPersonales datosPersonales;
         
