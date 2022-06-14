@@ -397,7 +397,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                             } else { // REVISAR
                                 motivoInscripcion.setCausaVariacion("OM");
                                 motivoInscripcion.setCodigoVariacion("A");
-                                motivoInscripcion.setDescripcion("-");
+                                motivoInscripcion.setDescripcion("Alta por omisión");
                                 periodoInscripcion.setMotivoInscripcion(motivoInscripcion);
                             }
                             persona.setPeriodoInscripcion(periodoInscripcion);

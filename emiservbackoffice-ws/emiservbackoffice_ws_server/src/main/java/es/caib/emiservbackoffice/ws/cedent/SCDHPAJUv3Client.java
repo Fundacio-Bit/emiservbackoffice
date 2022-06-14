@@ -1,5 +1,6 @@
 package es.caib.emiservbackoffice.ws.cedent;
 
+import es.caib.emiserv.logic.intf.exception.BackofficeException;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
 import es.caib.emiservbackoffice.ws.scsp.SCDHPAJUv3PeticionDatosEspecificos;
@@ -136,7 +137,7 @@ public class SCDHPAJUv3Client extends CedentClient {
         
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado response = null;
 
-       try {
+        try {
             response = api.peticionSincrona(solicitud);
         } catch (ProcessingException ex) {
             throw new ApiException(ex.getMessage(), ex, api.getApiClient().getStatusCode(), api.getApiClient().getResponseHeaders());
@@ -380,7 +381,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                                 es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Via via = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Via();
                                 via.setCodigo(va.getCodigo());
                                 via.setNombre(va.getNombre());
-                                via.setTipo(va.getTipo());
+                                via.setTipo(va.getTipo().substring(0, 2));
                                 direccion.setVia(via);
                             }
                             domicilio.setDireccion(direccion); 
@@ -420,30 +421,46 @@ public class SCDHPAJUv3Client extends CedentClient {
 
                         // Set motivo baja
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoBaja motb = dom.getMotivoBaja();
+                        es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja motivoBaja = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja();
                         if (motb != null) {
-                            es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja motivoBaja = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja();
-                            motivoBaja.setCausaVariacion(motb.getCausaVariacion());
+                            
+                            motivoBaja.setCausaVariacion((motb.getCausaVariacion()!=null)?motb.getCausaVariacion():"CD");
                             es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoBaja.CodigoVariacionEnum codigo = motb.getCodigoVariacion();
                             if (codigo != null) {
                                 motivoBaja.setCodigoVariacion(codigo.getValue());
+                            } else {
+                                motivoBaja.setCodigoVariacion("M");
                             }
                             motivoBaja.setDescripcion(motb.getDescripcion());
+                            domicilio.setMotivoBaja(motivoBaja);
+                        } else {
+                            motivoBaja.setCausaVariacion("CD");
+                            motivoBaja.setCodigoVariacion("M");
+                            motivoBaja.setDescripcion("Modificación cambio domicilio");
                             domicilio.setMotivoBaja(motivoBaja);
                         }
 
                         // Set motivo inscripcion
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoInscripcion mins = dom.getMotivoInscripcion();
+                        es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
                         if (mins != null) {
-                            es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoInscripcion motivoInscripcion = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoInscripcion();
-                            motivoInscripcion.setCausaVariacion(mins.getCausaVariacion());
+                            
+                            motivoInscripcion.setCausaVariacion((mins.getCausaVariacion()!=null)?mins.getCausaVariacion():"OM");
                             es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoInscripcion.CodigoVariacionEnum codigo = mins.getCodigoVariacion();
                             if (codigo != null) {
                                 motivoInscripcion.setCodigoVariacion(codigo.getValue());
+                            } else {
+                                motivoInscripcion.setCodigoVariacion("A");
                             }
                             motivoInscripcion.setDescripcion(mins.getDescripcion());
                             domicilio.setMotivoInscripcion(motivoInscripcion);
+                        } else { // Revisar
+                            motivoInscripcion.setCausaVariacion("OM");
+                            motivoInscripcion.setCodigoVariacion("A");
+                            motivoInscripcion.setDescripcion("Alta por omisión");
+                            domicilio.setMotivoInscripcion(motivoInscripcion);
                         }
-
+                        
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MunicipioRespuesta munRes = dom.getMunicipioRespuesta();
                         
                         if (munRes!=null){
@@ -521,21 +538,30 @@ public class SCDHPAJUv3Client extends CedentClient {
 
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud sol = adaptaSolicitud(pde.getSolicitud());
         
-        es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado res = getResultado(sol);
-
         rde = new SCDHPAJUv3RespuestaDatosEspecificos();
-
-        es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Resultado resultado = adaptaResultado(res);
-
-        rde.setResultado(resultado);
-
-        Estado respuestaEstado = new Estado();
-        respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
-        //estado.setCodigoEstadoSecundario(peticionAtributosEstado.getCodigoEstadoSecundario());
-        respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
-        //estado.setTiempoEstimadoRespuesta(peticionAtributosEstado.getTiempoEstimadoRespuesta());
-
+        es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Estado respuestaEstado = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Estado();
         
+        es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado res;
+        try {
+            res = getResultado(sol);
+            es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Resultado resultado = adaptaResultado(res);
+            rde.setResultado(resultado);
+
+            respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
+            respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
+            rde.setEstado(respuestaEstado);
+        } catch (ApiException ex) {
+            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+            if (ErrorBackoffice.NO_IDENTIFICAT.getEstat().endsWith(String.valueOf(ex.getCode()))){
+                respuestaEstado.setCodigoEstado(ErrorBackoffice.NO_IDENTIFICAT.getEstat());
+                respuestaEstado.setLiteralError("Titular No Identificat");
+                rde.setEstado(respuestaEstado);
+            } else {
+                throw new BackofficeException(ex.getMessage(), ex);
+            }
+        }
+
+
         es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Solicitud respuestaSolicitud = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Solicitud();
         
         respuestaSolicitud.setProvinciaSolicitud(provinciaSolicitud);
