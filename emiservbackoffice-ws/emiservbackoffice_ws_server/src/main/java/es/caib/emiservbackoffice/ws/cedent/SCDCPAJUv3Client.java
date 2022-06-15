@@ -263,11 +263,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         String fexp = res.getFechaExpedicion();
         String fechaExpedicion = fexp;
-        try {
-            fechaExpedicion = fullDateToDate(fexp);
-        } catch (ParseException ex) {
-            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fechaExpedicion = fullDateToDate(fexp);
         resultado.setFechaExpedicion(fechaExpedicion);
         
         
@@ -373,11 +369,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                             
                             String dsd = pin.getDesde();
                             String desde = dsd; 
-                            try {        
-                                desde = fullDateToDate(dsd);
-                            } catch (ParseException ex) {
-                                Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-                            }              
+                            desde = fullDateToDate(dsd);              
                             periodoInscripcion.setDesde(desde);
                             
                          

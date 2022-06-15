@@ -274,11 +274,7 @@ public class SCDHPAJUv3Client extends CedentClient {
         
         String fexp = res.getFechaExpedicion();
         String fechaExpedicion = fexp;
-        try {
-            fechaExpedicion = fullDateToDate(fexp);
-        } catch (ParseException ex) {
-            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fechaExpedicion = fullDateToDate(fexp);
         resultado.setFechaExpedicion(fechaExpedicion);
         
         
@@ -332,11 +328,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         
                         String dsd = dom.getDesde();
                         String desde = dsd;
-                        try {
-                            desde = fullDateToDate(dsd);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        desde = fullDateToDate(dsd);
                         domicilio.setDesde(desde);
 
                         
@@ -411,11 +403,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         
                         String hst = dom.getHasta();
                         String hasta = hst;
-                        try {
-                            hasta = fullDateToDate(hst);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        hasta = fullDateToDate(hst);
                         domicilio.setHasta(hasta);
 
 

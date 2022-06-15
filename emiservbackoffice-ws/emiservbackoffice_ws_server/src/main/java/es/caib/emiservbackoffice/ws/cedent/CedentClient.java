@@ -4,6 +4,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
@@ -70,15 +71,22 @@ public abstract class CedentClient {
     
     public abstract void peticionSincrona();
     
-    protected String fullDateToDate(String fullDate) throws ParseException{
+    protected String fullDateToDate(String fullDate) {
+
+        if (fullDate==null) return null;
         
         String strDate = fullDate;
         SimpleDateFormat sdfFullDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date = sdfFullDate.parse(fullDate);
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-        strDate = sdfDate.format(date);
+        Date date;
+        try {
+            date = sdfFullDate.parse(fullDate);
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+            strDate = sdfDate.format(date);
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(CedentClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return strDate;
-        
+
     }
     
     
