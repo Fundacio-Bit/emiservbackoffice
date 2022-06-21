@@ -384,7 +384,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         if (entc!=null){
                             es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.EntColectiva entColectiva = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.EntColectiva();
                             entColectiva.setCodigo(entc.getCodigo());
-                            entColectiva.setNombre(entc.getNombre());
+                            entColectiva.setNombre((entc.getNombre()!=null)?entc.getNombre():entc.getCodigo());
                             domicilio.setEntColectiva(entColectiva);
                         }
                         
@@ -393,7 +393,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         if (ents!=null){
                             es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.EntSingular entSingular = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.EntSingular();
                             entSingular.setCodigo(ents.getCodigo());
-                            entSingular.setNombre(ents.getNombre());
+                            entSingular.setNombre((ents.getNombre()!=null)?ents.getNombre():ents.getCodigo());
                             domicilio.setEntSingular(entSingular);
                         }
                         
