@@ -463,7 +463,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         if (nuc!=null){
                             es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Nucleo nucleo = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Nucleo();
                             nucleo.setCodigo(nuc.getCodigo());
-                            nucleo.setNombre(nuc.getNombre());
+                            nucleo.setNombre((nuc.getNombre()!=null)?nuc.getNombre():"-");
                             domicilio.setNucleo(nucleo);
                         }
                         
