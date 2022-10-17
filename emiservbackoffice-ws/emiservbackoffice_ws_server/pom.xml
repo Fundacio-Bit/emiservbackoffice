@@ -72,6 +72,18 @@
         </dependency>
       
       
+        <dependency>
+            <groupId>es.caib.scsp</groupId>
+            <artifactId>SVDSCTFNWS01v3-api-cedent-client</artifactId>
+            <version>${cedent-client.version}</version>
+            <exclusions>
+                <!-- evitar conflicte amb JAX-RS de JBoss -->
+                <exclusion>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>jsr311-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
       
         <dependency>
             <groupId>org.springframework</groupId>
@@ -114,6 +126,12 @@
         <dependency>
             <groupId>es.caib.scsp</groupId>
             <artifactId>SCDHPAJUv3-schemas-xsd</artifactId>
+            <version>1.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>es.caib.scsp</groupId>
+            <artifactId>SVDSCTFNWS01v3-schemas-xsd</artifactId>
             <version>1.0.0</version>
             <type>jar</type>
         </dependency>

@@ -360,7 +360,7 @@ components:
           type: string
 tags:
 - name: SVDSCTFNWS01v3
-  description: '### Consultes al padró històric'
+  description: '### Consultes al servei de família nombrosa'
   externalDocs:
     description: 'Manual del cedent'
     url: https://github.com/Fundacio-Bit/emiservbackoffice/blob/main/doc/interoperabilitat/SCDCHPAJUv3/cedent/ManualCedentPadroConvivencia.odt
