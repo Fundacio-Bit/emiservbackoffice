@@ -67,7 +67,7 @@
 |SCDCPAJU|Manual del cedent|[Manual](./SCDCPAJUv3/cedent/ManualCedentPadroConvivencia.odt)|
 |SCDCPAJU|API del cedent|[API](./SCDCPAJUv3/cedent/openapi.yaml)|
 |SVDSCTFNWS01|Manual del cedent||
-|SVDSCTFNWS01|API del cedent||
+|SVDSCTFNWS01|API del cedent|[API](./SVDSCTFNWS01/cedent/openapi.yaml)|
 |SoapFault SCSP-PID|Codis d'error SoapFault PAE|[PAe-CTT-Area de descargas](https://administracionelectronica.gob.es/ctt/resources/Soluciones/223/Descargas/Codigos%20de%20Error%20SoapFault%20SCSP-PID.pdf?idIniciativa=223&idElemento=19234)|
 |SoapFault SCSP-PID|Codis d'error SoapFault Local|[Codigos de Error SoapFault SCSP-PID.pdf](<./Codigos de Error SoapFault SCSP-PID.pdf>)|
 
