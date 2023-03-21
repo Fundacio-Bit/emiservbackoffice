@@ -21,6 +21,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collections;
 
+//import es.caib.emiservbackoffice.api.externa.model.Via;
+
 /**
  * Recurs REST per accedir a Unitats Organiques.
  *
