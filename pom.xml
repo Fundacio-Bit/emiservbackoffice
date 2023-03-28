@@ -32,7 +32,7 @@
         <arquillian.version>1.6.0.Final</arquillian.version>
         <wildfly-arquillian.version>3.0.1.Final</wildfly-arquillian.version>
         <mockito.version>3.5.13</mockito.version>
-        <emiserv.version>2.0.3</emiserv.version>
+        <emiserv.version>2.0.4</emiserv.version>
         <scsp-schemas-xsd.version>1.0.0</scsp-schemas-xsd.version>
         <!-- Propietats emprades als descriptors en mode Desenvolupament. -->
         <!-- Es poden activar els valors de producció activatn el profile -Pproduccio -->
