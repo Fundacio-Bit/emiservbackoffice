@@ -33,6 +33,7 @@
         <wildfly-arquillian.version>3.0.1.Final</wildfly-arquillian.version>
         <mockito.version>3.5.13</mockito.version>
         <emiserv.version>2.0.4</emiserv.version>
+        <resteasy.version>3.9.1.Final</resteasy.version>
         <scsp-schemas-xsd.version>1.0.0</scsp-schemas-xsd.version>
         <!-- Propietats emprades als descriptors en mode Desenvolupament. -->
         <!-- Es poden activar els valors de producció activatn el profile -Pproduccio -->
@@ -191,6 +192,25 @@
                 <version>${wildfly-arquillian.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-client</artifactId>
+                <version>${resteasy.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jaxrs</artifactId>
+                <version>${resteasy.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-json-binding-provider</artifactId>
+                <version>${resteasy.version}</version>
+                <scope>test</scope>
+            </dependency>
+            
         </dependencies>
     </dependencyManagement>
     <build>
