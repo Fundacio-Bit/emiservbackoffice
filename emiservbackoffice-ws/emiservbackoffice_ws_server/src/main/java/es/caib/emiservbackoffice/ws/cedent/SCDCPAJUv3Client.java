@@ -353,9 +353,10 @@ public class SCDCPAJUv3Client extends CedentClient {
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum tipo = doc.getTipo();
                             if (tipo != null) {
                                 documentacion.setTipo(tipo.getValue());
+                                documentacion.setValor(doc.getValor());
+                                persona.setDocumentacion(documentacion);
                             }
-                            documentacion.setValor(doc.getValor());
-                            persona.setDocumentacion(documentacion);
+                            
                         }
 
                         // Set periodo inscripcion

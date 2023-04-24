@@ -263,9 +263,10 @@ public class SCDHPAJUv3Client extends CedentClient {
             es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum tipo = doc.getTipo();
             if (tipo != null) {
                 documentacion.setTipo(tipo.getValue());
+                documentacion.setValor(doc.getValor());
+                resultado.setDocumentacion(documentacion);
             }
-            documentacion.setValor(doc.getValor());
-            resultado.setDocumentacion(documentacion);
+            
         }
 
         //LocalDate fexp = res.getFechaExpedicion();
