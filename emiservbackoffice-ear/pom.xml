@@ -4,7 +4,7 @@
     <parent>
         <groupId>es.caib.emiservbackoffice</groupId>
         <artifactId>emiservbackoffice</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>emiservbackoffice-ear</artifactId>
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>es.caib.emiservbackoffice</groupId>
             <artifactId>emiservbackoffice-ws-server</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <type>ejb</type>
         </dependency>
         <!-- WS END -->

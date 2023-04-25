@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.caib.emiservbackoffice</groupId>
     <artifactId>emiservbackoffice</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
     <name>EmiservBackoffice</name>
     <description>EmiservBackoffice Java EE 8 i JBOSS 7.2</description>
@@ -50,46 +50,46 @@
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-commons</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-service</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-persistence</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-ejb</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <type>ejb</type>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-back</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <type>war</type>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-front</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <type>war</type>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-api-externa</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <type>war</type>
             </dependency>
             <dependency>
                 <groupId>es.caib.emiservbackoffice</groupId>
                 <artifactId>emiservbackoffice-api-interna</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <type>war</type>
             </dependency>
             <!-- Definició de les versions de les llibreries, especificacions i eines disponibles dins JBoss -->
