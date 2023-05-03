@@ -199,6 +199,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                 
                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
                 tipo = documentacion.getTipo();
+                tipo = ("Pasaporte".equals(tipo)?es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue():tipo);
                 valor = documentacion.getValor();
                 dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                 dc.setValor(valor);
@@ -213,6 +214,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                 if (documentacion != null) {
                     es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
                     tipo = documentacion.getTipo();
+                    tipo = ("Pasaporte".equals(tipo)?es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue():tipo);
                     valor = documentacion.getValor();
                     dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                     dc.setValor(valor);
@@ -352,7 +354,8 @@ public class SCDCPAJUv3Client extends CedentClient {
                             es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion documentacion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion();
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum tipo = doc.getTipo();
                             if (tipo != null) {
-                                documentacion.setTipo(tipo.getValue());
+                                String valorTipo = (es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT==tipo)?"Pasaporte":tipo.getValue();
+                                documentacion.setTipo(valorTipo);
                                 documentacion.setValor(doc.getValor());
                                 persona.setDocumentacion(documentacion);
                             }
