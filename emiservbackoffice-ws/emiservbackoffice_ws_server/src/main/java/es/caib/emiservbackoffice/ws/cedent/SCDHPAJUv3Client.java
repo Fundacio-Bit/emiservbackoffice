@@ -38,6 +38,9 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.web.client.HttpServerErrorException;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  *
  * @author gdeignacio
@@ -141,6 +144,21 @@ public class SCDHPAJUv3Client extends CedentClient {
             response = api.peticionSincrona(solicitud);
         } catch (ProcessingException ex) {
             throw new ApiException(ex.getMessage(), ex, api.getApiClient().getStatusCode(), api.getApiClient().getResponseHeaders());
+        } catch (ApiException ex){
+
+            int code = 400;
+            String message = "";
+            String jsonString = ex.getMessage();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode;
+            try {
+                jsonNode = objectMapper.readTree(jsonString);
+                code = jsonNode.get("code").asInt();
+                message = jsonNode.get("message").asText();
+            } catch (IOException ioex){
+                throw new ApiException(ioex.getMessage(), ioex, api.getApiClient().getStatusCode(), api.getApiClient().getResponseHeaders());
+            }
+            throw new ApiException(message, ex, code, api.getApiClient().getResponseHeaders(), ex.getResponseBody());
         }
         return response;
     }
