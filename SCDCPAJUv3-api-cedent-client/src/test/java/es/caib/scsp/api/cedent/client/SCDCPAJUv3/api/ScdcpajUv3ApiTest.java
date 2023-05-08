@@ -34,12 +34,15 @@ import java.util.logging.Logger;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
 import static org.junit.Assert.assertNotNull;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * API tests for ScdcpajUv3Api
  */
-@Ignore
+
 public class ScdcpajUv3ApiTest {
 
     private final ScdcpajUv3Api api = new ScdcpajUv3Api();
@@ -58,7 +61,7 @@ public class ScdcpajUv3ApiTest {
         
         ApiClient apiClient =  api.getApiClient();
 
-        apiClient.setBasePath("http://pinbalcedent:8580/pinbal-services/rest");
+        apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
 
         apiClient.setDebugging(true);
 
@@ -82,8 +85,8 @@ public class ScdcpajUv3ApiTest {
         
         
         Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
-        String valor = "41438576M";
-        
+        //String valor = "41438576M";
+        String valor = "43085322C";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         
@@ -104,10 +107,24 @@ public class ScdcpajUv3ApiTest {
        
         try {
             response = api.peticionSincrona(body);
-            System.out.println(response.toString());
+            
         } catch (ProcessingException ex) {
             Logger.getLogger(ScdcpajUv3ApiTest.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No identificat");
+        } catch (ApiException ex) {
+            System.out.println("Codigo: " +  api.getApiClient().getStatusCode() + " " + ex.getMessage() + " " +  api.getApiClient().getResponseHeaders());
+
+            String jsonString = ex.getMessage();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+            System.out.println(jsonNode.get("code").asInt());
+            System.out.println(jsonNode.get("message").asText());
+
+
+            //GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
+
         }
 
 
