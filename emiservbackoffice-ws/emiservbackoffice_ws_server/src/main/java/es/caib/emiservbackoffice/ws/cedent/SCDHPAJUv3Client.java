@@ -531,8 +531,20 @@ public class SCDHPAJUv3Client extends CedentClient {
                 log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Provincia: " + pde.getSolicitud().getProvinciaSolicitud());
                 log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Municipi: " + pde.getSolicitud().getMunicipioSolicitud());
                 log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Numero anyos: " + pde.getSolicitud().getNumeroAnyos());
-                log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
-                log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Document: " + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+
+                if (pde.getSolicitud().getTitular() != null) {
+
+                    if (pde.getSolicitud().getTitular().getDocumentacion() != null) {
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Document: " + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+                    }
+
+                    if (pde.getSolicitud().getTitular().getNIA() != null) {
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "NIA: " + pde.getSolicitud().getTitular().getNIA());
+                    }
+
+                }   
+
             }
         }
 
