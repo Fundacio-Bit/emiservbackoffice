@@ -1,0 +1,279 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>es.caib.scsp</groupId>
+  <artifactId>SVDSCTFNWS01v3-api-cedent-client</artifactId>
+  <packaging>jar</packaging>
+  <name>SVDSCTFNWS01v3-api-cedent-client</name>
+  <version>1.0.1</version>
+  <scm>
+    <connection>scm:git:git@github.com:swagger-api/swagger-mustache.git</connection>
+    <developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>
+    <url>https://github.com/swagger-api/swagger-codegen</url>
+  </scm>
+  <prerequisites>
+    <maven>2.2.0</maven>
+  </prerequisites>
+
+ <properties>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    <server.auth.method>BASIC</server.auth.method>
+    <client.default.package>es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3</client.default.package>
+    <swagger-ui.version>3.35.1</swagger-ui.version>        
+
+    <swagger-core-version>2.0.0</swagger-core-version>
+    <resteasy-version>3.1.3.Final</resteasy-version>
+    <jackson-version>2.6.4</jackson-version>
+    <jodatime-version>2.9.9</jodatime-version>
+    <maven-plugin-version>1.0.0</maven-plugin-version>
+    <junit-version>4.13.1</junit-version>
+
+  </properties>
+
+  <build>
+    <plugins>
+
+
+ <!-- Genera el Client Rest per Java a partir del fitxer openapi.json -->
+            <!-- https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/README.md#general-configuration-parameters -->
+            <plugin>
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>3.0.34</version>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.yaml</inputSpec>
+                            <language>java</language>
+                            <!--language>jaxrs-cxf-client</language-->
+                            <configHelp>java</configHelp>
+                            <library>resteasy</library>
+                            <!--library>resttemplate</library-->
+                            <apiPackage>${client.default.package}.api</apiPackage>
+                            <modelPackage>${client.default.package}.model</modelPackage>
+                            <invokerPackage>${client.default.package}.services</invokerPackage>
+                            <generateApiTests>true</generateApiTests>
+                            <generateApiDocumentation>true</generateApiDocumentation>
+                            <generateModelTests>true</generateModelTests>
+                            <generateModelDocumentation>true</generateModelDocumentation>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <configOptions>
+                                <groupId>es.caib.scsp</groupId>
+                                <artifactId>SVDSCTFNWS01v3-api-cedent-client</artifactId>
+                                <artifactVersion>1.0.0</artifactVersion>
+                                <dateLibrary>joda</dateLibrary>
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                            </configOptions>
+                            <!-- <ignoreFileOverride>${project.basedir}/.swagger-codegen-ignore</ignoreFileOverride> -->
+                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
+							<!-- <configHelp>true</configHelp> -->
+							<!--<library>jersey2</library>  -->
+							<!--<library>resttemplate</library>  -->
+							<!--<configOptions>  -->
+							<!--    <dateLibrary>joda</dateLibrary>  -->
+                            <!--</configOptions>  -->
+							<!--<supportingFilesToGenerate>mvn</supportingFilesToGenerate> -->
+                            <!--addCompileSourceRoot>true</addCompileSourceRoot-->
+                  <!--
+
+                            <output>${project.basedir}/../SVDSCTFNWS01v3-api-cedent-client</output>
+
+                            ${project.build.directory}/generated-sources/xjc-SCDCPAJUv3-respuesta
+                  -->
+                            <variableNamingConvention>camelCase</variableNamingConvention>
+                            <!-- <serializableModel>true</serializableModel> -->
+                            <fullJavaUtil>true</fullJavaUtil>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12</version>
+        <configuration>
+          <systemProperties>
+            <property>
+              <name>loggerPath</name>
+              <value>conf/log4j.properties</value>
+            </property>
+          </systemProperties>
+          <argLine>-Xms512m -Xmx1500m</argLine>
+          <parallel>methods</parallel>
+          <forkMode>pertest</forkMode>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- attach test jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add_sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/main/java</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add_test_sources</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/java</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.2.0</version>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger-core-version}</version>
+    </dependency>
+    <!-- HTTP client: jersey-client -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
+      <version>${resteasy-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+      <version>${resteasy-version}</version>
+    </dependency>
+    <!-- JSON processing: jackson -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-joda</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>${jodatime-version}</version>
+    </dependency>
+
+    <!-- Base64 encoding that works in both JVM and Android -->
+    <dependency>
+      <groupId>com.brsanthu</groupId>
+      <artifactId>migbase64</artifactId>
+      <version>2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson-provider</artifactId>
+      <version>3.1.3.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.joschi.jackson</groupId>
+      <artifactId>jackson-datatype-threetenbp</artifactId>
+      <version>${jackson-version}</version>
+    </dependency>
+    <!-- test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit-version}</version>
+      <scope>test</scope>
+    </dependency>
+     <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.20</version>
+            <scope>test</scope>
+        </dependency>
+  </dependencies>
+ 
+</project>
