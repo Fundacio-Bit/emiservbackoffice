@@ -183,6 +183,13 @@
       <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
+
+      <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.20</version>
+            <scope>test</scope>
+        </dependency>
   </dependencies>
   <properties>
     <swagger-core-version>2.0.0</swagger-core-version>

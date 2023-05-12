@@ -12,23 +12,40 @@
 
 package es.caib.scsp.api.cedent.client.SCDHPAJUv3.api;
 
+
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Titular;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiClient;
+import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 import org.junit.Ignore;
 
+import org.springframework.util.Base64Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.core.HttpHeaders;
+import static org.junit.Assert.assertNotNull;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 
 /**
  * API tests for ScdhpajUv3Api
  */
-@Ignore
+
 public class ScdhpajUv3ApiTest {
 
     private final ScdhpajUv3Api api = new ScdhpajUv3Api();
@@ -43,9 +60,82 @@ public class ScdhpajUv3ApiTest {
      */
     @Test
     public void peticionSincronaTest() throws Exception {
-        Solicitud body = null;
-        Resultado response = api.peticionSincrona(body);
+        
+        ApiClient apiClient =  api.getApiClient();
 
-        // TODO: test validations
+        apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
+
+        apiClient.setDebugging(true);
+
+        String usuari = "pinbal";
+        String secret = "!puW6PHUQC%c";
+
+        String userpass = usuari.concat(":").concat(secret);
+
+        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+
+         Solicitud body = new Solicitud();
+        
+        String provinciaSolicitud = "7";
+        String municipioSolicitud = "26";
+        
+        body.setProvinciaSolicitud(provinciaSolicitud);
+        body.setMunicipioSolicitud(municipioSolicitud);
+        
+        DatosPersonales datosPersonales = new DatosPersonales();
+        Documentacion documentacion = new Documentacion();
+        
+        
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
+        //String valor = "41438576M";
+        String valor = "43085322C";
+        documentacion.setTipo(tipo);
+        documentacion.setValor(valor);
+        
+        System.out.println(datosPersonales);
+        
+        Titular titular;
+        titular = new Titular();
+        //titular.setDocumentacion(documentacion);
+        titular.setNia("0702600196105");
+        System.out.println(titular);
+        
+        body.setTitular(titular);
+
+        System.out.println("===========");
+        System.out.println(body);
+        System.out.println("===========");
+
+        assertNotNull(body);
+        assertNotNull(titular);
+        
+        Resultado response = null;
+       
+        try {
+            response = api.peticionSincrona(body);
+            System.out.println("===========");
+            System.out.println(response);
+            System.out.println("===========");
+        } catch (ProcessingException ex) {
+            Logger.getLogger(ScdhpajUv3ApiTest.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No identificat");
+        } catch (ApiException ex) {
+            System.out.println("Codigo: " +  api.getApiClient().getStatusCode() + " " + ex.getMessage() + " " +  api.getApiClient().getResponseHeaders());
+
+            String jsonString = ex.getMessage();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+            System.out.println(jsonNode.get("code").asInt());
+            System.out.println(jsonNode.get("message").asText());
+
+
+            //GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
+
+        }
+
+
+
     }
 }
