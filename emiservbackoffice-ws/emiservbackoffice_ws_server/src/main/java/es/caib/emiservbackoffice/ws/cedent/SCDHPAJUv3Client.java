@@ -118,7 +118,7 @@ public class SCDHPAJUv3Client extends CedentClient {
     
     private es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado getResultado(es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud solicitud) throws ApiException {
 
-        log.info("SCDHPAJUv3Client :: Iniciant client ");
+        log.info("SCDHPAJUv3Client :: Iniciant client");
         
 
         ScdhpajUv3Api api = new ScdhpajUv3Api();
@@ -140,7 +140,7 @@ public class SCDHPAJUv3Client extends CedentClient {
         //api.getApiClient().addDefaultHeader(HttpHeaders.CONTENT_TYPE, "; charset=" + StandardCharsets.UTF_8.name());
         
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado response = null;
-        log.info("SCDHPAJUv3Client :: Iniciant consulta al cedent " +  solicitud);
+        
         try {
             response = api.peticionSincrona(solicitud); 
         } catch (ProcessingException ex) {
@@ -162,7 +162,7 @@ public class SCDHPAJUv3Client extends CedentClient {
             throw new ApiException(message, ex, code, api.getApiClient().getResponseHeaders(), ex.getResponseBody());
         }
 
-        log.info("SCDHPAJUv3Client :: Consulta al cedent finalitzada:  " +  response);
+        log.info("SCDHPAJUv3Client :: Consulta al cedent finalitzada");
         return response;
     }
     
@@ -562,6 +562,8 @@ public class SCDHPAJUv3Client extends CedentClient {
         }
 
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud sol = adaptaSolicitud(pde.getSolicitud());
+
+        log.info("SCDHPAJUv3Client :: Solicitud per al cedent " +  solicitud);
         
         rde = new SCDHPAJUv3RespuestaDatosEspecificos();
         es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Estado respuestaEstado = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Estado();
@@ -569,7 +571,10 @@ public class SCDHPAJUv3Client extends CedentClient {
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado res;
         try {
             res = getResultado(sol);
+
+            log.info("SCDHPAJUv3Client :: Resposta del cedent " +  res);
             es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Resultado resultado = adaptaResultado(res);
+            log.info("SCDHPAJUv3Client :: Resposta del cedent adaptada");
             rde.setResultado(resultado);
 
             respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
@@ -596,15 +601,19 @@ public class SCDHPAJUv3Client extends CedentClient {
         
         String tipo = null;
         String valor = null;
-        
+        String numSoporte = null;
+
         if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDocumentacion()!=null){
             tipo = solicitud.getTitular().getDocumentacion().getTipo();
             valor = solicitud.getTitular().getDocumentacion().getValor();
+            numSoporte = solicitud.getTitular().getDocumentacion().getNumSoporte();
         } else if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDatosPersonales()!=null && solicitud.getTitular().getDatosPersonales().getDocumentacion()!=null){
             tipo = solicitud.getTitular().getDatosPersonales().getDocumentacion().getTipo();
             valor = solicitud.getTitular().getDatosPersonales().getDocumentacion().getValor();
+            numSoporte = solicitud.getTitular().getDatosPersonales().getDocumentacion().getNumSoporte();
         }
         
+        respuestaDocumentacion.setNumSoporte(numSoporte);
         respuestaDocumentacion.setTipo(tipo);
         respuestaDocumentacion.setValor(valor);
         respuestaTitular.setDocumentacion(respuestaDocumentacion);
@@ -615,6 +624,7 @@ public class SCDHPAJUv3Client extends CedentClient {
 
         rde.setSolicitud(respuestaSolicitud);
 
+        log.info("SCDHPAJUv3Client :: Dades resposta");
         try {
             setDatosRespuesta();
         } catch (JAXBException | ParserConfigurationException ex) {
