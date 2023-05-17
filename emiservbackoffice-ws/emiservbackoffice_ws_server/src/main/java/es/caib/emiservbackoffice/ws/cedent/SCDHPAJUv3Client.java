@@ -527,6 +527,10 @@ public class SCDHPAJUv3Client extends CedentClient {
             Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        String tipo = null;
+        String valor = null;
+        String numSoporte = null;
+
         if (pde != null) {
 
             log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Solicitud: " + pde.getSolicitud());
@@ -538,12 +542,16 @@ public class SCDHPAJUv3Client extends CedentClient {
                 if (pde.getSolicitud().getTitular() != null) {
 
                     if (pde.getSolicitud().getTitular().getDocumentacion() != null) {
-                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
-                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Document: " + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+                        tipo = pde.getSolicitud().getTitular().getDocumentacion().getTipo();
+                        valor = pde.getSolicitud().getTitular().getDocumentacion().getValor();
+                        
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + tipo);
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Document: " + valor);
                     }
 
                     if (pde.getSolicitud().getTitular().getNIA() != null) {
-                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "NIA: " + pde.getSolicitud().getTitular().getNIA());
+                        numSoporte = pde.getSolicitud().getTitular().getNIA();
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "NIA: " + numSoporte);
                     }
 
                 }   
@@ -599,9 +607,7 @@ public class SCDHPAJUv3Client extends CedentClient {
         es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Titular respuestaTitular = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Titular();
         es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Documentacion respuestaDocumentacion = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Documentacion();
         
-        String tipo = null;
-        String valor = null;
-        String numSoporte = null;
+    
 
         if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDocumentacion()!=null){
             tipo = solicitud.getTitular().getDocumentacion().getTipo();
@@ -616,6 +622,8 @@ public class SCDHPAJUv3Client extends CedentClient {
         log.info("SCDHPAJUv3Client :: Tipus de documentació de la solicitud: "  + tipo);
         log.info("SCDHPAJUv3Client :: Valor de documentació de la solicitud: "  + valor);
         log.info("SCDHPAJUv3Client :: Numero de suport de la solicitud: "  + numSoporte);
+
+        tipo = (tipo!=null)?tipo:
 
 
         respuestaDocumentacion.setNumSoporte(numSoporte);
