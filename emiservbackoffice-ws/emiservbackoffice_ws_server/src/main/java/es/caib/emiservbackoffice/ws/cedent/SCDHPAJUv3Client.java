@@ -610,9 +610,9 @@ public class SCDHPAJUv3Client extends CedentClient {
     
 
         if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDocumentacion()!=null){
-            tipo = solicitud.getTitular().getDocumentacion().getTipo();
-            valor = solicitud.getTitular().getDocumentacion().getValor();
-            numSoporte = solicitud.getTitular().getDocumentacion().getNumSoporte();
+            tipo = (solicitud.getTitular().getDocumentacion().getTipo()!=null)?solicitud.getTitular().getDocumentacion().getTipo():tipo;
+            valor = (solicitud.getTitular().getDocumentacion().getValor()!=null)?solicitud.getTitular().getDocumentacion().getValor():valor;
+            numSoporte = (solicitud.getTitular().getDocumentacion().getNumSoporte()!=null)?solicitud.getTitular().getDocumentacion().getNumSoporte():numSoporte;
         } else if (solicitud!=null && solicitud.getTitular()!= null && solicitud.getTitular().getDatosPersonales()!=null && solicitud.getTitular().getDatosPersonales().getDocumentacion()!=null){
             tipo = solicitud.getTitular().getDatosPersonales().getDocumentacion().getTipo();
             valor = solicitud.getTitular().getDatosPersonales().getDocumentacion().getValor();
@@ -623,9 +623,8 @@ public class SCDHPAJUv3Client extends CedentClient {
         log.info("SCDHPAJUv3Client :: Valor de documentació de la solicitud: "  + valor);
         log.info("SCDHPAJUv3Client :: Numero de suport de la solicitud: "  + numSoporte);
 
-        tipo = (tipo!=null)?tipo:
-
-
+        
+    
         respuestaDocumentacion.setNumSoporte(numSoporte);
         respuestaDocumentacion.setTipo(tipo);
         respuestaDocumentacion.setValor(valor);
