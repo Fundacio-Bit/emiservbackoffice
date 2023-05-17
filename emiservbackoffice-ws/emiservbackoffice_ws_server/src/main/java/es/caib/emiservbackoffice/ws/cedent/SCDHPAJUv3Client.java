@@ -613,14 +613,21 @@ public class SCDHPAJUv3Client extends CedentClient {
             numSoporte = solicitud.getTitular().getDatosPersonales().getDocumentacion().getNumSoporte();
         }
         
+        log.info("SCDHPAJUv3Client :: Tipus de documentació de la solicitud: "  + tipo);
+        log.info("SCDHPAJUv3Client :: Valor de documentació de la solicitud: "  + valor);
+        log.info("SCDHPAJUv3Client :: Numero de suport de la solicitud: "  + numSoporte);
+
+
         respuestaDocumentacion.setNumSoporte(numSoporte);
         respuestaDocumentacion.setTipo(tipo);
         respuestaDocumentacion.setValor(valor);
         respuestaTitular.setDocumentacion(respuestaDocumentacion);
         respuestaSolicitud.setTitular(respuestaTitular);
         
-        datosGenericos.getTitular().setTipoDocumentacion(es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.valueOf(respuestaDocumentacion.getTipo()));
-        datosGenericos.getTitular().setDocumentacion(respuestaDocumentacion.getValor());
+        if (respuestaDocumentacion.getTipo()!=null){
+            datosGenericos.getTitular().setTipoDocumentacion(es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.valueOf(respuestaDocumentacion.getTipo()));
+            datosGenericos.getTitular().setDocumentacion(respuestaDocumentacion.getValor());
+        }
 
         rde.setSolicitud(respuestaSolicitud);
 
