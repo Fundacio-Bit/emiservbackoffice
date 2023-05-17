@@ -544,14 +544,14 @@ public class SCDHPAJUv3Client extends CedentClient {
                     if (pde.getSolicitud().getTitular().getDocumentacion() != null) {
                         tipo = pde.getSolicitud().getTitular().getDocumentacion().getTipo();
                         valor = pde.getSolicitud().getTitular().getDocumentacion().getValor();
-                        
+                        numSoporte = "";
                         log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: " + tipo);
                         log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "Document: " + valor);
                     }
 
                     if (pde.getSolicitud().getTitular().getNIA() != null) {
-                        numSoporte = pde.getSolicitud().getTitular().getNIA();
-                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "NIA: " + numSoporte);
+                        String NIA = pde.getSolicitud().getTitular().getNIA();
+                        log.info("SCDHPAJUv3Client :: Paràmetres de consulta: " + "NIA: " + NIA);
                     }
 
                 }   
