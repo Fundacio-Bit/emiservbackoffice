@@ -444,6 +444,6 @@
         <module>emiservbackoffice-ear</module>
         <module>emiservbackoffice-pinbal</module>
         <module>emiservbackoffice-cedent-SCDCPAJUv3</module>
-        <!--module>SCDCPAJUv3-api-cedent-client</module-->
+        <!--module>SVDSCTFNWS01v3-api-cedent-client</module-->
     </modules>
 </project>
