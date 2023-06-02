@@ -41,7 +41,6 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.auth.Authentication;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.auth.HttpBasicAuth;
-import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.ApiClient;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.ApiException;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.JSON;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.Pair;

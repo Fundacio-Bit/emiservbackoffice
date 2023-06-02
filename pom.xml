@@ -156,11 +156,11 @@
                 <artifactId>emiserv-service-intf</artifactId>
                 <version>${emiserv.version}</version>
             </dependency>
-            <dependency>
+            <!--dependency>
                 <groupId>es.caib.scsp</groupId>
                 <artifactId>scsp-schemas-xsd-SCDHPAJUv3</artifactId>
                 <version>${scsp-schemas-xsd.version}</version>
-            </dependency>
+            </dependency-->
             <!-- Dependències emprades als tests -->
             <dependency>
                 <groupId>junit</groupId>

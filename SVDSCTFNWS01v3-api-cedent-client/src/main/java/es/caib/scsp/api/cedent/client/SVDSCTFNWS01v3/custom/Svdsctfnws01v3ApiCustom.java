@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.api.Svdsctfnws01v3Api;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Solicitud;

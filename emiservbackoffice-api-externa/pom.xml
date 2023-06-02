@@ -36,14 +36,14 @@
             <artifactId>emiservbackoffice-service</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
                 <groupId>es.caib.emiserv</groupId>
                 <artifactId>emiserv-service-intf</artifactId>        
-        </dependency>
-        <dependency>
+        </dependency-->
+        <!--dependency>
                 <groupId>es.caib.scsp</groupId>
                 <artifactId>scsp-schemas-xsd-SCDHPAJUv3</artifactId>        
-        </dependency>
+        </dependency-->
         <!-- Anotacions de documentació de openapi -->
         <dependency>
             <groupId>org.eclipse.microprofile.openapi</groupId>
