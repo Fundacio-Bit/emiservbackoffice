@@ -6,6 +6,7 @@ package es.caib.emiservbackoffice.ws.specs;
 
 import es.caib.emiservbackoffice.ws.cedent.SCDCPAJUv3Client;
 import es.caib.emiservbackoffice.ws.cedent.SCDHPAJUv3Client;
+import es.caib.emiservbackoffice.ws.cedent.SVDSCTFNWS01v3Client;
 
 /**
  *
@@ -14,7 +15,8 @@ import es.caib.emiservbackoffice.ws.cedent.SCDHPAJUv3Client;
 public enum ServeiBackoffice {
     
     SCDCPAJU("SCDCPAJUv3", SCDCPAJUv3Client.class),
-    SCDHPAJU("SCDHPAJUv3", SCDHPAJUv3Client.class);
+    SCDHPAJU("SCDHPAJUv3", SCDHPAJUv3Client.class),
+    SVDSCTFNWS01("SVDSCTFNWS01v3", SVDSCTFNWS01v3Client.class);
     
     private ServeiBackoffice(String codi, Class client){
         this.codi = codi;
