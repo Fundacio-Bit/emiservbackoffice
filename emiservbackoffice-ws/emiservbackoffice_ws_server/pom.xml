@@ -116,7 +116,7 @@
         </dependency>
         <dependency>
                 <groupId>es.caib.emiserv</groupId>
-                <artifactId>emiserv-service-intf</artifactId>        
+                <artifactId>emiserv-service-intf</artifactId>
         </dependency>
         <dependency>
             <groupId>es.caib.scsp</groupId>
