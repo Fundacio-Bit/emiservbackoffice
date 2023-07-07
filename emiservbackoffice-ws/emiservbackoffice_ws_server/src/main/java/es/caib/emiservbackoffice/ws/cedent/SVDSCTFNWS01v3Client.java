@@ -346,7 +346,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                         // es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Documentacion();
                         es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum tipo = doc.getTipo();
                         if (tipo != null) {
-                            String valorTipo = (es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.PASSAPORT == tipo)
+                            String valorTipo = (es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.Pasaporte == tipo)
                                     ? "Pasaporte"
                                     : tipo.getValue();
                             beneficiarioRetorno.setTipoDocumentacion(valorTipo);
