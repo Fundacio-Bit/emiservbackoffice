@@ -298,13 +298,13 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
             Integer nh = tfnret.getNumeroHijos();
 
             Categoria cat = tfnret.getCategoria();
-            String categoria;
+            String categoria = null;
             if (cat != null) {
                 categoria = cat.getValue();
             }
 
             TituloVigente tvi = tfnret.getTituloVigente();
-            String tituloVigente;
+            String tituloVigente = null;
             if (tvi != null) {
                 tituloVigente = tvi.getValue();
             }
@@ -346,8 +346,8 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                         // es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Documentacion();
                         es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum tipo = doc.getTipo();
                         if (tipo != null) {
-                            String valorTipo = (es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.Pasaporte == tipo)
-                                    ? "Pasaporte"
+                            String valorTipo = (es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.PASAPORTE == tipo)
+                                    ? es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.PASAPORTE.getValue()
                                     : tipo.getValue();
                             beneficiarioRetorno.setTipoDocumentacion(valorTipo);
                             String documentacion = doc.getValor();
@@ -405,8 +405,8 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
             es.caib.scsp.esquemas.SVDSCTFNWS01v3.peticion.datosespecificos.Consulta consulta = pde.getConsulta();
             
-            es.caib.scsp.esquemas.SVDSCTFNWS01v3.peticion.datosespecificos.TituloFamiliaNumerosa tfm;
-            es.caib.scsp.esquemas.SVDSCTFNWS01v3.peticion.datosespecificos.DatosAdicionalesTitular dat;
+            es.caib.scsp.esquemas.SVDSCTFNWS01v3.peticion.datosespecificos.TituloFamiliaNumerosa tfm = null;
+            es.caib.scsp.esquemas.SVDSCTFNWS01v3.peticion.datosespecificos.DatosAdicionalesTitular dat = null;
 
             log.info("SVDSCTFNWS01v3Client :: Paràmetres de consulta: " + "Consulta: " + consulta);
 
