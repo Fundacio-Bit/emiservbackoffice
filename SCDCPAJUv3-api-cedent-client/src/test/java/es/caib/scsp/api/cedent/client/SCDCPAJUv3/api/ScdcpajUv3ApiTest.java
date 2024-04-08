@@ -61,16 +61,22 @@ public class ScdcpajUv3ApiTest {
         
         ApiClient apiClient =  api.getApiClient();
 
-        apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
+        //apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
+        //apiClient.setBasePath("http://192.168.5.14:38080/emiservcedentapi/externa/services");
+        apiClient.setBasePath("http://192.168.31.180:38080/emiservcedentapi/externa");
+        //apiClient.setBasePath("http://192.168.2.81:38080/emiservcedentapi/externa");
 
         apiClient.setDebugging(true);
 
-        String usuari = "pinbal";
-        String secret = "!puW6PHUQC%c";
+        //String usuari = "pinbal";
+        //String secret = "!puW6PHUQC%c";
+
+        String usuari="pinbal";
+        String secret=""; 
 
         String userpass = usuari.concat(":").concat(secret);
 
-        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+        //apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
 
          Solicitud body = new Solicitud();
         
@@ -84,9 +90,10 @@ public class ScdcpajUv3ApiTest {
         Documentacion documentacion = new Documentacion();
         
         
-        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIE;
         //String valor = "41438576M";
-        String valor = "43085322C";
+        String valor = "78219106Q";
+        //String valor = "Z1000675L";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         
@@ -106,12 +113,20 @@ public class ScdcpajUv3ApiTest {
         Resultado response = null;
        
         try {
+
             response = api.peticionSincrona(body);
+            System.out.println("RESPONSE:  " + response);
             
         } catch (ProcessingException ex) {
+
             Logger.getLogger(ScdcpajUv3ApiTest.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No identificat");
+            
         } catch (ApiException ex) {
+
+            System.out.println(" ");
+            System.out.println("Api Exception Peticion Sincrona ");
+
             System.out.println("Codigo: " +  api.getApiClient().getStatusCode() + " " + ex.getMessage() + " " +  api.getApiClient().getResponseHeaders());
 
             String jsonString = ex.getMessage();
@@ -122,12 +137,9 @@ public class ScdcpajUv3ApiTest {
             System.out.println(jsonNode.get("code").asInt());
             System.out.println(jsonNode.get("message").asText());
 
-
             //GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
 
         }
-
-
         
     }
 }
