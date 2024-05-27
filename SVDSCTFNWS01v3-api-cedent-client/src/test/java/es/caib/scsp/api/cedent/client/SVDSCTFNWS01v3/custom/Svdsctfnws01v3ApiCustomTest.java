@@ -29,7 +29,7 @@ import org.junit.Ignore;
 import org.springframework.util.Base64Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashMap;       
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -65,12 +65,13 @@ public class Svdsctfnws01v3ApiCustomTest {
         
         ApiClientCustom apiClient =  api.getApiClientCustom();
 
-        apiClient.setBasePath("http://localhost:8080/pinbal-services/rest");
+        apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
 
         apiClient.setDebugging(true);
 
         String usuari = "pinbal";
-        String secret = "!puW6PHUQC%c";
+        //String secret = "!puW6PHUQC%c";
+        String secret = "";
 
         String userpass = usuari.concat(":").concat(secret);
 
@@ -78,7 +79,7 @@ public class Svdsctfnws01v3ApiCustomTest {
 
         Solicitud body = new Solicitud();
         
-        String codigoComunidadAutonoma = "4";
+        String codigoComunidadAutonoma = "07";
         String numeroTitulo = null;
         String fechaConsulta = null;
 
@@ -95,7 +96,7 @@ public class Svdsctfnws01v3ApiCustomTest {
         
         Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
         //String valor = "41438576M";
-        String valor = "43085322C";
+        String valor = "41503905Z";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         

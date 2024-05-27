@@ -63,7 +63,7 @@ public class ScdcpajUv3ApiTest {
 
         //apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
         //apiClient.setBasePath("http://192.168.5.14:38080/emiservcedentapi/externa/services");
-        apiClient.setBasePath("http://192.168.31.180:38080/emiservcedentapi/externa");
+        apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
         //apiClient.setBasePath("http://192.168.2.81:38080/emiservcedentapi/externa");
 
         apiClient.setDebugging(true);
