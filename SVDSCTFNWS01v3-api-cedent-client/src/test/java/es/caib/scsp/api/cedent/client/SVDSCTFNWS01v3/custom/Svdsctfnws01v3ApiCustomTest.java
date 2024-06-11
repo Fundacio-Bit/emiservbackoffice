@@ -24,6 +24,7 @@ import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.ApiException;
 
 import java.nio.charset.StandardCharsets;
 import org.junit.Test;
+import org.jboss.logging.Logger;
 import org.junit.Ignore;
 
 import org.springframework.util.Base64Utils;
@@ -32,8 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;       
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
 import static org.junit.Assert.assertNotNull;
@@ -46,7 +45,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Svdsctfnws01v3ApiCustomTest {
 
+    private static final Logger LOG = Logger.getLogger(Svdsctfnws01v3ApiCustomTest.class);
+
     private final Svdsctfnws01v3ApiCustom api = new Svdsctfnws01v3ApiCustom();
+    
 
     /**
      * Realitza una consulta al cedent
@@ -61,7 +63,7 @@ public class Svdsctfnws01v3ApiCustomTest {
     @Test
     public void peticionSincronaCustomTest() throws Exception {
         
-        Logger.getLogger(Svdsctfnws01v3ApiCustomTest.class.getName()).log(Level.INFO, "Entrando");
+        //Logger.getLogger(Svdsctfnws01v3ApiCustomTest.class.getName()).log(Level.INFO, "Entrando");
         
         ApiClientCustom apiClient =  api.getApiClientCustom();
 
@@ -75,7 +77,7 @@ public class Svdsctfnws01v3ApiCustomTest {
 
         String userpass = usuari.concat(":").concat(secret);
 
-        apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+        //apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
 
         Solicitud body = new Solicitud();
         
@@ -95,8 +97,9 @@ public class Svdsctfnws01v3ApiCustomTest {
         Documentacion documentacion = new Documentacion();
         
         Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
-        //String valor = "41438576M";
-        String valor = "41503905Z";
+        //String valor = "41504049C";
+        String valor = "41438576M";
+        //String valor = "41503905Z";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         
@@ -104,6 +107,7 @@ public class Svdsctfnws01v3ApiCustomTest {
 
         DatosPersonales datosPersonales = new DatosPersonales();
 
+        System.out.println(datosPersonales);
 
         datosAdicionalesTitular.setDocumentacion(documentacion);
         datosAdicionalesTitular.setDatosPersonales(datosPersonales);
@@ -119,15 +123,21 @@ public class Svdsctfnws01v3ApiCustomTest {
         ModelApiResponse modelApiResponse;
        
         try {
+
+            LOG.info("Svdsctfnws01v3ApiCustomTest :: peticionSincronaCustomTest :: Consulta ") ;
+
             response = api.peticionSincronaCustom(body);
+
+            LOG.info("Svdsctfnws01v3ApiCustomTest :: peticionSincronaCustomTest :: Response "  + response) ;
 
             resultado = (Resultado) response.get("returnType");
             modelApiResponse = (ModelApiResponse) response.get("errorType");
             
         } catch (ProcessingException ex) {
 
-            Logger.getLogger(Svdsctfnws01v3ApiCustomTest.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("No identificat");
+            //Logger.getLogger(Svdsctfnws01v3ApiCustomTest.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error("Svdsctfnws01v3ApiCustomTest :: peticionSincronaCustomTest :: Error " + ex.getMessage(), ex) ;
+            LOG.info("Svdsctfnws01v3ApiCustomTest :: peticionSincronaCustomTest :: No identificado ") ;
             
         } catch (ApiException ex) {
             System.out.println("Codigo: " +  api.getApiClientCustom().getStatusCode() + " " + ex.getMessage() + " " +  api.getApiClientCustom().getResponseHeaders());
@@ -137,9 +147,10 @@ public class Svdsctfnws01v3ApiCustomTest {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
 
-            System.out.println(jsonNode.get("code").asInt());
-            System.out.println(jsonNode.get("message").asText());
+            LOG.debug("Svdsctfnws01v3ApiCustomTest :: peticionSincronaCustomTest :: ApiException " + jsonNode) ;
 
+            //System.out.println(jsonNode.get("code").asInt());
+            //System.out.println(jsonNode.get("message").asText());
 
             //GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
 

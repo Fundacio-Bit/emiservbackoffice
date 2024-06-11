@@ -48,7 +48,11 @@ import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.StringUtil;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.auth.ApiKeyAuth;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.auth.OAuth;
 
+
 public class ApiClientCustom {
+
+  private static final Logger LOG = Logger.getLogger(ApiClientCustom.class);
+
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private String basePath = "http://emiservbackoffice.fundaciobit.org:8080/emiservbackofficeapi/externa/services";
   private boolean debugging = false;
@@ -65,6 +69,9 @@ public class ApiClientCustom {
   private DateFormat dateFormat;
 
   public ApiClientCustom() {
+
+    LOG.debug("ApiClientCustom :: ApiClientCustom :: Creacio del client EmiservBackoffice");
+
     json = new JSON();
     httpClient = buildHttpClient(debugging);
 
@@ -729,18 +736,33 @@ public class ApiClientCustom {
     statusCode = response.getStatusInfo().getStatusCode();
     responseHeaders = buildResponseHeaders(response);
 
+    LOG.debug("ApiClientCustom :: invokeAPICustom :: Response Status: " + statusCode) ;
+    LOG.debug("ApiClientCustom :: invokeAPICustom :: Response Headers: " + responseHeaders) ;
+    
     if (response.getStatus() == Status.NO_CONTENT.getStatusCode()) {
       return null;
     } else if (response.getStatusInfo().getFamily().equals(Status.Family.SUCCESSFUL)) {
       if (returnType == null)
         return null;
-      else
-        return (Map<String, Object>) (new HashMap<String, Object>()).put("returnType", deserialize(response, returnType));
+      else {
+        LOG.debug("ApiClientCustom :: invokeAPICustom :: Return Type: " + returnType) ;
+        Object returnTypeObject = deserialize(response, returnType);
+        Map<String, Object> responseMap = new HashMap<String, Object>();
+        responseMap.put("returnType", returnTypeObject);
+        LOG.debug("ApiClientCustom :: invokeAPICustom :: Response Map: " + responseMap) ;
+        return responseMap;
+      }
     } else if (response.getStatusInfo().getFamily().equals(Status.Family.CLIENT_ERROR)) {
       if (errorType == null)
         return null;
-      else
-        return (Map<String, Object>) (new HashMap<String, Object>()).put("errorType", deserialize(response, errorType));
+      else {
+        LOG.debug("ApiClientCustom :: invokeAPICustom :: Error Type: " + errorType) ;
+        Object errorTypeObject = deserialize(response, errorType);
+        Map<String, Object> responseMap = new HashMap<String, Object>();
+        responseMap.put("errorType", errorTypeObject);
+        LOG.debug("ApiClientCustom :: invokeAPICustom :: Response Map: " + responseMap) ;
+        return responseMap;
+      }
     }else {
       String message = "error";
       String respBody = null;
