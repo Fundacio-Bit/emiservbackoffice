@@ -83,7 +83,8 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
             pde = manager.generateItem(peticionDatosEspecificos, false, true);
 
-            log.info("SVDSCTFNWS01v3Client :: Datos Especificos Peticion: " + ((pde != null) ? pde.toString() : ""));
+            log.info("SVDSCTFNWS01v3Client :: setDatosPeticion :: Datos Especificos Peticion: " + ((pde != null) ? pde.toString() : ""));
+            
         } catch (TransformerException ex) {
             Logger.getLogger(SVDSCTFNWS01v3Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
@@ -101,17 +102,17 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
         XmlSchema xmlSchemaAnnotation = manager.getXmlSchemaAnnotation();
 
-        log.info("SVDSCTFNWS01v3Client :: Datos Especificos NAMESPACE: "
+        log.info("SVDSCTFNWS01v3Client :: setDatosRespuesta :: Datos Especificos NAMESPACE: "
                 + ((xmlSchemaAnnotation != null) ? xmlSchemaAnnotation.namespace() : "No xmlSchemaAnnotation"));
-        log.info("SVDSCTFNWS01v3Client :: Datos Especificos LOCATION: "
+        log.info("SVDSCTFNWS01v3Client :: setDatosRespuesta :: Datos Especificos LOCATION: "
                 + ((xmlSchemaAnnotation != null) ? xmlSchemaAnnotation.location() : "No xmlSchemaAnnotation"));
 
         XmlRootElement xmlRootElementAnnotation = manager.getXmlRootElementAnnotation();
 
-        log.info("SVDSCTFNWS01v3Client :: Datos Especificos XmlRoot NAMESPACE: "
+        log.info("SVDSCTFNWS01v3Client :: setDatosRespuesta :: Datos Especificos XmlRoot NAMESPACE: "
                 + ((xmlRootElementAnnotation != null) ? xmlRootElementAnnotation.namespace()
                         : "No xmlRootElementAnnotation"));
-        log.info("SVDSCTFNWS01v3Client :: Datos Especificos XmlRoot LOCATION: "
+        log.info("SVDSCTFNWS01v3Client :: setDatosRespuesta :: Datos Especificos XmlRoot LOCATION: "
                 + ((xmlRootElementAnnotation != null) ? xmlRootElementAnnotation.name()
                         : "No xmlRootElementAnnotation"));
 
@@ -285,6 +286,22 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
         es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Retorno retorno = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Retorno();
 
+        es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.EstadoRetorno estret = res.getEstadoRetorno();
+
+        if (estret != null) {
+
+            es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado estado = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado();
+
+            String codest = estret.getCodigoEstado();
+            String literr = estret.getLiteralError();
+
+            estado.setCodigoEstado(codest);
+            estado.setLiteralError(literr);
+
+            retorno.setEstado(estado);
+        }
+
+
         es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.TituloFamiliaNumerosaRetorno tfnret = res
                 .getTituloFamiliaNumerosaRetorno();
 
@@ -440,7 +457,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
             rde = new SVDSCTFNWS01v3RespuestaDatosEspecificos();
 
-            es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado respuestaEstado = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado();
+            
             es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Retorno retorno = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Retorno();
 
             try {
@@ -457,12 +474,9 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                 log.info("SVDSCTFNWS01v3Client :: Resposta api del cedent " + modelApiResponse);
 
                 if (res != null) {
+
                     retorno = adaptaResultado(res);
                     
-                    respuestaEstado.setCodigoEstado(ErrorBackoffice.TRAMITADA.getEstat());
-                    respuestaEstado.setLiteralError(ErrorBackoffice.TRAMITADA.getCodi());
-                    retorno.setEstado(respuestaEstado);
-
                     log.info("SVDSCTFNWS01v3Client :: Resposta del cedent adaptada");
                     
                     if (retorno != null) {
@@ -480,6 +494,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                 }
 
                 if (modelApiResponse != null) {
+                    es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado respuestaEstado = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado();
                     retorno = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Retorno();
                     respuestaEstado.setCodigoEstado(String.valueOf(modelApiResponse.getCode()));
                     respuestaEstado.setLiteralError(modelApiResponse.getMessage());
@@ -488,7 +503,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
             } catch (ApiException ex) {
                 Logger.getLogger(SVDSCTFNWS01v3Client.class.getName()).log(Level.SEVERE, null, ex);
-
+                es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado respuestaEstado = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Estado();
                 retorno = new es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.Retorno();
                 respuestaEstado.setCodigoEstado(ErrorBackoffice.ERROR_CEDENT.getEstat());
                 respuestaEstado.setLiteralError("Error genèric del cedent. " + ex.getMessage());

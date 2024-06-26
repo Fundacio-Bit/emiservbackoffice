@@ -82,17 +82,6 @@ import org.xml.sax.SAXException;
         serviceName = EmiservBackofficeWsImpl.NAME_WS + "Service",
         targetNamespace = "http://caib.es/emiserv/backoffice")
 public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackoffice {
-
-//    public static final String TRAMITADA = "0003";
-//    public static final String DOS_O_MES = "0232";
-//    public static final String NO_IDENTIFICAT = "0233";
-//    public static final String NOT_DISPONIBLE = "0238";
-//    public static final String SCHEMA_INCORRECTE = "0401";
-//    public static final String FALTA_SOLICITUD = "0401";
-//    public static final String FALTA_ATRIBUTOS = "0401";
-//    public static final String MULTIPLES_SOLICITUDS = "0415";
-//    public static final String ERROR_BACKOFFICE = "0242";
-//    public static final String ERROR_CEDENT = "0242";
     
     public static final String NAME = "EmiservBackoffice";
 
@@ -114,7 +103,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             return respuesta;
         }
         
-        log.info("EmiservBackofficeWsImpl :: Peticion no nula" );
+        log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Peticion no nula" );
         
         Atributos peticionAtributos = peticion.getAtributos();
         
@@ -128,16 +117,16 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             return respuesta;
         }
         
-        log.info("EmiservBackofficeWsImpl :: Atributos: "  + peticionAtributos.toString());
+        log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Atributos: "  + peticionAtributos.toString());
         
         Estado peticionAtributosEstado = peticionAtributos.getEstado();
         
         if (peticionAtributosEstado==null) {
-            log.info("EmiservBackofficeWsImpl :: Estado: Petició no subministra estat. Creant objecte Estado ");
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Estado : Petició no subministra estat. Creant objecte Estado.");
             peticionAtributosEstado = new Estado();
         }
         
-        log.info("EmiservBackofficeWsImpl :: Estado: "  + peticionAtributosEstado.toString());
+        log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Estado : "  + peticionAtributosEstado.toString());
         
         Solicitudes peticionSolicitudes = peticion.getSolicitudes();
         
@@ -153,7 +142,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             return respuesta;
         }
         
-        log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Size :"  + peticionSolicitudesSolicitudTransmision.size());
+        log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Size :"  + peticionSolicitudesSolicitudTransmision.size());
         
         if (peticionSolicitudesSolicitudTransmision.size()>1){
             respuesta = peticionErronea(MULTIPLES_SOLICITUDS,  "El número de sol·licituds no pot ser major que 1");
@@ -168,7 +157,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         
             String peticionSolicitudTransmisionId = peticionSolicitudTransmision.getId();
             
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Id : "  + peticionSolicitudTransmisionId);
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Id : "  + peticionSolicitudTransmisionId);
             
             DatosGenericos peticionDatosGenericos = peticionSolicitudTransmision.getDatosGenericos();
             
@@ -184,29 +173,29 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
                 return respuesta;
             }
             
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Datos Especificos : "  + strPeticionDatosEspecificos);
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Datos Especificos : "  + strPeticionDatosEspecificos);
            
             Emisor peticionEmisor = peticionDatosGenericos.getEmisor();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Emisor : "  + peticionEmisor.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Emisor : "  + peticionEmisor.toString());
             Solicitante peticionSolicitante = peticionDatosGenericos.getSolicitante();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Solicitante : "  + peticionSolicitante.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Solicitante : "  + peticionSolicitante.toString());
             Titular peticionTitular = peticionDatosGenericos.getTitular();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Titular : "  + peticionTitular.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Titular : "  + peticionTitular.toString());
             Transmision peticionTransmision = peticionDatosGenericos.getTransmision();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Transmision : "  + peticionTransmision.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Transmision : "  + peticionTransmision.toString());
 
             Consentimiento peticionSolicitanteConsentimiento = peticionSolicitante.getConsentimiento();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Consentimiento : "  + peticionSolicitanteConsentimiento.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Consentimiento : "  + peticionSolicitanteConsentimiento.toString());
             Funcionario peticionSolicitanteFuncionario = peticionSolicitante.getFuncionario();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Funcionario : "  + peticionSolicitanteFuncionario.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Funcionario : "  + peticionSolicitanteFuncionario.toString());
             Procedimiento peticionSolicitanteProcedimiento = peticionSolicitante.getProcedimiento();
-            log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: Procedimiento : "  + peticionSolicitanteProcedimiento.toString());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: Procedimiento : "  + peticionSolicitanteProcedimiento.toString());
             TipoDocumentacion peticionTitularTipoDocumentacion = peticionTitular.getTipoDocumentacion();
             
             if (peticionTitularTipoDocumentacion==null) {
-                log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion : Petició no subministra informació del titular.");
+                log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: TipoDocumentacion : Petició no subministra informació del titular.");
             } else{
-                log.info("EmiservBackofficeWsImpl :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
+                log.info("EmiservBackofficeWsImpl :: peticionSincrona :: SolicitudTransmision: TipoDocumentacion :"  + peticionTitularTipoDocumentacion.toString());
             }
             
             // Secció de tractament de la resposta
@@ -222,11 +211,11 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             Propietats propietats = new Propietats(new PropertyFileConfigSource(), serveiBackoffice);
             
-            log.info("EmiservBackofficeWsImpl :: Configurant per al codi de certificat : "  + codiCertificat);
-            log.info("EmiservBackofficeWsImpl :: Configurant per al servei : "  + serveiBackoffice.getCodi());
-            log.info("EmiservBackofficeWsImpl :: Client backoffice : "  + serveiBackoffice.getClient().getName());
-            log.info("EmiservBackofficeWsImpl :: Propietats: Endpoint : "  + propietats.getEndpoint());
-            log.info("EmiservBackofficeWsImpl :: Propietats: Usuari : "  + propietats.getUsuari());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Configurant per al codi de certificat : "  + codiCertificat);
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Configurant per al servei : "  + serveiBackoffice.getCodi());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Client backoffice : "  + serveiBackoffice.getClient().getName());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Propietats: Endpoint : "  + propietats.getEndpoint());
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Propietats: Usuari : "  + propietats.getUsuari());
             
             
             TransmisionDatos respuestaTransmisionDatos  =  new TransmisionDatos();
@@ -260,7 +249,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             
             try {
                 CedentClient client = (CedentClient) clazz.getConstructor(constructorParameters).newInstance(parameters);
-                log.info("EmiservBackofficeWsImpl :: Classe client instanciada per : "  + client.getClass().getName());
+                log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Classe client instanciada per : "  + client.getClass().getName());
                 client.peticionSincrona();
                 strRespuestaDatosEspecificos = client.getStrRespuestaDatosEspecificos();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
@@ -269,7 +258,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
                 return respuesta;
             }
             
-            log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : "  + strRespuestaDatosEspecificos);
+            log.info("EmiservBackofficeWsImpl :: peticionSincrona :: Transmision: Respuesta Datos Especificos : "  + strRespuestaDatosEspecificos);
             
             Element respuestaDatosEspecificos = null;
             
@@ -348,7 +337,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
         atributos.setEstado(estado);
         respuesta.setAtributos(atributos);
         
-        log.info("EmiservBackofficeWsImpl :: " + "codigoEstado = " + estado.getCodigoEstado() + "literalError = " + estado.getLiteralError());
+        log.info("EmiservBackofficeWsImpl :: peticionErronea :: " + "codigoEstado = " + estado.getCodigoEstado() + "literalError = " + estado.getLiteralError());
         
         return respuesta;
         
@@ -405,7 +394,7 @@ public class EmiservBackofficeWsImpl extends BaseWsImpl implements EmiservBackof
             Logger.getLogger(EmiservBackofficeWsImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-        log.info("EmiservBackofficeWsImpl :: Transmision: Respuesta Datos Especificos : Adaptado "  + xml);
+        log.info("EmiservBackofficeWsImpl :: camelCaseToCamelCaseLower :: Transmision: Respuesta Datos Especificos : Adaptado "  + xml);
       
         try {
             element  = stringToElement(xml);

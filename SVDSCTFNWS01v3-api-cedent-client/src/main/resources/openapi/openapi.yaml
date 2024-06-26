@@ -239,8 +239,18 @@ components:
           $ref: "#/components/schemas/TituloFamiliaNumerosaRetorno"
         listaBeneficiariosRetorno:
           $ref: "#/components/schemas/ListaBeneficiariosRetorno"
+        estadoRetorno:
+          $ref: "#/components/schemas/EstadoRetorno"
       xml:
         name: Resultado
+
+    EstadoRetorno:
+      type: object
+      properties:
+        codigoEstado:
+          type: string
+        literalError:
+          type: string
 
     TituloFamiliaNumerosaRetorno:
       type: object
