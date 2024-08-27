@@ -80,8 +80,8 @@ public class ScdcpajUv3ApiTest {
 
          Solicitud body = new Solicitud();
         
-        String provinciaSolicitud = "7";
-        String municipioSolicitud = "26";
+        String provinciaSolicitud = "07";
+        String municipioSolicitud = "032";
         
         body.setProvinciaSolicitud(provinciaSolicitud);
         body.setMunicipioSolicitud(municipioSolicitud);
@@ -92,8 +92,8 @@ public class ScdcpajUv3ApiTest {
         
         Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIE;
         //String valor = "41438576M";
-        String valor = "78219106Q";
-        //String valor = "Z1000675L";
+        //String valor = "78219106Q";
+        String valor = "Z1000675L";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         

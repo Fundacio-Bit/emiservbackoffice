@@ -14,6 +14,10 @@ import org.w3c.dom.Element;
  * @author gdeignacio
  */
 public abstract class CedentClient {
+
+    private static final String FULL_DATE_STRING = "yyyy-MM-dd hh:mm:ss";
+    private static final String DATE_STRING = "yyyy-MM-dd";
+    
     
     public static String EMISERV_BACKOFFICE_XMLNS = "http://caib.es/emiserv/backoffice";
 
@@ -80,11 +84,14 @@ public abstract class CedentClient {
         if (fullDate==null) return null;
         
         String strDate = fullDate;
-        SimpleDateFormat sdfFullDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+        String dateFormat = (fullDate.length() == DATE_STRING.length())? DATE_STRING : FULL_DATE_STRING;
+
+        SimpleDateFormat sdfFullDate = new SimpleDateFormat(dateFormat);
         Date date;
         try {
             date = sdfFullDate.parse(fullDate);
-            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdfDate = new SimpleDateFormat(dateFormat);
             strDate = sdfDate.format(date);
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(CedentClient.class.getName()).log(Level.SEVERE, null, ex);
