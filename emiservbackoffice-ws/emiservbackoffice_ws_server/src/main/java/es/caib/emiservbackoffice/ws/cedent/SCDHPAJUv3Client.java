@@ -281,6 +281,7 @@ public class SCDHPAJUv3Client extends CedentClient {
             es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado res) {
 
         if (res == null) {
+            log.info("SCDHPAJUv3Client :: adaptaResultado :: Resultado nulo");
             return null;
         }
 
@@ -291,9 +292,15 @@ public class SCDHPAJUv3Client extends CedentClient {
 
         // set Documentacion
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion doc = res.getDocumentacion();
+        if (doc == null){
+            log.info("SCDHPAJUv3Client :: adaptaResultado :: Documentacion nula");
+        }
         if (doc != null) {
             es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Documentacion documentacion = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.Documentacion();
             es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum tipo = doc.getTipo();
+            if (tipo == null){
+                log.info("SCDHPAJUv3Client :: adaptaResultado :: Tipo de Documentacion nulo");
+            }
             if (tipo != null) {
                 String valorTipo = (es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.PASSAPORT == tipo)
                         ? "Pasaporte"
@@ -329,6 +336,9 @@ public class SCDHPAJUv3Client extends CedentClient {
 
         // Set Historico Domicilios
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.HistoricoDomicilios hdom = res.getHistoricoDomicilios();
+        if (hdom == null){
+            log.info("SCDHPAJUv3Client :: adaptaResultado :: HistoricoDomicilios nulo");
+        }
         if (hdom != null) {
 
             es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.HistoricoDomicilios historicoDomicilios = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.HistoricoDomicilios();
@@ -441,7 +451,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         String hasta = hst;
                         hasta = fullDateToDate(hst);
                         domicilio.setHasta(hasta);
-
+                        log.info("SCDHPAJUv3Client :: adaptaResultado :: Commprobando motivo baja");
                         // Set motivo baja
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoBaja motb = dom.getMotivoBaja();
                         es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja motivoBaja = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja();
