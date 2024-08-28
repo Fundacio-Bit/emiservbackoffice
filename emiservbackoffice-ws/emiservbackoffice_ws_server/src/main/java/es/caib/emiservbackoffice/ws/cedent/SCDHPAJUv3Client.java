@@ -322,17 +322,24 @@ public class SCDHPAJUv3Client extends CedentClient {
         resultado.setFechaExpedicion(fechaExpedicion);
 
         // set fecha nacimiento
-        Date date;
-        Timestamp timestamp = null;
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(res.getFechaNacimiento());
-            timestamp = new java.sql.Timestamp(date.getTime());
-        } catch (ParseException ex) {
-            Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+        String fn = res.getFechaNacimiento();
+        if (fn == null){
+            log.info("SCDHPAJUv3Client :: adaptaResultado :: Fecha de Nacimiento nula");
+        }
+        if (fn != null) {
+            Date date;
+            Timestamp timestamp = null;
+            try {
+                date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(fn);
+                timestamp = new java.sql.Timestamp(date.getTime());
+            } catch (ParseException ex) {
+                Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            XMLGregorianCalendar fechaNacimiento = GregorianCalendars.timestampToXMLGregorianCalendar(timestamp);
+            resultado.setFechaNacimiento(fechaNacimiento);
         }
 
-        XMLGregorianCalendar fechaNacimiento = GregorianCalendars.timestampToXMLGregorianCalendar(timestamp);
-        resultado.setFechaNacimiento(fechaNacimiento);
+        
 
         // Set Historico Domicilios
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.HistoricoDomicilios hdom = res.getHistoricoDomicilios();
@@ -451,7 +458,7 @@ public class SCDHPAJUv3Client extends CedentClient {
                         String hasta = hst;
                         hasta = fullDateToDate(hst);
                         domicilio.setHasta(hasta);
-                        log.info("SCDHPAJUv3Client :: adaptaResultado :: Commprobando motivo baja");
+                        
                         // Set motivo baja
                         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.MotivoBaja motb = dom.getMotivoBaja();
                         es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja motivoBaja = new es.caib.scsp.esquemas.SCDHPAJUv3.respuesta.datosespecificos.MotivoBaja();
