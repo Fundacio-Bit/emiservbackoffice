@@ -532,7 +532,8 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                respuestaConsulta.setDatosAdicionalesTitular(datr);
             }
             
-            rde.setConsulta(respuestaConsulta);
+            // Omitim posar la consulta de la petició a la resposta
+            // rde.setConsulta(respuestaConsulta);
           
         }
 
