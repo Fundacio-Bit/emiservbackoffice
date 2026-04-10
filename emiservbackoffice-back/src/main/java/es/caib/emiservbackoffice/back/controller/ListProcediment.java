@@ -6,7 +6,7 @@ import es.caib.emiservbackoffice.service.model.Pagina;
 import es.caib.emiservbackoffice.service.model.ProcedimentDTO;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
+import org.primefaces.model.SortMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +61,7 @@ public class ListProcediment extends AbstractController implements Serializable 
             private static final long serialVersionUID = 1L;
 
             @Override
-            public List<ProcedimentDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+            public List<ProcedimentDTO> load(int first, int pageSize, Map<String, SortMeta> sortBy,
                                              Map<String, FilterMeta> filterBy) {
                 Pagina<ProcedimentDTO> pagina =
                         procedimentService.findByUnitat(first, pageSize, unitat.getValue().getId());

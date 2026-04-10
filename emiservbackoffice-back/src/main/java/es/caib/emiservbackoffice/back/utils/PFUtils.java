@@ -35,9 +35,9 @@ public final class PFUtils {
         }
 
         return multiSortMeta.stream().map(
-                    sortMeta -> (sortMeta.getSortOrder() == SortOrder.ASCENDING ?
-                            Ordre.ascendent(Enum.valueOf(type, sortMeta.getSortField())) :
-                            Ordre.descendent(Enum.valueOf(type, sortMeta.getSortField())))
+                    sortMeta -> (sortMeta.getOrder() == SortOrder.ASCENDING ?
+                            Ordre.ascendent(Enum.valueOf(type, sortMeta.getField())) :
+                            Ordre.descendent(Enum.valueOf(type, sortMeta.getField())))
             ).collect(Collectors.toList());
     }
 

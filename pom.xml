@@ -25,14 +25,14 @@
         <mp-openapi.version>1.1.2</mp-openapi.version>
         <mp-config.version>1.3</mp-config.version>
         <keycloak.version>6.0.1</keycloak.version>
-        <primefaces.version>8.0</primefaces.version>
+        <primefaces.version>10.0.0</primefaces.version>
         <primefaces.theme.version>1.0.11</primefaces.theme.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <junit.version>4.13.1</junit.version>
         <arquillian.version>1.6.0.Final</arquillian.version>
         <wildfly-arquillian.version>3.0.1.Final</wildfly-arquillian.version>
         <mockito.version>3.5.13</mockito.version>
-        <emiserv.version>2.0.4</emiserv.version>
+        <emiserv.version>2.0.5</emiserv.version>
         <resteasy.version>3.9.1.Final</resteasy.version>
         <scsp-schemas-xsd.version>1.0.0</scsp-schemas-xsd.version>
         <!-- Propietats emprades als descriptors en mode Desenvolupament. -->
@@ -42,7 +42,7 @@
         <!-- Altres substitucions a aplicar dins els descriptors. -->
         <!-- Es poden sobreescriure passant la propietat al maven amb -D -->
         <webXml.loginConfig.authMethod>KEYCLOAK</webXml.loginConfig.authMethod>
-        <webXml.loginConfig.realmName>Govern de les Illes Balears</webXml.loginConfig.realmName>
+        <webXml.loginConfig.realmName>GOIB</webXml.loginConfig.realmName>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -442,7 +442,7 @@
         <module>emiservbackoffice-api-externa</module>
         <module>emiservbackoffice-ws</module>
         <module>emiservbackoffice-ear</module>
-        <module>emiservbackoffice-pinbal</module>
+        <!--module>emiservbackoffice-pinbal</module-->
         <module>emiservbackoffice-cedent-SCDCPAJUv3</module>
         <module>SCDHPAJUv3-api-cedent-client</module>
         <module>SCDCPAJUv3-api-cedent-client</module>
