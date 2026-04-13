@@ -81,7 +81,7 @@ public abstract class CedentClient {
     
     protected String fullDateToDate(String fullDate) {
 
-        if (fullDate==null) return null;
+        if (fullDate==null || fullDate.trim().isEmpty()) return null;
         
         String strDate = fullDate;
 
