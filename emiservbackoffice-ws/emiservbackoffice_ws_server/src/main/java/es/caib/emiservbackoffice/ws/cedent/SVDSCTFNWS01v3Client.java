@@ -122,6 +122,12 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
         try {
             strRespuestaDatosEspecificos = manager.elementToString(respuestaDatosEspecificos);
+
+            if (strRespuestaDatosEspecificos != null) {
+                strRespuestaDatosEspecificos = strRespuestaDatosEspecificos.replace("<ListaBeneficiariosRetorno/>","");
+
+
+                
         } catch (TransformerException ex) {
             Logger.getLogger(SVDSCTFNWS01v3Client.class.getName()).log(Level.SEVERE, null, ex);
         }
