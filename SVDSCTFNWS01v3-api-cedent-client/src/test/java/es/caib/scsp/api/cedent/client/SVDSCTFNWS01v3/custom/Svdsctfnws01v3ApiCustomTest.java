@@ -67,7 +67,8 @@ public class Svdsctfnws01v3ApiCustomTest {
         
         ApiClientCustom apiClient =  api.getApiClientCustom();
 
-        apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
+        //apiClient.setBasePath("http://185.68.189.37:48080/emiservcedentapi/externa");
+        apiClient.setBasePath("http://sdmi16209:48080/emiservcedentapi/externa");
 
         apiClient.setDebugging(true);
 
@@ -81,7 +82,7 @@ public class Svdsctfnws01v3ApiCustomTest {
 
         Solicitud body = new Solicitud();
         
-        String codigoComunidadAutonoma = "07";
+        String codigoComunidadAutonoma = "04";
         String numeroTitulo = null;
         String fechaConsulta = null;
 
@@ -96,9 +97,9 @@ public class Svdsctfnws01v3ApiCustomTest {
         
         Documentacion documentacion = new Documentacion();
         
-        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIF;
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIE;
         //String valor = "41504049C";
-        String valor = "41438576M";
+        String valor = "60740722E";
         //String valor = "41503905Z";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);

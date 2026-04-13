@@ -387,6 +387,10 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
             }
 
+            if (listaBeneficiariosRetorno.getBeneficiarioRetorno().isEmpty()) {
+                listaBeneficiariosRetorno = null;
+            }   
+
             retorno.setListaBeneficiariosRetorno(listaBeneficiariosRetorno);
 
         }
