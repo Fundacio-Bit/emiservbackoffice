@@ -125,7 +125,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
             if (strRespuestaDatosEspecificos != null) {
                 strRespuestaDatosEspecificos = strRespuestaDatosEspecificos.replace("<ListaBeneficiariosRetorno/>","");
-
+            }    
 
                 
         } catch (TransformerException ex) {
