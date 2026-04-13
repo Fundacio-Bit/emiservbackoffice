@@ -330,7 +330,13 @@ public class SCDHPAJUv3Client extends CedentClient {
             Date date;
             Timestamp timestamp = null;
             try {
-                date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(fn);
+                // Intentar primero con formato completo (con hora)
+                try {
+                    date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fn);
+                } catch (ParseException ex) {
+                    // Si falla, intentar con formato solo fecha
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(fn);
+                }
                 timestamp = new java.sql.Timestamp(date.getTime());
             } catch (ParseException ex) {
                 Logger.getLogger(SCDHPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);

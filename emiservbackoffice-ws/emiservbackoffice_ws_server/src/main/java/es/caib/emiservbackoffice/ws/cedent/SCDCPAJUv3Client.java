@@ -444,7 +444,13 @@ public class SCDCPAJUv3Client extends CedentClient {
                         Date date;
                         Timestamp timestamp = null;
                         try {
-                            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(per.getFechaNacimiento());
+                            // Intentar primero con formato completo (con hora)
+                            try {
+                                date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(per.getFechaNacimiento());
+                            } catch (ParseException ex) {
+                                // Si falla, intentar con formato solo fecha
+                                date = new SimpleDateFormat("yyyy-MM-dd").parse(per.getFechaNacimiento());
+                            }
                             timestamp = new java.sql.Timestamp(date.getTime());
                         } catch (ParseException ex) {
                             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
