@@ -11,7 +11,6 @@ import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +21,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -443,21 +444,24 @@ public class SCDCPAJUv3Client extends CedentClient {
                         // set fecha nacimiento
                         Date date;
                         Timestamp timestamp = null;
+                        XMLGregorianCalendar fechaNacimiento = null;
                         try {
-                            // Intentar primero con formato completo (con hora)
-                            try {
-                                date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(per.getFechaNacimiento());
-                            } catch (ParseException ex) {
-                                // Si falla, intentar con formato solo fecha
-                                date = new SimpleDateFormat("yyyy-MM-dd").parse(per.getFechaNacimiento());
+                            String fechaNacimientoRaw = per.getFechaNacimiento();
+                            if (fechaNacimientoRaw != null && fechaNacimientoRaw.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                int year = Integer.parseInt(fechaNacimientoRaw.substring(0, 4));
+                                int month = Integer.parseInt(fechaNacimientoRaw.substring(5, 7));
+                                int day = Integer.parseInt(fechaNacimientoRaw.substring(8, 10));
+                                fechaNacimiento = DatatypeFactory.newInstance().newXMLGregorianCalendarDate(year,
+                                        month, day, DatatypeConstants.FIELD_UNDEFINED);
+                            } else {
+                                // Mantener soporte para fecha con hora
+                                date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fechaNacimientoRaw);
+                                timestamp = new java.sql.Timestamp(date.getTime());
+                                fechaNacimiento = GregorianCalendars.timestampToXMLGregorianCalendar(timestamp);
                             }
-                            timestamp = new java.sql.Timestamp(date.getTime());
-                        } catch (ParseException ex) {
+                        } catch (Exception ex) {
                             Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.SEVERE, null, ex);
                         }
-
-                        XMLGregorianCalendar fechaNacimiento = GregorianCalendars
-                                .timestampToXMLGregorianCalendar(timestamp);
                         persona.setFechaNacimiento(fechaNacimiento);
 
                         // add persona
