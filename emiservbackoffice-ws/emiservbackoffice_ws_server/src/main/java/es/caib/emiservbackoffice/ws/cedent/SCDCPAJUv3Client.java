@@ -84,6 +84,45 @@ public class SCDCPAJUv3Client extends CedentClient {
         return normalized;
     }
 
+    private es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion normalizeTipoDocumentacionBackoffice(
+            String tipo) {
+        if (tipo == null) {
+            return null;
+        }
+
+        String normalized = tipo.trim();
+        if (normalized.isEmpty()) {
+            return null;
+        }
+
+        if ("Pasaporte".equalsIgnoreCase(normalized)
+                || "Passaport".equalsIgnoreCase(normalized)
+                || "PASSAPORT".equalsIgnoreCase(normalized)
+                || "Passport".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.Pasaporte;
+        }
+        if ("NIF".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIF;
+        }
+        if ("NIE".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIE;
+        }
+        if ("DNI".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.DNI;
+        }
+        if ("CIF".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.CIF;
+        }
+
+        try {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.valueOf(normalized);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING,
+                    "SCDCPAJUv3Client :: Tipus de documentació no reconegut per backoffice: " + tipo);
+            return null;
+        }
+    }
+
     private void setDatosPeticion() throws JAXBException, IOException {
 
         try {
@@ -590,10 +629,14 @@ public class SCDCPAJUv3Client extends CedentClient {
         respuestaTitular.setDocumentacion(respuestaDocumentacion);
         respuestaSolicitud.setTitular(respuestaTitular);
 
-        datosGenericos.getTitular()
-                .setTipoDocumentacion(es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion
-                        .valueOf(respuestaDocumentacion.getTipo()));
-        datosGenericos.getTitular().setDocumentacion(respuestaDocumentacion.getValor());
+        es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipoDocumentacionBackoffice = normalizeTipoDocumentacionBackoffice(
+            respuestaDocumentacion.getTipo());
+        if (datosGenericos.getTitular() != null && tipoDocumentacionBackoffice != null) {
+            datosGenericos.getTitular().setTipoDocumentacion(tipoDocumentacionBackoffice);
+        }
+        if (datosGenericos.getTitular() != null) {
+            datosGenericos.getTitular().setDocumentacion(respuestaDocumentacion.getValor());
+        }
 
         rde.setSolicitud(respuestaSolicitud);
 
