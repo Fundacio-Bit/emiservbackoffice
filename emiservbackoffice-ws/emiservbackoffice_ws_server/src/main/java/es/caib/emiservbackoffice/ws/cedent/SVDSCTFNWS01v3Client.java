@@ -64,6 +64,75 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
         super(datosGenericos, strPeticionDatosEspecificos, propietats);
     }
 
+    private String normalizeTipoDocumentacionCedent(String tipo) {
+        if (tipo == null) {
+            return null;
+        }
+
+        String normalized = tipo.trim();
+        if (normalized.isEmpty()) {
+            return normalized;
+        }
+
+        if ("Pasaporte".equalsIgnoreCase(normalized)
+                || "Passaport".equalsIgnoreCase(normalized)
+                || "PASSAPORT".equalsIgnoreCase(normalized)
+                || "Passport".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.PASAPORTE.getValue();
+        }
+
+        if ("NIF".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.NIF.getValue();
+        }
+        if ("NIE".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.NIE.getValue();
+        }
+        if ("DNI".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.DNI.getValue();
+        }
+
+        return normalized;
+    }
+
+    private es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion normalizeTipoDocumentacionBackoffice(
+            String tipo) {
+        if (tipo == null) {
+            return null;
+        }
+
+        String normalized = tipo.trim();
+        if (normalized.isEmpty()) {
+            return null;
+        }
+
+        if ("Pasaporte".equalsIgnoreCase(normalized)
+                || "Passaport".equalsIgnoreCase(normalized)
+                || "PASSAPORT".equalsIgnoreCase(normalized)
+                || "Passport".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.Pasaporte;
+        }
+        if ("NIF".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIF;
+        }
+        if ("NIE".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIE;
+        }
+        if ("DNI".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.DNI;
+        }
+        if ("CIF".equalsIgnoreCase(normalized)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.CIF;
+        }
+
+        try {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.valueOf(normalized);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(SVDSCTFNWS01v3Client.class.getName()).log(Level.WARNING,
+                    "SVDSCTFNWS01v3Client :: Tipus de documentació no reconegut per backoffice: " + tipo);
+            return null;
+        }
+    }
+
     private void setDatosPeticion() throws JAXBException, IOException {
 
         try {
@@ -253,7 +322,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
         es.caib.emiserv.logic.intf.service.ws.backoffice.Titular titular = datosGenericos.getTitular();
 
         if (titular != null){
-            tipo = titular.getTipoDocumentacion().toString();
+            tipo = titular.getTipoDocumentacion() != null ? titular.getTipoDocumentacion().toString() : null;
             valor = titular.getDocumentacion();
             apellido1 = titular.getApellido1();
             apellido2 = titular.getApellido2();
@@ -263,7 +332,7 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
             dp.setApellido2(apellido2);
             dp.setNombre(nombre);
 
-            dc.setTipo(es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.fromValue(tipo));
+            dc.setTipo(es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Documentacion.TipoEnum.fromValue(normalizeTipoDocumentacionCedent(tipo)));
             dc.setValor(valor);
             dp.setDocumentacion(dc);
         }
@@ -419,10 +488,12 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
         es.caib.emiserv.logic.intf.service.ws.backoffice.Titular ttl = datosGenericos.getTitular();
 
         if (ttl != null) {
-            if (ttl.getDocumentacion() != null) {
+            if (ttl.getTipoDocumentacion() != null) {
                 tipo = ttl.getTipoDocumentacion().toString();
-                valor = ttl.getDocumentacion();
                 log.info("SVDSCTFNWS01v3Client :: Paràmetres de consulta: " + "Tipus document: " + tipo);
+            }
+            if (ttl.getDocumentacion() != null) {
+                valor = ttl.getDocumentacion();
                 log.info("SVDSCTFNWS01v3Client :: Paràmetres de consulta: " + "Document: " + valor);
             }
         }
@@ -492,11 +563,14 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                     if (retorno != null) {
                         for (es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.BeneficiarioRetorno beneficiarioRetorno : retorno.getListaBeneficiariosRetorno().getBeneficiarioRetorno()) {
                             if ("S".equals(beneficiarioRetorno.getTitular())) {
-                                datosGenericos.getTitular()
-                                        .setTipoDocumentacion(es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion
-                                                .valueOf(beneficiarioRetorno.getTipoDocumentacion()));
-                                datosGenericos.getTitular().setDocumentacion(beneficiarioRetorno.getDocumentacion());
-
+                                es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipoDocumentacionBackoffice =
+                                        normalizeTipoDocumentacionBackoffice(beneficiarioRetorno.getTipoDocumentacion());
+                                if (datosGenericos.getTitular() != null && tipoDocumentacionBackoffice != null) {
+                                    datosGenericos.getTitular().setTipoDocumentacion(tipoDocumentacionBackoffice);
+                                }
+                                if (datosGenericos.getTitular() != null) {
+                                    datosGenericos.getTitular().setDocumentacion(beneficiarioRetorno.getDocumentacion());
+                                }
                             }
                         }
                     }
