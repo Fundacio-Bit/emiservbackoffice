@@ -54,6 +54,36 @@ public class SCDCPAJUv3Client extends CedentClient {
         super(datosGenericos, strPeticionDatosEspecificos, propietats);
     }
 
+    private String normalizeTipoDocumentacionCedent(String tipo) {
+        if (tipo == null) {
+            return null;
+        }
+
+        String normalized = tipo.trim();
+        if (normalized.isEmpty()) {
+            return normalized;
+        }
+
+        if ("Pasaporte".equalsIgnoreCase(normalized)
+                || "Passaport".equalsIgnoreCase(normalized)
+                || "PASSAPORT".equalsIgnoreCase(normalized)
+                || "Passport".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue();
+        }
+
+        if ("NIF".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIF.getValue();
+        }
+        if ("NIE".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIE.getValue();
+        }
+        if ("DNI".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.DNI.getValue();
+        }
+
+        return normalized;
+    }
+
     private void setDatosPeticion() throws JAXBException, IOException {
 
         try {
@@ -229,10 +259,7 @@ public class SCDCPAJUv3Client extends CedentClient {
             if (documentacion != null) {
 
                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
-                tipo = documentacion.getTipo();
-                tipo = ("Pasaporte".equals(tipo)
-                        ? es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue()
-                        : tipo);
+                tipo = normalizeTipoDocumentacionCedent(documentacion.getTipo());
                 valor = documentacion.getValor();
                 dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                 dc.setValor(valor);
@@ -246,11 +273,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
                 if (documentacion != null) {
                     es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
-                    tipo = documentacion.getTipo();
-                    tipo = ("Pasaporte".equals(tipo)
-                            ? es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT
-                                    .getValue()
-                            : tipo);
+                    tipo = normalizeTipoDocumentacionCedent(documentacion.getTipo());
                     valor = documentacion.getValor();
                     dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                     dc.setValor(valor);
@@ -492,10 +515,15 @@ public class SCDCPAJUv3Client extends CedentClient {
                         + pde.getSolicitud().getProvinciaSolicitud());
                 log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Municipi: "
                         + pde.getSolicitud().getMunicipioSolicitud());
-                log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: "
-                        + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
-                log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Document: "
-                        + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+                
+                // Agregar validaciones defensivas para evitar NullPointerException en logs
+                if (pde.getSolicitud().getTitular() != null
+                        && pde.getSolicitud().getTitular().getDocumentacion() != null) {
+                    log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Tipus document: "
+                            + pde.getSolicitud().getTitular().getDocumentacion().getTipo());
+                    log.info("SCDCPAJUv3Client :: Paràmetres de consulta: " + "Document: "
+                            + pde.getSolicitud().getTitular().getDocumentacion().getValor());
+                }
             }
         }
 

@@ -56,6 +56,36 @@ public class SCDHPAJUv3Client extends CedentClient {
         super(datosGenericos, strPeticionDatosEspecificos, propietats);
     }
 
+    private String normalizeTipoDocumentacionCedent(String tipo) {
+        if (tipo == null) {
+            return null;
+        }
+
+        String normalized = tipo.trim();
+        if (normalized.isEmpty()) {
+            return normalized;
+        }
+
+        if ("Pasaporte".equalsIgnoreCase(normalized)
+                || "Passaport".equalsIgnoreCase(normalized)
+                || "PASSAPORT".equalsIgnoreCase(normalized)
+                || "Passport".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue();
+        }
+
+        if ("NIF".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.NIF.getValue();
+        }
+        if ("NIE".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.NIE.getValue();
+        }
+        if ("DNI".equalsIgnoreCase(normalized)) {
+            return es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.DNI.getValue();
+        }
+
+        return normalized;
+    }
+
     private void setDatosPeticion() throws JAXBException, IOException {
 
         try {
@@ -220,10 +250,7 @@ public class SCDHPAJUv3Client extends CedentClient {
             if (documentacion != null) {
 
                 es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion();
-                tipo = documentacion.getTipo();
-                tipo = ("Pasaporte".equals(tipo)
-                        ? es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue()
-                        : tipo);
+                tipo = normalizeTipoDocumentacionCedent(documentacion.getTipo());
                 valor = documentacion.getValor();
                 dc.setTipo(es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                 dc.setValor(valor);
@@ -237,11 +264,7 @@ public class SCDHPAJUv3Client extends CedentClient {
 
                 if (documentacion != null) {
                     es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion();
-                    tipo = documentacion.getTipo();
-                    tipo = ("Pasaporte".equals(tipo)
-                            ? es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.PASSAPORT
-                                    .getValue()
-                            : tipo);
+                    tipo = normalizeTipoDocumentacionCedent(documentacion.getTipo());
                     valor = documentacion.getValor();
                     dc.setTipo(es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
                     dc.setValor(valor);
