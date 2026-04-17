@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.HttpHeaders;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiException;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -78,7 +79,7 @@ public class ScdhpajUv3ApiTest {
         Solicitud body = new Solicitud();
         
         String provinciaSolicitud = "07";
-        String municipioSolicitud = "032";
+        String municipioSolicitud = "015";
         
         body.setProvinciaSolicitud(provinciaSolicitud);
         body.setMunicipioSolicitud(municipioSolicitud);
@@ -98,13 +99,13 @@ public class ScdhpajUv3ApiTest {
         
         Titular titular;
         titular = new Titular();
-        titular.setDocumentacion(documentacion);
+        //titular.setDocumentacion(documentacion);
         //titular.setNia("003200000077866");
-        //titular.setNia("0702600196105");
+        titular.setNia("001500000081114");
         System.out.println(titular);
         
         body.setTitular(titular);
-        body.setNumeroAnyos("20");
+        body.setNumeroAnyos("99");
 
         System.out.println("===========");
         System.out.println(body);
@@ -124,15 +125,22 @@ public class ScdhpajUv3ApiTest {
             Logger.getLogger(ScdhpajUv3ApiTest.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No identificat");
         } catch (ApiException ex) {
-            System.out.println("Codigo: " +  api.getApiClient().getStatusCode() + " " + ex.getMessage() + " " +  api.getApiClient().getResponseHeaders());
+            int statusCode = api.getApiClient().getStatusCode();
+            String responseBody = ex.getMessage();
+            System.out.println("Codigo: " + statusCode + " " + responseBody + " " + api.getApiClient().getResponseHeaders());
 
-            String jsonString = ex.getMessage();
+            if (responseBody != null && responseBody.trim().startsWith("{")) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(responseBody);
+                if (jsonNode.has("code")) {
+                    System.out.println(jsonNode.get("code").asInt());
+                }
+                if (jsonNode.has("message")) {
+                    System.out.println(jsonNode.get("message").asText());
+                }
+            }
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(jsonString);
-
-            System.out.println(jsonNode.get("code").asInt());
-            System.out.println(jsonNode.get("message").asText());
+            fail("peticionSincrona devolvio HTTP " + statusCode + ". Respuesta: " + responseBody);
 
 
             //GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
