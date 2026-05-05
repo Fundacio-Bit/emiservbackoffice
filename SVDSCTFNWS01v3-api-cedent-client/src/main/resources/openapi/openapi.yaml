@@ -150,12 +150,12 @@ components:
       properties:
         tipo:
           type: string
-          description: "Possibles valors son NIF, DNI, NIE, Pasaporte."
+          description: "Possibles valors son NIF, DNI, NIE, Passaport."
           enum:
             - NIF
             - DNI
             - NIE
-            - Pasaporte
+            - Passaport
           xml:
             name: Tipo
         valor:
