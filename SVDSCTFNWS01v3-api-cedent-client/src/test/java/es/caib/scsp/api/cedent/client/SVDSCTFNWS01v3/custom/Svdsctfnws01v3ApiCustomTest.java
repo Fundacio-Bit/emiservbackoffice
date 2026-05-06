@@ -67,8 +67,8 @@ public class Svdsctfnws01v3ApiCustomTest {
         
         ApiClientCustom apiClient =  api.getApiClientCustom();
 
-        //apiClient.setBasePath("http://185.68.189.37:48080/emiservcedentapi/externa");
-        apiClient.setBasePath("http://sdmi16209:48080/emiservcedentapi/externa");
+        apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
+        //apiClient.setBasePath("http://sdmi16209:48080/emiservcedentapi/externa");
 
         apiClient.setDebugging(true);
 
@@ -97,9 +97,9 @@ public class Svdsctfnws01v3ApiCustomTest {
         
         Documentacion documentacion = new Documentacion();
         
-        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIE;
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.PASSAPORT;
         //String valor = "41504049C";
-        String valor = "60740722E";
+        String valor = "223301419";
         //String valor = "41503905Z";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);

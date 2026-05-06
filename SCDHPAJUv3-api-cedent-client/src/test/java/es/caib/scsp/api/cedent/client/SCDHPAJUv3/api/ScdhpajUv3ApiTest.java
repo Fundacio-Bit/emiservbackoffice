@@ -64,8 +64,8 @@ public class ScdhpajUv3ApiTest {
         
         ApiClient apiClient =  api.getApiClient();
 
-        //apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
-        apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
+        apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
+        //apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
 
         apiClient.setDebugging(true);
 
@@ -79,7 +79,7 @@ public class ScdhpajUv3ApiTest {
         Solicitud body = new Solicitud();
         
         String provinciaSolicitud = "07";
-        String municipioSolicitud = "015";
+        String municipioSolicitud = "026";
         
         body.setProvinciaSolicitud(provinciaSolicitud);
         body.setMunicipioSolicitud(municipioSolicitud);
@@ -88,10 +88,10 @@ public class ScdhpajUv3ApiTest {
         Documentacion documentacion = new Documentacion();
         
         
-        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.NIE;
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.PASSAPORT;
         //String valor = "41438576M";
         //String valor = "43085322C";
-        String valor = "Z1000675L";
+        String valor = "AS296472";
         documentacion.setTipo(tipo);
         documentacion.setValor(valor);
         
@@ -99,9 +99,9 @@ public class ScdhpajUv3ApiTest {
         
         Titular titular;
         titular = new Titular();
-        //titular.setDocumentacion(documentacion);
+        titular.setDocumentacion(documentacion);
         //titular.setNia("003200000077866");
-        titular.setNia("001500000081114");
+        //titular.setNia("001500000050775");
         System.out.println(titular);
         
         body.setTitular(titular);

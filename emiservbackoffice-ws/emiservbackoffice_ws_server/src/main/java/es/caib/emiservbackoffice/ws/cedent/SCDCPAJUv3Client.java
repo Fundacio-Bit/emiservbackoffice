@@ -54,74 +54,88 @@ public class SCDCPAJUv3Client extends CedentClient {
         super(datosGenericos, strPeticionDatosEspecificos, propietats);
     }
 
-    private String normalizeTipoDocumentacionCedent(String tipo) {
+
+    private es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum normalizeTipoDocumentacionCedent(
+            es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipo) {
+
         if (tipo == null) {
             return null;
         }
 
-        String normalized = tipo.trim();
-        if (normalized.isEmpty()) {
-            return normalized;
+        if (tipo == es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.Pasaporte) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT;
         }
 
-        if ("Pasaporte".equalsIgnoreCase(normalized)
-                || "Passaport".equalsIgnoreCase(normalized)
-                || "PASSAPORT".equalsIgnoreCase(normalized)
-                || "Passport".equalsIgnoreCase(normalized)) {
-            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT.getValue();
+        if (tipo == es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIF) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIF;
         }
 
-        if ("NIF".equalsIgnoreCase(normalized)) {
-            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIF.getValue();
-        }
-        if ("NIE".equalsIgnoreCase(normalized)) {
-            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIE.getValue();
-        }
-        if ("DNI".equalsIgnoreCase(normalized)) {
-            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.DNI.getValue();
+        if (tipo == es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIE) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIE;
         }
 
-        return normalized;
+        if (tipo == es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.DNI) {
+            return es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.DNI;
+        }
+
+        return null;
     }
+    
 
     private es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion normalizeTipoDocumentacionBackoffice(
-            String tipo) {
+            es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum tipo) {
+
         if (tipo == null) {
             return null;
         }
 
-        String normalized = tipo.trim();
-        if (normalized.isEmpty()) {
-            return null;
-        }
-
-        if ("Pasaporte".equalsIgnoreCase(normalized)
-                || "Passaport".equalsIgnoreCase(normalized)
-                || "PASSAPORT".equalsIgnoreCase(normalized)
-                || "Passport".equalsIgnoreCase(normalized)) {
+        if (tipo == es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT) {
             return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.Pasaporte;
         }
-        if ("NIF".equalsIgnoreCase(normalized)) {
+
+        if (tipo == es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIF) {
             return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIF;
         }
-        if ("NIE".equalsIgnoreCase(normalized)) {
+
+        if (tipo == es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.NIE) {
             return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIE;
         }
-        if ("DNI".equalsIgnoreCase(normalized)) {
+
+        if (tipo == es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.DNI) {
             return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.DNI;
         }
-        if ("CIF".equalsIgnoreCase(normalized)) {
-            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.CIF;
-        }
 
-        try {
-            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.valueOf(normalized);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(SCDCPAJUv3Client.class.getName()).log(Level.WARNING,
-                    "SCDCPAJUv3Client :: Tipus de documentació no reconegut per backoffice: " + tipo);
+        return null;
+        
+    }
+
+
+    private es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion normalizeTipoDocumentacionBackoffice(
+               String tipo) {
+        
+        if (tipo == null) {
             return null;
         }
+
+        if ("Pasaporte".equals(tipo)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.Pasaporte;
+        }
+
+        if ("NIF".equals(tipo)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIF;
+        }
+
+        if ("NIE".equals(tipo)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.NIE;
+        }
+
+        if ("DNI".equals(tipo)) {
+            return es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion.DNI;
+        }
+
+        return null;
     }
+
 
     private void setDatosPeticion() throws JAXBException, IOException {
 
@@ -272,7 +286,7 @@ public class SCDCPAJUv3Client extends CedentClient {
         es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.Documentacion documentacion;
         es.caib.scsp.esquemas.SCDCPAJUv3.peticion.datosespecificos.DatosPersonales datosPersonales;
 
-        String tipo;
+        es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum tipo;
         String valor;
         String apellido1;
         String apellido2;
@@ -298,9 +312,13 @@ public class SCDCPAJUv3Client extends CedentClient {
             if (documentacion != null) {
 
                 es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
-                tipo = normalizeTipoDocumentacionCedent(documentacion.getTipo());
+                
+                String tipoDocumentacion = documentacion.getTipo();
+                es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipoDocumentacionBackoffice = normalizeTipoDocumentacionBackoffice(tipoDocumentacion);
+                tipo = normalizeTipoDocumentacionCedent(tipoDocumentacionBackoffice);
+                
                 valor = documentacion.getValor();
-                dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
+                dc.setTipo(tipo);
                 dc.setValor(valor);
                 ti.setDocumentacion(dc);
 
@@ -312,9 +330,13 @@ public class SCDCPAJUv3Client extends CedentClient {
 
                 if (documentacion != null) {
                     es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion dc = new es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion();
-                    tipo = normalizeTipoDocumentacionCedent(documentacion.getTipo());
+                    
+                    String tipoDocumentacion = documentacion.getTipo();
+                    es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipoDocumentacionBackoffice = normalizeTipoDocumentacionBackoffice(tipoDocumentacion);
+                    tipo = normalizeTipoDocumentacionCedent(tipoDocumentacionBackoffice);
+
                     valor = documentacion.getValor();
-                    dc.setTipo(es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.fromValue(tipo));
+                    dc.setTipo(tipo);
                     dc.setValor(valor);
                     dp.setDocumentacion(dc);
                 }
@@ -449,13 +471,18 @@ public class SCDCPAJUv3Client extends CedentClient {
                         // set Documentacion
                         es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion doc = per.getDocumentacion();
                         if (doc != null) {
+
                             es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion documentacion = new es.caib.scsp.esquemas.SCDCPAJUv3.respuesta.datosespecificos.Documentacion();
                             es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum tipo = doc.getTipo();
+
                             if (tipo != null) {
-                                String valorTipo = (es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion.TipoEnum.PASSAPORT == tipo)
-                                        ? "Pasaporte"
-                                        : tipo.getValue();
-                                documentacion.setTipo(valorTipo);
+                                
+                                es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipoBackoffice = normalizeTipoDocumentacionBackoffice(tipo);
+
+                                if (tipoBackoffice != null=){
+                                    documentacion.setTipo(tipoBackoffice.toString());
+                                }
+
                                 documentacion.setValor(doc.getValor());
                                 persona.setDocumentacion(documentacion);
                             }
