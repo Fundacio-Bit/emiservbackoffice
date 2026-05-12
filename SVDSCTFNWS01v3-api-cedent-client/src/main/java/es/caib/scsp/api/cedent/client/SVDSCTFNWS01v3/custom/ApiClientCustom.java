@@ -757,11 +757,32 @@ public class ApiClientCustom {
         return null;
       else {
         LOG.debug("ApiClientCustom :: invokeAPICustom :: Error Type: " + errorType) ;
-        Object errorTypeObject = deserialize(response, errorType);
-        Map<String, Object> responseMap = new HashMap<String, Object>();
-        responseMap.put("errorType", errorTypeObject);
-        LOG.debug("ApiClientCustom :: invokeAPICustom :: Response Map: " + responseMap) ;
-        return responseMap;
+
+        // Keep entity buffered so we can fallback to plain text body if typed
+        // deserialization fails (e.g. content-type text/html).
+        response.bufferEntity();
+
+        try {
+          Object errorTypeObject = deserialize(response, errorType);
+          Map<String, Object> responseMap = new HashMap<String, Object>();
+          responseMap.put("errorType", errorTypeObject);
+          LOG.debug("ApiClientCustom :: invokeAPICustom :: Response Map: " + responseMap) ;
+          return responseMap;
+        } catch (RuntimeException ex) {
+          String message = ex.getMessage();
+          String respBody = null;
+          if (response.hasEntity()) {
+            try {
+              respBody = String.valueOf(response.readEntity(String.class));
+              if (respBody != null && !respBody.trim().isEmpty()) {
+                message = respBody;
+              }
+            } catch (RuntimeException ignore) {
+              // Keep original exception message when fallback body cannot be read.
+            }
+          }
+          throw new ApiException(response.getStatus(), message, buildResponseHeaders(response), respBody);
+        }
       }
     }else {
       String message = "error";
