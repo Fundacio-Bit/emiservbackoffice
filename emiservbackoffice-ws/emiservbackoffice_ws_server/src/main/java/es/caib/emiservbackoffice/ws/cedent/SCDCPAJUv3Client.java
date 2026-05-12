@@ -479,7 +479,7 @@ public class SCDCPAJUv3Client extends CedentClient {
                                 
                                 es.caib.emiserv.logic.intf.service.ws.backoffice.TipoDocumentacion tipoBackoffice = normalizeTipoDocumentacionBackoffice(tipo);
 
-                                if (tipoBackoffice != null=){
+                                if (tipoBackoffice != null){
                                     documentacion.setTipo(tipoBackoffice.toString());
                                 }
 
