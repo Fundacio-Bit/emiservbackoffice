@@ -15,7 +15,7 @@
     <description>Implementació Serveis Web de EmiservBackoffice</description>
 
     <properties>
-        <cedent-client.version>1.0.0</cedent-client.version>
+        <cedent-client.version>1.0.1</cedent-client.version>
         <cxf-version>3.2.4</cxf-version>
         <jackson-jaxrs-version>2.9.1</jackson-jaxrs-version>
         <spring-web-version>5.3.20</spring-web-version>
