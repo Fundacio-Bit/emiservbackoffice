@@ -41,6 +41,8 @@ import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 
 /**
  *
@@ -207,6 +209,13 @@ public class SCDHPAJUv3Client extends CedentClient {
 
         ApiClient apiClient = api.getApiClient();
 
+        // Important: el contracte extern espera el valor funcional de l'enum
+        // (ex. "Passaport") i no el nom intern de la constant (ex. "PASSAPORT").
+        // Per aixo forcem Jackson a serialitzar/deserialitzar enums amb toString().
+        ObjectMapper apiMapper = apiClient.getJSON().getContext(null);
+        apiMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+        apiMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+
         apiClient.setBasePath(propietats.getEndpoint());
 
         apiClient.setDebugging(true);
@@ -232,20 +241,35 @@ public class SCDHPAJUv3Client extends CedentClient {
             throw new ApiException(ex.getMessage(), ex, api.getApiClient().getStatusCode(),
                     api.getApiClient().getResponseHeaders());
         } catch (ApiException ex) {
+            int code = (ex.getCode() > 0) ? ex.getCode() : 400;
+            String message = ex.getMessage();
 
-            int code = 400;
-            String message = "";
-            String jsonString = ex.getMessage();
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode;
-            try {
-                jsonNode = objectMapper.readTree(jsonString);
-                code = jsonNode.get("code").asInt();
-                message = jsonNode.get("message").asText();
-            } catch (IOException ioex) {
-                throw new ApiException(ioex.getMessage(), ioex, api.getApiClient().getStatusCode(),
-                        api.getApiClient().getResponseHeaders());
+            // No assumim que l'error del cedent sigui sempre JSON: en alguns casos
+            // arriba text pla o una traca serialitzada.
+            String responseBody = ex.getResponseBody();
+            if (responseBody != null && !responseBody.trim().isEmpty()) {
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonNode jsonNode = objectMapper.readTree(responseBody);
+                    if (jsonNode.has("code") && !jsonNode.get("code").isNull()) {
+                        code = jsonNode.get("code").asInt(code);
+                    }
+                    if (jsonNode.has("message") && !jsonNode.get("message").isNull()) {
+                        message = jsonNode.get("message").asText(message);
+                    }
+                } catch (IOException ioex) {
+                    log.debug("SCDHPAJUv3Client :: getResultado :: resposta error no JSON", ioex);
+                }
             }
+
+            if ((message == null || message.trim().isEmpty()) && responseBody != null && !responseBody.trim().isEmpty()) {
+                message = responseBody;
+            }
+
+            if (message == null || message.trim().isEmpty()) {
+                message = "Error desconegut en la peticio al cedent";
+            }
+
             throw new ApiException(message, ex, code, api.getApiClient().getResponseHeaders(), ex.getResponseBody());
         }
 
