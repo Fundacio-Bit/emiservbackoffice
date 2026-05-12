@@ -5,7 +5,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.ScdcpajUv3Api;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.Scdcpajuv3Api;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
 import java.io.IOException;
@@ -207,7 +207,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         log.info("SCDCPAJUv3Client :: Iniciant client ");
 
-        ScdcpajUv3Api api = new ScdcpajUv3Api();
+        Scdcpajuv3Api api = new Scdcpajuv3Api();
 
         ApiClient apiClient = api.getApiClient();
 
