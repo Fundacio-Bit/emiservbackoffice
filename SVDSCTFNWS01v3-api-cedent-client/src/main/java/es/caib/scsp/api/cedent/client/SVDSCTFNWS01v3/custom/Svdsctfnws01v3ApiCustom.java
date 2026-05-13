@@ -7,30 +7,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.api.Svdsctfnws01v3Api;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.ModelApiResponse;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Resultado;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.model.Solicitud;
+import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.ApiClient;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.ApiException;
 import es.caib.scsp.api.cedent.client.SVDSCTFNWS01v3.services.Pair;
 
-public class Svdsctfnws01v3ApiCustom {
-  
-  private ApiClientCustom apiClientCustom;
+public class Svdsctfnws01v3ApiCustom extends Svdsctfnws01v3Api {
 
   public Svdsctfnws01v3ApiCustom() {
-    this(ConfigurationCustom.getDefaultApiClientCustom());
+    super(ConfigurationCustom.getDefaultApiClientCustom());
   }
 
   public Svdsctfnws01v3ApiCustom(ApiClientCustom apiClientCustom) {
-    this.apiClientCustom = apiClientCustom;
+    super(apiClientCustom);
   }
 
   public ApiClientCustom getApiClientCustom() {
-    return apiClientCustom;
+    ApiClient apiClient = super.getApiClient();
+    if (apiClient instanceof ApiClientCustom) {
+      return (ApiClientCustom) apiClient;
+    }
+    throw new IllegalStateException("El ApiClient actual no es ApiClientCustom");
   }
 
   public void setApiClientCustom(ApiClientCustom apiClientCustom) {
-    this.apiClientCustom = apiClientCustom;
+    super.setApiClient(apiClientCustom);
+  }
+
+  @Override
+  public void setApiClient(ApiClient apiClient) {
+    if (!(apiClient instanceof ApiClientCustom)) {
+      throw new IllegalArgumentException("Nomes s'accepta ApiClientCustom");
+    }
+    super.setApiClient(apiClient);
   }
 
   /**
@@ -41,6 +53,7 @@ public class Svdsctfnws01v3ApiCustom {
    * @throws ApiException if fails to make API call
    */
   public Map<String, Object> peticionSincronaCustom(Solicitud body) throws ApiException {
+    ApiClientCustom apiClientCustom = getApiClientCustom();
     Object localVarPostBody = body;
     // verify the required parameter 'body' is set
     if (body == null) {
