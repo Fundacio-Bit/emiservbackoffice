@@ -1,6 +1,6 @@
 /*
- * SCDCPAJUv3
- * # This is a SCDCPAJUv3 server spec You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). For this sample, you can use the api key `special-key` to test the authorization filters.
+ * SCDHPAJUv3
+ * # This is a SCDHPAJUv3 server spec You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). For this sample, you can use the api key `special-key` to test the authorization filters.
  *
  * OpenAPI spec version: 1.0.0
  * Contact: pinbal@fundaciobit.org
@@ -10,22 +10,21 @@
  * Do not edit the class manually.
  */
 
-package es.caib.scsp.api.cedent.client.SCDCPAJUv3.custom;
+package es.caib.scsp.api.cedent.client.SCDHPAJUv3.custom;
 
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.DatosPersonales;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Documentacion;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Solicitud;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Titular;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiClient;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.ProcessingException;
 import static org.junit.Assert.assertNotNull;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,12 +33,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
- * API tests for Scdcpajuv3Api
+ * API tests for Scdhpajuv3Api
  */
 
-public class Scdcpajuv3ApiCustomTest {
+public class Scdhpajuv3ApiCustomTest {
 
-    private final Scdcpajuv3ApiCustom api = new Scdcpajuv3ApiCustom();
+    private final Scdhpajuv3ApiCustom api = new Scdhpajuv3ApiCustom();
 
     /**
      * Realitza una consulta al cedent
@@ -110,7 +109,7 @@ public class Scdcpajuv3ApiCustomTest {
             
         } catch (ProcessingException ex) {
 
-            Logger.getLogger(Scdcpajuv3ApiCustomTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Scdhpajuv3ApiCustomTest.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No identificat");
             
         } catch (ApiException ex) {

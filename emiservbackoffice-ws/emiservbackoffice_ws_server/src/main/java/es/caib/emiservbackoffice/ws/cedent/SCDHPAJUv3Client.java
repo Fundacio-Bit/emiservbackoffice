@@ -6,7 +6,7 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.Estado;
 import es.caib.emiservbackoffice.ws.scsp.SCDHPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDHPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
-import es.caib.scsp.api.cedent.client.SCDHPAJUv3.api.Scdhpajuv3Api;
+import es.caib.scsp.api.cedent.client.SCDHPAJUv3.custom.Scdhpajuv3ApiCustom;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiClient;
 import es.caib.scsp.api.cedent.client.SCDHPAJUv3.services.ApiException;
 import java.io.IOException;
@@ -41,8 +41,6 @@ import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 
 /**
  *
@@ -205,16 +203,12 @@ public class SCDHPAJUv3Client extends CedentClient {
 
         log.info("SCDHPAJUv3Client :: Iniciant client");
 
-        Scdhpajuv3Api api = new Scdhpajuv3Api();
+        Scdhpajuv3ApiCustom api = new Scdhpajuv3ApiCustom();
 
         ApiClient apiClient = api.getApiClient();
 
-        // Important: el contracte extern espera el valor funcional de l'enum
-        // (ex. "Passaport") i no el nom intern de la constant (ex. "PASSAPORT").
-        // Per aixo forcem Jackson a serialitzar/deserialitzar enums amb toString().
-        ObjectMapper apiMapper = apiClient.getJSON().getContext(null);
-        apiMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-        apiMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+        // Nota: La serialización de enums ya está manejada por ApiClientCustom
+        // que pre-serializa el body JSON usando toString() en los enums
 
         apiClient.setBasePath(propietats.getEndpoint());
 
@@ -236,7 +230,7 @@ public class SCDHPAJUv3Client extends CedentClient {
         es.caib.scsp.api.cedent.client.SCDHPAJUv3.model.Resultado response = null;
 
         try {
-            response = api.peticionSincrona(solicitud);
+            response = api.peticionSincronaCustom(solicitud);
         } catch (ProcessingException ex) {
             throw new ApiException(ex.getMessage(), ex, api.getApiClient().getStatusCode(),
                     api.getApiClient().getResponseHeaders());

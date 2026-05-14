@@ -48,8 +48,6 @@ import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 
 /**
  *
@@ -221,12 +219,8 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
 
         ApiClientCustom apiClient = api.getApiClientCustom();
 
-        // Important: el contracte extern espera el valor funcional de l'enum
-        // (ex. "Passaport") i no el nom intern de la constant (ex. "PASSAPORT").
-        // Per aixo forcem Jackson a serialitzar/deserialitzar enums amb toString().
-        ObjectMapper apiMapper = apiClient.getJSON().getContext(null);
-        apiMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-        apiMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+        // Nota: La serialización de enums ya está manejada por ApiClientCustom
+        // que pre-serializa el body JSON usando toString() en los enums
 
         apiClient.setBasePath(propietats.getEndpoint());
 

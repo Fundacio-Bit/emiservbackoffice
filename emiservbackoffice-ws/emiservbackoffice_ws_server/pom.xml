@@ -75,7 +75,7 @@
         <dependency>
             <groupId>es.caib.scsp</groupId>
             <artifactId>SVDSCTFNWS01v3-api-cedent-client</artifactId>
-            <version>1.0.1</version>
+            <version>${cedent-client.version}</version>
             <exclusions>
                 <!-- evitar conflicte amb JAX-RS de JBoss -->
                 <exclusion>
