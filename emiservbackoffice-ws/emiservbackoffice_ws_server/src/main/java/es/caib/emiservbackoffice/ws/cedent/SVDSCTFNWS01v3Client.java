@@ -584,7 +584,9 @@ public class SVDSCTFNWS01v3Client extends CedentClient {
                     
                     log.info("SVDSCTFNWS01v3Client :: Resposta del cedent adaptada");
                     
-                    if (retorno != null) {
+                    if (retorno != null
+                            && retorno.getListaBeneficiariosRetorno() != null
+                            && retorno.getListaBeneficiariosRetorno().getBeneficiarioRetorno() != null) {
                         for (es.caib.scsp.esquemas.SVDSCTFNWS01v3.respuesta.datosespecificos.BeneficiarioRetorno beneficiarioRetorno : retorno.getListaBeneficiariosRetorno().getBeneficiarioRetorno()) {
                             if ("S".equals(beneficiarioRetorno.getTitular())) {
 
