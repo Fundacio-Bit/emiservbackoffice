@@ -4,7 +4,7 @@
     <parent>
         <artifactId>emiservbackoffice</artifactId>
         <groupId>es.caib.emiservbackoffice</groupId>
-        <version>1.0.1</version>
+        <version>2.0.0</version>
     </parent>
 
     <artifactId>emiservbackoffice-cedent-SCDCPAJUv3</artifactId>
@@ -14,7 +14,7 @@
     <description>Mòdul web d'exemple d'integració amb el servei SCDCPAJUv3 del CEDENT</description>
 
     <properties>
-        <cedent-client.version>1.0.0</cedent-client.version>
+        <cedent-client.version>2.0.0</cedent-client.version>
         <cxf-version>3.2.4</cxf-version>
         <jackson-jaxrs-version>2.9.1</jackson-jaxrs-version>
     </properties>

@@ -1,0 +1,124 @@
+package es.caib.scsp.api.cedent.client.SCDCPAJUv3.api;
+
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.DatosPersonales;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Documentacion;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Resultado;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Solicitud;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.model.Titular;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClientCustom;
+
+import org.junit.Test;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.ProcessingException;
+import static org.junit.Assert.assertNotNull;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+
+
+/**
+ * API tests for Scdcpajuv3Api
+ */
+
+public class Scdcpajuv3ApiCustomTest {
+
+    private final Scdcpajuv3ApiCustom api = new Scdcpajuv3ApiCustom();
+
+    /**
+     * Realitza una consulta al cedent
+     *
+     * Realitza una consulta al cedent
+     *
+     * @throws Exception
+     *          if the Api call fails
+     */
+    @Test
+    public void peticionSincronaTest() throws Exception {
+
+
+        ApiClientCustom apiClient =  api.getApiClientCustom();
+
+        //apiClient.setBasePath("http://10.0.0.45:8580/pinbal-services/rest");
+        //apiClient.setBasePath("http://192.168.5.14:38080/emiservcedentapi/externa/services");
+        apiClient.setBasePath("http://Nautilus:48080/emiservcedentapi/externa");
+        //apiClient.setBasePath("http://192.168.2.81:38080/emiservcedentapi/externa");
+
+        apiClient.setDebugging(true);
+
+        //String usuari = "pinbal";
+        //String secret = "!puW6PHUQC%c";
+
+        //apiClient.addDefaultHeader(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString(userpass.getBytes(StandardCharsets.UTF_8)));
+
+         Solicitud body = new Solicitud();
+        
+        String provinciaSolicitud = "07";
+        String municipioSolicitud = "032";
+        
+        body.setProvinciaSolicitud(provinciaSolicitud);
+        body.setMunicipioSolicitud(municipioSolicitud);
+        
+        DatosPersonales datosPersonales = new DatosPersonales();
+        Documentacion documentacion = new Documentacion();
+        
+        
+        Documentacion.TipoEnum tipo = Documentacion.TipoEnum.PASSAPORT;
+        //String valor = "41438576M";
+        //String valor = "78219106Q";
+        String valor = "Z1000675L";
+        documentacion.setTipo(tipo);
+        documentacion.setValor(valor);
+        
+        System.out.println(datosPersonales);
+        
+        Titular titular;
+        titular = new Titular();
+        titular.setDocumentacion(documentacion);
+        
+        System.out.println(titular);
+        
+        body.setTitular(titular);
+        
+        assertNotNull(body);
+        assertNotNull(titular);
+        
+        Resultado response = null;
+       
+        try {
+
+            response = api.peticionSincronaCustom(body);
+            System.out.println("RESPONSE:  " + response);
+            
+        } catch (ProcessingException ex) {
+
+            Logger.getLogger(Scdcpajuv3ApiCustomTest.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No identificat");
+            
+        } catch (ApiException ex) {
+
+            System.out.println(" ");
+            System.out.println("Api Exception Peticion Sincrona ");
+
+            System.out.println("Codigo: " +  api.getApiClient().getStatusCode() + " " + ex.getMessage() + " " +  api.getApiClient().getResponseHeaders());
+
+            String jsonString = ex.getMessage();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+            System.out.println(jsonNode.get("code").asInt());
+            System.out.println(jsonNode.get("message").asText());
+
+            //GenericType<ModelApiResponse> localVarReturnType = new GenericType<ModelApiResponse>() {};
+
+        }
+
+
+
+   
+    }
+}
