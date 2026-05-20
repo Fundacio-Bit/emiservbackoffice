@@ -5,8 +5,8 @@ import es.caib.emiserv.logic.intf.service.ws.backoffice.DatosGenericos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3PeticionDatosEspecificos;
 import es.caib.emiservbackoffice.ws.scsp.SCDCPAJUv3RespuestaDatosEspecificos;
 import es.caib.emiservbackoffice.ws.specs.ErrorBackoffice;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.custom.Scdcpajuv3ApiCustom;
-import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClient;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.api.Scdcpajuv3ApiCustom;
+import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiClientCustom;
 import es.caib.scsp.api.cedent.client.SCDCPAJUv3.services.ApiException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -207,7 +207,7 @@ public class SCDCPAJUv3Client extends CedentClient {
 
         Scdcpajuv3ApiCustom api = new Scdcpajuv3ApiCustom();
 
-        ApiClient apiClient = api.getApiClient();
+        ApiClientCustom apiClient = api.getApiClientCustom();
 
         // Nota: La serialización de enums ya está manejada por ApiClientCustom
         // que pre-serializa el body JSON usando toString() en los enums
